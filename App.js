@@ -17,7 +17,7 @@ import Header from './src/components/Header';
 const homeName = 'Home';
 const searchName = 'Rechercher'
 const favouritesName = 'Favoris'
-const messageName = 'Messages'
+const messageName = 'Ajouter'
 const parametersName = 'Paramètres'
 
 const Tab = createBottomTabNavigator();
@@ -45,7 +45,7 @@ function App(){
               }else if (rn === favouritesName) {
                   iconName = focused ? 'heart' : 'heart-outline'
               }else if (rn === messageName) {
-                  iconName = focused ? 'chatbubbles-sharp' : 'chatbubbles-outline'
+                  iconName = focused ? 'add-sharp' : 'add-outline'
               }else if (rn === parametersName) {
                   iconName = focused ? 'settings-sharp' : 'settings-outline'
               }
