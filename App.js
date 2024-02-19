@@ -39,7 +39,7 @@ function App(){
               let rn = route.name;
 
               if (rn === homeName) {
-                  iconName = focused ? 'home' : 'home-outline'
+                  iconName = focused ? 'home-sharp' : 'home-outline'
               }else if (rn === searchName) {
                   iconName = focused ? 'search' : 'search-outline'
               }else if (rn === favouritesName) {
