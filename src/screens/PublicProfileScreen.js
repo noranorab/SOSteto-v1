@@ -8,7 +8,7 @@ export default function PublicProfileScreen({navigation}) {
             <Text 
             onPress = {() => alert('This is the profile screen.')}
             style={{ fontSize: 26, fontWeight: 'bold'}}>
-                Public Profile
+             
             </Text>
         </View>
     )
