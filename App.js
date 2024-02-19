@@ -45,7 +45,7 @@ function App(){
               }else if (rn === favouritesName) {
                   iconName = focused ? 'heart' : 'heart-outline'
               }else if (rn === messageName) {
-                  iconName = focused ? 'chatbubbles-sharp' : 'chatbubbles-outline'
+                  iconName = focused ? 'chatbubbles-outline' : 'chatbubbles-outline'
               }else if (rn === parametersName) {
                   iconName = focused ? 'settings-sharp' : 'settings-outline'
               }
