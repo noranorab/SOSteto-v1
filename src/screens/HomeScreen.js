@@ -1,13 +1,18 @@
 import * as React from 'react';
 import { View, Text, Image, FlatList, Pressable} from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
 
 const posts = [
-    {id: 1, postOwner: 'Mohammed Boulija', ownerBio: "Infirmier Puériculteur Diplômé d'état", location: 'Rabat, Maroc', sourceImageProfile: require('./flower.jpg')},
-    {id: 2, postOwner: 'Mohammed Boulija', ownerBio: "Infirmier Puériculteur Diplômé d'état", location: 'Rabat, Maroc', sourceImageProfile:  require('./flower.jpg')},
-    {id: 3, postOwner: 'Mohammed Boulija', ownerBio: "Infirmier Puériculteur Diplômé d'état", location: 'Rabat, Maroc', sourceImageProfile:  require('./flower.jpg')},
-    {id: 4, postOwner: 'Mohammed Boulija', ownerBio: "Infirmier Puériculteur Diplômé d'état", location: 'Rabat, Maroc', sourceImageProfile:  require('./flower.jpg')}
+    {id: 1, postOwner: 'Mohammed Boulija', ownerBio: "Infirmier Puériculteur Diplômé d'état", location: 'Rabat, Maroc', sourceImageProfile: require('../../assets/flower.jpg'), actif: 'True'},
+    {id: 2, postOwner: 'Mohammed Boulija', ownerBio: "Infirmier Puériculteur Diplômé d'état", location: 'Rabat, Maroc', sourceImageProfile:  require('../../assets/flower.jpg'), actif: 'True'},
+    {id: 3, postOwner: 'Mohammed Boulija', ownerBio: "Infirmier Puériculteur Diplômé d'état", location: 'Rabat, Maroc', sourceImageProfile:  require('../../assets/flower.jpg'), actif: 'True'},
+    {id: 4, postOwner: 'Mohammed Boulija', ownerBio: "Infirmier Puériculteur Diplômé d'état", location: 'Rabat, Maroc', sourceImageProfile:  require('../../assets/flower.jpg'), actif: 'False'},
+    {id: 5, postOwner: 'Mohammed Boulija', ownerBio: "Infirmier Puériculteur Diplômé d'état", location: 'Rabat, Maroc', sourceImageProfile:  require('../../assets/flower.jpg'), actif: 'True'},
+    {id: 6, postOwner: 'Mohammed Boulija', ownerBio: "Infirmier Puériculteur Diplômé d'état", location: 'Rabat, Maroc', sourceImageProfile:  require('../../assets/flower.jpg'), actif: 'True'},
+    {id: 7, postOwner: 'Mohammed Boulija', ownerBio: "Infirmier Puériculteur Diplômé d'état", location: 'Rabat, Maroc', sourceImageProfile:  require('../../assets/flower.jpg'), actif: 'True'},
+    {id: 8, postOwner: 'Mohammed Boulija', ownerBio: "Infirmier Puériculteur Diplômé d'état", location: 'Rabat, Maroc', sourceImageProfile:  require('../../assets/flower.jpg'), actif: 'False'}
 
 ]
 
@@ -39,11 +44,13 @@ const PostItem = ({ item }) => {
     return (
         <View style={{
             flexDirection: 'row',
-            marginLeft: 10,
-            marginTop: 5,
+            marginLeft: 0,
+            marginTop: 1,
+            padding: 10,
             borderBottomWidth: 1,
             borderBottomColor: '#E6E6E6',
-            paddingBottom: 10
+            paddingBottom: 10,
+            backgroundColor: 'white'
 
         }}>
             <Image style={{
@@ -54,10 +61,22 @@ const PostItem = ({ item }) => {
                 marginRight: 10,
             }} source={item.sourceImageProfile}/>
             <View>
-                <Text style={{
-                    fontWeight : 'bold',
-                    fontSize : 16
-                }}>{item.postOwner}</Text>
+                <View style={{
+                    flexDirection: 'row',
+                }}>
+                    <Text style={{
+                        fontWeight : 'bold',
+                        fontSize : 16
+                    }}>{item.postOwner}</Text>
+                  
+                    <Ionicons style={{
+                        flexDirection: 'row',
+                        marginLeft: 10,
+                        marginTop: 5
+                    }} name="ellipse-sharp" size={10} color={item.actif == 'True' ? "#26ea01" : "#959595" }/>
+                 
+                </View>
+                
                 <Text style={{
                     fontSize : 14
                 }}>{item.ownerBio}</Text>
