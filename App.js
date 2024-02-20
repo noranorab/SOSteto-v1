@@ -11,7 +11,7 @@ import ParameterScreen from './src/screens/ParameterScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { View } from 'react-native';
-import Header from './src/components/Header';
+import Header from './src/components/header';
 import Footer from './src/components/Footer';
 
 
