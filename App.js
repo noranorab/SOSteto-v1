@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from './src/screens/HomeScreen';
 import SearchScreen from './src/screens/SearchScreen';
 import FavouritesScreen from './src/screens/FavouritesScreen';
-import MessagesScreen from './src/screens/MessagesScreen';
+import MessagesScreen from './src/screens/AjouterScreen';
 import ParameterScreen from './src/screens/ParameterScreen';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
