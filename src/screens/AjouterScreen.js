@@ -14,7 +14,7 @@ function InputWithIcon({ inputHeight, onPressIcon, iconName="add-outline" }) {
         marginTop: 5
       }}
     >
-      <Ionicons name={iconName} size={24} color="grey" />
+      <Ionicons name={iconName} size={23} color="grey" />
     </TouchableOpacity>
   );
 }
