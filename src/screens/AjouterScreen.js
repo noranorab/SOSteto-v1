@@ -10,7 +10,7 @@ function InputWithIcon({ inputHeight, onPressIcon, iconName="add-outline" }) {
       style={{
         position: 'absolute',
         top: inputHeight / 2 - 12,
-        right: 30,
+        right: 25,
         marginTop: 5
       }}
     >
