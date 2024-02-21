@@ -11,6 +11,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeStackScreen from '../screens/HomeStackScreen';
 import HomeScreen from '../screens/HomeScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/core';
+
 
 const Tab = createBottomTabNavigator();
 
@@ -23,12 +25,30 @@ const parametersName = 'Paramètres'
 const notificationsName = 'Notifications'
 
 
+const Header = () => {
+    const navigation = useNavigation();
+    return (
+        <Pressable onPress={() => navigation.navigate("home3") } style={{flexDirection:'row', alignItems:'center', justifyContent: 'space-between'}}>
+                            
+                            <View style={{width: '100%', marginLeft: 160, flexDirection: 'row', position: 'relative'}}>
+                                <Ionicons style={{paddingRight: 10}} name="help-circle-outline" color="black" size={28} />
+                                <Ionicons style={{paddingRight: 10}} name="notifications-outline" color="black" size={24} />
+                                <Ionicons name="person-outline" color="black" size={24} />
+                            </View>
+
+                                
+            
+        </Pressable>
+    )
+}
+
 const HomeStack = createNativeStackNavigator();
 
 function HomeStackGroup(){
     return(
         <HomeStack.Navigator>
-            <HomeStack.Screen name="TabsGroup" component={Footer}/>
+            <HomeStack.Screen name="home2" component={HomeScreen}/>
+            <HomeStack.Screen name="home3" component={HomeScreen}/>
         </HomeStack.Navigator>
     )
 }
@@ -40,7 +60,7 @@ function HomeStackGroup(){
 
 
 
-export default function Footer({navigation}){
+export default function Footer(){
     return (
 
             <Tab.Navigator
@@ -64,23 +84,21 @@ export default function Footer({navigation}){
                 })}
             >
                 <Tab.Screen 
-                name={homeName} component={HomeScreen} options={{
-   
-                    headerLeft:() => (
-                            <Pressable onPress={() => alert('hello')}>
-                                <Image
-                                    source={require("./SOS.png")}
-                                    style={{width: 100, height: 40, marginLeft: 10}}
-            
+                name={homeName} component={HomeStackGroup} options={{
+                    header:() => (
+    
+                        <View style={{flexDirection:'row', alignItems:'center', justifyContent: 'space-between', paddingTop: 40, backgroundColor: 'white', marginLeft: 5}}>
+                            <Image
+                                source={require("./SOS.png")}
+                                style={{width: 100, height: 40}}
+        
                                 />
-                                <Ionicons name="home" color="black" size={24} />
+                            <Header/>
+                        </View>
+    )}}/>
+                    
             
-                            </Pressable>
-                    ),
-                    tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="home" color={color} size={size} />
-                    )
-                }}/>
+            
                 <Tab.Screen 
                 name={searchName} component={SearchScreen}/>
             <Tab.Screen 
