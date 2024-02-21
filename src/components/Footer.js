@@ -12,6 +12,7 @@ import HomeStackScreen from '../screens/HomeStackScreen';
 import HomeScreen from '../screens/HomeScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/core';
+import VoirProfileDetailsScreen from '../screens/VoirProfileDetailsScreen';
 
 
 const Tab = createBottomTabNavigator();
@@ -69,6 +70,7 @@ function HomeStackGroup(){
             <HomeStack.Screen name="home3" component={HomeScreen}/>
             <HomeStack.Screen name="home4" component={HomeScreen}/>
             <HomeStack.Screen name="home5" component={HomeScreen}/>
+            <HomeStack.Screen name="VoirProfileDetailsScreen" component={VoirProfileDetailsScreen}/>
         </HomeStack.Navigator>
     )
 }
