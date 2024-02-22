@@ -66,21 +66,25 @@ function HomeStackGroup(){
                                 />
                             <Header/>
                         </View>
-    )}}/>
+                    )
+    }}/>
             <HomeStack.Screen name="home3" component={HomeScreen}/>
             <HomeStack.Screen name="home4" component={HomeScreen}/>
             <HomeStack.Screen name="home5" component={HomeScreen}/>
-            <HomeStack.Screen name="VoirProfileDetailsScreen" component={VoirProfileDetailsScreen}/>
+            <HomeStack.Screen
+                name="VoirProfileDetailsScreen"
+                component={VoirProfileDetailsScreen}
+                options={{
+                headerTitle: "Posts Details",
+                headerShown: true,
+                contentStyle: {
+                    backgroundColor: 'white'
+                }
+                }}
+            />
         </HomeStack.Navigator>
     )
 }
-
-
-
-
-
-
-
 
 export default function Footer(){
     return (

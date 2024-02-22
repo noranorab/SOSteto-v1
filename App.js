@@ -1,24 +1,24 @@
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import * as React from 'react';
 
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import HomeScreen from './src/screens/HomeScreen';
-import SearchScreen from './src/screens/SearchScreen';
-import FavouritesScreen from './src/screens/FavouritesScreen';
-import MessagesScreen from './src/screens/AjouterScreen';
-import ParameterScreen from './src/screens/ParameterScreen';
-
-import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { View } from 'react-native';
-import Header from './src/components/header';
+
 import Footer from './src/components/Footer';
 
+
+const MyTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: '#84c4c0',
+  },
+};
 
 
 function App(){
   return(
-  <NavigationContainer>
+  <NavigationContainer style={{ backgroundColor : 'white'}} theme={MyTheme}>
     <View style={{
         flex: 1
     }}>
