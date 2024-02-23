@@ -25,7 +25,7 @@ function Header() {
             paddingHorizontal: 10,
         }}>
             <Image
-                source={require('../components/SOS.png')}
+                source={require('../../assets/SOS.png')}
                 style={{
                     width: 100,
                     height: 30,
@@ -50,7 +50,7 @@ function Header() {
 function HomeLogo(){
     return (
             <Image
-            source={require('../components/SOS.png')}
+            source={require('../../assets/SOS.png')}
             style={
                 {
                     width: 100,

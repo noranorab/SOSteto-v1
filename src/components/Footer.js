@@ -13,6 +13,9 @@ import HomeScreen from '../screens/HomeScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/core';
 import VoirProfileDetailsScreen from '../screens/VoirProfileDetailsScreen';
+import HelpScreen from '../screens/HelpScreen';
+import NotificationsScreen from '../screens/NotificationsScreen';
+import PublicProfileScreen from '../screens/PublicProfileScreen';
 
 
 const Tab = createBottomTabNavigator();
@@ -60,7 +63,7 @@ function HomeStackGroup(){
     
                         <View style={{flexDirection:'row', alignItems:'center', justifyContent: 'space-between', paddingTop: 40, backgroundColor: 'white', marginLeft: 5}}>
                             <Image
-                                source={require("./SOS.png")}
+                                source={require("../../assets/SOS.png")}
                                 style={{width: 100, height: 40}}
         
                                 />
@@ -68,9 +71,9 @@ function HomeStackGroup(){
                         </View>
                     )
     }}/>
-            <HomeStack.Screen name="home3" component={HomeScreen}/>
-            <HomeStack.Screen name="home4" component={HomeScreen}/>
-            <HomeStack.Screen name="home5" component={HomeScreen}/>
+            <HomeStack.Screen name="home3" component={HelpScreen}/>
+            <HomeStack.Screen name="home4" component={NotificationsScreen}/>
+            <HomeStack.Screen name="home5" component={PublicProfileScreen}/>
             <HomeStack.Screen
                 name="VoirProfileDetailsScreen"
                 component={VoirProfileDetailsScreen}
