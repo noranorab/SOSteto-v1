@@ -8,7 +8,7 @@ import Icon1 from 'react-native-vector-icons/MaterialCommunityIcons';
 import { villes } from '../data/villes';
 import { specialities } from '../data/specialities';
 import { useNavigation } from '@react-navigation/core';
-
+import { Button } from '../components/Button';
 import FooterMainPage from '../components/FooterMainPage';
 
 const buttonStyles = {
@@ -31,7 +31,6 @@ const Header = () => {
 
 
     return (
-<<<<<<< HEAD
         <View style={{ backgroundColor: '#84c7c0', padding: 10, }}>
             <Text style={{
                 fontSize: 20, fontWeight: 'bold', color: 'white', marginBottom: 0, marginTop: 0, padding: 4,
@@ -57,42 +56,16 @@ const Header = () => {
                 <TouchableOpacity style={styles.submitButton} onPress={() => navigate('home7')}>
                     <Text style={styles.submitButtonText}>Rechercher </Text>
                 </TouchableOpacity>
-=======
-        <View style={{backgroundColor: '#84c7c0' , height: 300}}>
-                    <Text style={{fontSize: 20, fontWeight: 'bold', color: 'white', paddingLeft: 10, paddingTop: 20, width: 190}}>Trouvez votre infirmier(ère) avec un seul click</Text>
-                    <Text style={{fontSize: 14, fontWeight: 'bold', color: 'white', paddingLeft: 10, paddingTop: 20}}>
-                        Faîte une recherche rapide ! 
-                    </Text>
-                    <View style={{marginTop: 10, flexDirection: 'row', paddingLeft: 10 }}>
-                        <RNPickerSelect
-                            placeholder={{ label: 'Ville', value: null }}
-                            items={villes ? villes.map((ville) => ({ label: ville.name, value: ville.id })) : []}
-                            onValueChange={(value) => setSelectedVille(value)}
-                            style={pickerSelectStyles}
-                            value={selectedVille}
-                        />
-                        <RNPickerSelect
-                            placeholder={{ label: 'Spécialité', value: null }}
-                            items={specialities ? specialities.map((specialite) => ({ label: specialite.name, value: specialite.id })) : []}
-                            onValueChange={(value) => setSelectedSpecialite(value)}
-                            style={pickerSelectStyles}
-                            value={selectedSpecialite}
-                        />
-                        
-                      
-                    </View>
->>>>>>> origin/nora
 
-<<<<<<< HEAD
 
             </View>
 
             {/* <Button
                 onPress={() => navigate('home7')} title='Rechercher' /> */}
-=======
+
                             <Button 
                             onPress={() => navigate('home7')} style={buttonStyles} title='Rechercher' />
->>>>>>> 64f8f6a4167c7d4726fa54e44a8079a301744b96
+
         </View>
 
     )
@@ -133,13 +106,8 @@ export default function MainPageScreen() {
                     />
                 </View>
                 <View style={styles.additionalSection}>
-<<<<<<< HEAD
                     <Icon1 name="cursor-default-click" size={40} color="#fff" style={{ marginTop: 20 }} />
                     <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'white', width: 300, paddingBottom: 10, textAlign: 'center', paddingTop: 15 }}>Ne perdez pas de temps! Créez un compte sur SOSteto et trouvez l'infirmière dont vous avez besoin à tout moment et n'importe où.</Text>
-=======
-                    <Icon1 name="cursor-default-click" size={40} color="#fff" style={{marginTop: 20}}/>
-                    <Text style={{fontSize: 17, color:'white', width: 300, paddingBottom: 10, textAlign: 'center', paddingTop: 15}}>Ne perdez pas de temps! Créez un compte sur SOSteto et trouvez l'infirmière dont vous avez besoin à tout moment et n'importe où.</Text>
->>>>>>> 64f8f6a4167c7d4726fa54e44a8079a301744b96
                 </View>
                 <FooterMainPage></FooterMainPage>
 
