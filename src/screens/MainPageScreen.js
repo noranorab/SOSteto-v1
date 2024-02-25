@@ -32,13 +32,11 @@ const Header = () => {
 
     return (
         <View style={{ backgroundColor: '#84c7c0', padding: 10, }}>
-            <Text style={{
-                fontSize: 20, fontWeight: 'bold', color: 'white', marginBottom: 0, marginTop: 0, padding: 4,
-            }}>Trouvez votre infirmier(ère) avec un seul click</Text>
-            <Text style={{ fontSize: 18, color: 'white', marginBottom: 10, marginTop: 0, padding: 8, }}>
+            <Text style={{fontSize: 20, fontWeight: 'bold', color: 'white', paddingLeft: 10, paddingTop: 20, width: 190}}>Trouvez votre infirmier(ère) avec un seul click</Text>
+            <Text style={{fontSize: 14, fontWeight: 'bold', color: 'white', paddingLeft: 10, paddingTop: 20}}>
                 Faîte une recherche rapide !
             </Text>
-            <View style={{ alignItems: 'center', width: '85%', marginLeft: 25, }}>
+            <View style={{ alignItems: 'center', width: '85%', marginLeft: 10, paddingTop:10 }}>
                 <RNPickerSelect
                     placeholder={{ label: 'Ville', value: null }}
                     items={villes ? villes.map((ville) => ({ label: ville.name, value: ville.id })) : []}
@@ -53,18 +51,15 @@ const Header = () => {
                     style={pickerSelectStyles}
                     value={selectedSpecialite}
                 />
-                <TouchableOpacity style={styles.submitButton} onPress={() => navigate('home7')}>
-                    <Text style={styles.submitButtonText}>Rechercher </Text>
-                </TouchableOpacity>
+                
 
 
             </View>
+            <TouchableOpacity style={styles.submitButton} onPress={() => navigate('home7')}>
+                <Text style={styles.submitButtonText}>Rechercher </Text>
+            </TouchableOpacity>
 
-            {/* <Button
-                onPress={() => navigate('home7')} title='Rechercher' /> */}
-
-                            <Button 
-                            onPress={() => navigate('home7')} style={buttonStyles} title='Rechercher' />
+            
 
         </View>
 
@@ -146,14 +141,19 @@ const styles = StyleSheet.create({
     },
 
     submitButton: {
+        marginTop: 5,
+        marginLeft: 10,
         backgroundColor: '#fff',
         padding: 10,
         borderRadius: 5,
+        width: 110,
+        
         // alignItems: 'center',
     },
     submitButtonText: {
-        color: 'black',
-        fontSize: 16,
+        color: '#C1C1C1',
+        fontSize: 14,
+        textAlign: 'center'
     },
     imageContainer: {
         alignItems: 'center',
