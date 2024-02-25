@@ -1,10 +1,16 @@
 import { useRoute } from '@react-navigation/native';
 import * as React from 'react';
-import { View, Text, Image, FlatList, Pressable, ImageBackground, Switch} from 'react-native';
+import { View, Text, Image, FlatList, Pressable, ImageBackground, Switch, ScrollView} from 'react-native';
 import { PostContent } from '../components/PostContent';
 import { PostItem } from '../components/PostItem';
 import { posts } from '../data/posts';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import CalendarPicker from 'react-native-calendar-picker';
+import RNDateTimePicker from '@react-native-community/datetimepicker';
+import MyDateTimePicker from '../components/MyCalendarPicker';
+
+
+
 
 
 
@@ -17,7 +23,7 @@ export default function VoirProfileDetailsScreen() {
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
     
     return(
-        <View testID='VoirProfileDetailsScreen' >
+        <ScrollView testID='VoirProfileDetailsScreen' >
             <ImageBackground
             source={require('./banniere.png')}
             style={{
@@ -40,65 +46,230 @@ export default function VoirProfileDetailsScreen() {
                         }}/>
             </ImageBackground>
 
-            <View style={{
-                marginLeft: 10,
-                marginTop: 60
-            }}>
-                <View style={{
-                        flexDirection: 'row',
-                    }}>
-                        <Text style={{
-                            fontWeight : 'bold',
-                            fontSize : 16
-                        }}>{item.postOwner}</Text>
+            <View>
+                    <View style={{
+                        
+                        paddingBottom: 10,
+                        borderBottomColor: '#E6E6E6',
+                        borderBottomWidth : 5,
                     
-                        <Ionicons style={{
-                            flexDirection: 'row',
-                            marginLeft: 10,
-                            marginTop: 5
-                        }} name="ellipse-sharp" size={10} color={item.actif == 'True' ? "#26ea01" : "#959595" }/>
+                    }}>
+                        <Ionicons style={{marginLeft: 320, height: 50, marginTop: 5}} name='pencil-sharp' size={25} color='#C1C1C1'/>
+                            <View style={{ marginLeft: 10}}>
+                                <View style={{
+                                            flexDirection: 'row',
+                                        
+                                        }}>
+                                            <Text style={{
+                                                fontWeight : 'bold',
+                                                fontSize : 20
+                                            }}>{item.postOwner}</Text>
+                                        
+                                            <Ionicons style={{
+                                                flexDirection: 'row',
+                                                marginLeft: 10,
+                                                marginTop: 5
+                                            }} name="ellipse-sharp" size={10} color={item.actif == 'True' ? "#26ea01" : "#959595" }/>
+                                </View>
+                            
+                                
+                        <Text style={{
+                                fontSize : 14,
+                        }}>{item.ownerBio}</Text>
+                    
+
+                        <Text style={{
+                                fontSize : 14,
+                                paddingBottom: 10
+
+                        }}>{item.infirmier.tel}</Text>
+                        <Text style={{
+                                fontSize : 14,
+                                color: '#808080',
+                                paddingBottom: 10
+
+                        }}>{item.location}</Text>
+
+                        
+
+                    </View>
                 </View>
-                <Text style={{
+                <View style={{
+                   paddingBottom: 10,
+                   paddingTop:10,
+                   borderBottomColor: '#E6E6E6',
+                   borderBottomWidth : 5,
+                }}>
+                    <View style={{marginLeft: 10 }} >
+                        <Text style={{
+                        fontWeight : 'bold',
+                        fontSize : 20
+                        }}>Disponibilité</Text>
+                        <View>
+                            <Text>Date</Text>
+                            
+                           
+                            
+                        </View>
+                        <View>
+                            <Text>Horaire</Text>
+                            <View>
+                                <Text>De</Text>
+                                <Text>A</Text>
+                            </View>
+
+                        </View>
+                        
+
+                        <Text style={{
+                        paddingTop: 10,
                         fontSize : 14
-                }}>{item.ownerBio}</Text>
-             
-
-                <Text style={{
-                        fontSize : 14,
-                        paddingBottom: 10
-
-                }}>{item.infirmier.tel}</Text>
-                   <Text style={{
-                        fontSize : 14,
-                        color: '#808080',
-                        paddingBottom: 10
-
-                }}>{item.location}</Text>
+                        }}>{item.infirmier.apropos}</Text>
+                        
+                    </View>
+                    
+                
+                </View>
 
                 <View style={{
-                    flexDirection: 'row',
-                    alignItems: 'center'
+                   height: 130,
+                   paddingBottom: 10,
+                   paddingTop:10,
+                   borderBottomColor: '#E6E6E6',
+                   borderBottomWidth : 5,
                 }}>
-                    <Text style={{
-                       
-                        fontWeight: 'bold',
-                        color: '#808080'
-                    }}>Disponible</Text>
-                    <Switch
-                    style={{ transform:[{ scaleX: .7 }, { scaleY: .7 }] }}
-                    trackColor={{ 
-                            false:'#808080',
-                            true: '#84c4c0'}}
-                    thumbColor={isEnabled ? 'white' : '#C1C1C1'}
-                    ios_backgroundColor= '#B0B0B0'
-                    onValueChange={toggleSwitch}
-                    value={isEnabled}
-                    />
+                    <View style={{marginLeft: 10 }} >
+                        <Text style={{
+                        fontWeight : 'bold',
+                        fontSize : 20
+                        }}>A propos</Text>
+                        <Text style={{
+                        paddingTop: 10,
+                        fontSize : 14
+                        }}>{item.infirmier.apropos}</Text>
+                        
+                    </View>
+                    
+                
                 </View>
-
+                
+                <View style={{
+                   height: 130,
+                   paddingBottom: 10,
+                   paddingTop:10,
+                   borderBottomColor: '#E6E6E6',
+                   borderBottomWidth : 5,
+                }}>
+                    <View style={{marginLeft: 10 }} >
+                        <Text style={{
+                        fontWeight : 'bold',
+                        fontSize : 20
+                        }}>Soins et Actes</Text>
+                        <Text style={{
+                        paddingTop: 10,
+                        fontSize : 14
+                        }}>{item.infirmier.apropos}</Text>
+                        
+                    </View>
+                    
+                
+                </View>
+                
+                <View style={{
+                   height: 130,
+                   paddingBottom: 10,
+                   paddingTop:10,
+                   borderBottomColor: '#E6E6E6',
+                   borderBottomWidth : 5,
+                }}>
+                    <View style={{marginLeft: 10 }} >
+                        <Text style={{
+                        fontWeight : 'bold',
+                        fontSize : 20
+                        }}>Diplômes et Formations</Text>
+                        <Text style={{
+                        paddingTop: 10,
+                        fontSize : 14
+                        }}>{item.infirmier.apropos}</Text>
+                        
+                    </View>
+                    
+                
+                </View>
+                
+                <View style={{
+                   height: 130,
+                   paddingBottom: 10,
+                   paddingTop:10,
+                   borderBottomColor: '#E6E6E6',
+                   borderBottomWidth : 5,
+                }}>
+                    <View style={{marginLeft: 10 }} >
+                        <Text style={{
+                        fontWeight : 'bold',
+                        fontSize : 20
+                        }}>Commentaires</Text>
+                        <Text style={{
+                        paddingTop: 10,
+                        fontSize : 14
+                        }}>{item.infirmier.apropos}</Text>
+                        
+                    </View>
+                    
+                
+                </View>
+                
+                <View style={{
+                   height: 130,
+                   paddingBottom: 10,
+                   paddingTop:10,
+                   borderBottomColor: '#E6E6E6',
+                   borderBottomWidth : 5,
+                }}>
+                    <View style={{marginLeft: 10 }} >
+                        <Text style={{
+                        fontWeight : 'bold',
+                        fontSize : 20
+                        }}>Langues parlées</Text>
+                        <Text style={{
+                        paddingTop: 10,
+                        fontSize : 14
+                        }}>{item.infirmier.apropos}</Text>
+                        
+                    </View>
+                    
+                
+                </View>
+                
+                <View style={{
+                   height: 130,
+                   paddingBottom: 10,
+                   paddingTop:10,
+                   borderBottomColor: '#E6E6E6',
+                   borderBottomWidth : 5,
+                }}>
+                    <View style={{marginLeft: 10 }} >
+                        <Text style={{
+                        fontWeight : 'bold',
+                        fontSize : 20
+                        }}>Curriculum Vitae</Text>
+                        <Text style={{
+                        paddingTop: 10,
+                        fontSize : 14
+                        }}>{item.infirmier.apropos}</Text>
+                        
+                    </View>
+                    
+                
+                </View>
+                
+                
             </View>
+            
+
+            
 
             {/* <PostContent item={item}/> */}
-        </View>
+        </ScrollView>
     )
 }

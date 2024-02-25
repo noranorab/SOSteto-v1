@@ -16,6 +16,7 @@ const buttonStyles = {
     paddingVertical: 10,
     width: 100,
     borderRadius: 4,
+    marginTop: 20
     
 };
 
@@ -29,7 +30,7 @@ const Header = () => {
     
 
     return (
-        <View style={{backgroundColor: '#84c7c0' , height: 240}}>
+        <View style={{backgroundColor: '#84c7c0' , height: 300}}>
                     <Text style={{fontSize: 20, fontWeight: 'bold', color: 'white', paddingLeft: 10, paddingTop: 20, width: 190}}>Trouvez votre infirmier(ère) avec un seul click</Text>
                     <Text style={{fontSize: 14, fontWeight: 'bold', color: 'white', paddingLeft: 10, paddingTop: 20}}>
                         Faîte une recherche rapide ! 
