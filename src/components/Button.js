@@ -16,19 +16,10 @@ export const Button = (props) => {
     };
 
     
-    const buttonStyles = {
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingVertical: 10,
-        marginLeft: 55,
-        width: 100,
-        borderRadius: 4,
-        backgroundColor: isPressed ? '#67b0ae' : '#84c4c0', // Change background color when pressed
-    };
 
     return (
       <Pressable 
-        style={buttonStyles}
+        style={props.style}
         onPress={props.onPress}
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}

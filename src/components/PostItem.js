@@ -7,6 +7,17 @@ import { Button } from './Button';
 import { PostContent } from './PostContent';
 
 
+const buttonStyles = {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 10,
+    marginLeft: 55,
+    width: 100,
+    borderRadius: 4,
+    backgroundColor: '#84c0c7'
+    
+};
+
   
 
 export const PostItem = ({ item }) => {
@@ -23,7 +34,7 @@ export const PostItem = ({ item }) => {
 
             <PostContent item={item}/>
             <Button onPress={() => { 
-                navigate("VoirProfileDetailsScreen", {item}) }}  title='Voir Profile' />
+                navigate("VoirProfileDetailsScreen", {item}) }} style={buttonStyles}  title='Voir Profile' />
                 
 
         </View>    

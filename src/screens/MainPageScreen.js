@@ -11,7 +11,16 @@ import { useNavigation } from '@react-navigation/core';
 
 import FooterMainPage from '../components/FooterMainPage';
 
+const buttonStyles = {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 10,
+    width: 100,
+    borderRadius: 4,
+    
+};
 
+  
 
 const Header = () => {
     const { navigate } = useNavigation()
@@ -47,11 +56,16 @@ const Header = () => {
                     <Text style={styles.submitButtonText}>Rechercher </Text>
                 </TouchableOpacity>
 
+<<<<<<< HEAD
 
             </View>
 
             {/* <Button
                 onPress={() => navigate('home7')} title='Rechercher' /> */}
+=======
+                            <Button 
+                            onPress={() => navigate('home7')} style={buttonStyles} title='Rechercher' />
+>>>>>>> 64f8f6a4167c7d4726fa54e44a8079a301744b96
         </View>
 
     )
@@ -92,8 +106,13 @@ export default function MainPageScreen() {
                     />
                 </View>
                 <View style={styles.additionalSection}>
+<<<<<<< HEAD
                     <Icon1 name="cursor-default-click" size={40} color="#fff" style={{ marginTop: 20 }} />
                     <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'white', width: 300, paddingBottom: 10, textAlign: 'center', paddingTop: 15 }}>Ne perdez pas de temps! Créez un compte sur SOSteto et trouvez l'infirmière dont vous avez besoin à tout moment et n'importe où.</Text>
+=======
+                    <Icon1 name="cursor-default-click" size={40} color="#fff" style={{marginTop: 20}}/>
+                    <Text style={{fontSize: 17, color:'white', width: 300, paddingBottom: 10, textAlign: 'center', paddingTop: 15}}>Ne perdez pas de temps! Créez un compte sur SOSteto et trouvez l'infirmière dont vous avez besoin à tout moment et n'importe où.</Text>
+>>>>>>> 64f8f6a4167c7d4726fa54e44a8079a301744b96
                 </View>
                 <FooterMainPage></FooterMainPage>
 

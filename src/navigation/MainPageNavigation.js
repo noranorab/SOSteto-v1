@@ -13,6 +13,7 @@ import MainPageScreen from '../screens/MainPageScreen';
 import { Button } from '../components/Button';
 import Footer from '../components/Footer';
 import { NavigationContainer, DefaultTheme} from '@react-navigation/native';
+import HelpScreen from '../screens/HelpScreen';
 
 
 const MyTheme = {
@@ -38,7 +39,7 @@ function MainPageNavigation(){
                             <View style={{paddingTop: 50}}>
                             <Image
                                 source={require("../../assets/SOS.png")}
-                                style={{width: 100, height: 40, marginLeft: 140, marginBottom: 10}}
+                                style={{width: 100, height: 40, marginLeft: 150, marginBottom: 10}}
                                 />
                             </View>    
                     )
@@ -48,6 +49,7 @@ function MainPageNavigation(){
                     
                 headerShown : false
             }}/>
+            
         </HomeStack.Navigator>
     )
 }
