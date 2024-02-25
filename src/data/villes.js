@@ -10,4 +10,8 @@ export const villes = [
     { id: 9, name: 'Meknes' },
     { id: 10, name: 'Ouarzazate' },
 
+<<<<<<< HEAD
 ];
+=======
+];
+>>>>>>> chaima
