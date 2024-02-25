@@ -22,7 +22,7 @@ function InputWithIcon({ inputHeight, onPressIcon, iconName = "add-outline" }) {
         position: "absolute",
         top: inputHeight / 2 - 12,
         right: 25,
-        marginTop: 5,
+        marginTop: 15
       }}
     >
       <Ionicons name={iconName} size={24} color="grey" />
@@ -42,26 +42,32 @@ function InfoSection({
     <>
       <Text
         style={{
-          fontSize: 14,
+          fontSize: 17,
           fontWeight: "bold",
-          marginTop: 10,
+          marginTop: 20,
           color: "#7BBCB5",
         }}
       >
         {title}
       </Text>
-      <Text style={{ fontSize: 14, color: "#3f4040" }}>{description}</Text>
+      <Text style={{ fontSize: 14, color: "#3f4040", paddingTop: 5 }}>{description}</Text>
       <View style={{ position: "relative" }}>
         <TextInput
           style={{
-            height: inputHeight,
-            borderColor: "gray",
+            height: inputHeight + 10,
+            borderColor: "#C1C1C1",
             borderWidth: 1,
             marginRight: 20,
+            paddingTop: 10,
+            paddingLeft: 15,
+            paddingBottom: 10,
+            width: 350,
             color: "gray",
-            marginTop: 5,
-            paddingRight: 40,
-            textAlignVertical: textAlign,
+            marginTop: 10,
+            paddingRight: 10,
+            textAlignVertical: 'center',
+            borderRadius: 5,
+            fontSize: 14
           }}
           placeholder={placeholder}
           multiline={true}
@@ -91,9 +97,9 @@ export default function AjouterScreen({ navigation }) {
 
   return (
     <TouchableWithoutFeedback onPress={dismissKeyboard}>
-      <ScrollView>
-        <View style={{ marginTop: 15, marginLeft: 10 }}>
-          <Text style={{ fontSize: 16, fontWeight: "bold", marginBottom: 10 }}>
+      <ScrollView style={{backgroundColor: 'white', borderColor: '#E6E6E6', borderWidth: 1, marginLeft: 10,}}>
+        <View style={{ marginTop: 15, marginTop: 20 }}>
+          <Text style={{ fontSize: 20, fontWeight: "bold", paddingBottom: 10,  }}>
             Votre demande
           </Text>
           <InfoSection
@@ -119,7 +125,7 @@ export default function AjouterScreen({ navigation }) {
               <TextInput
                 style={{
                   height: 30,
-                  borderColor: "gray",
+                  borderColor: "#C1C1C1",
                   borderWidth: 1,
                   marginRight: 20,
                   color: "gray",
@@ -142,7 +148,7 @@ export default function AjouterScreen({ navigation }) {
           ))}
           <Text
             style={{
-              fontSize: 14,
+              fontSize: 17,
               fontWeight: "bold",
               marginTop: 10,
               color: "#7BBCB5",
@@ -152,10 +158,19 @@ export default function AjouterScreen({ navigation }) {
           </Text>
           <View
             style={{
+              borderColor: "#C1C1C1",
               borderWidth: 1,
-              borderColor: "grey",
               marginRight: 20,
-              marginTop: 5,
+              paddingTop: 10,
+              paddingLeft: 15,
+              paddingBottom: 10,
+              width: 350,
+              color: "gray",
+              marginTop: 10,
+              paddingRight: 10,
+              textAlignVertical: 'center',
+              borderRadius: 5,
+              fontSize: 17
             }}
           >
             <RNPickerSelect
@@ -177,7 +192,7 @@ export default function AjouterScreen({ navigation }) {
           </View>
           <Text
             style={{
-              fontSize: 14,
+              fontSize: 17,
               fontWeight: "bold",
               marginTop: 10,
               color: "#7BBCB5",
@@ -187,10 +202,19 @@ export default function AjouterScreen({ navigation }) {
           </Text>
           <View
             style={{
+              borderColor: "#C1C1C1",
               borderWidth: 1,
-              borderColor: "grey",
               marginRight: 20,
-              marginTop: 5,
+              paddingTop: 10,
+              paddingLeft: 15,
+              paddingBottom: 10,
+              width: 350,
+              color: "gray",
+              marginTop: 10,
+              paddingRight: 10,
+              textAlignVertical: 'center',
+              borderRadius: 5,
+              fontSize: 14
             }}
           >
             <RNPickerSelect
@@ -210,20 +234,24 @@ export default function AjouterScreen({ navigation }) {
               value={selectedQuartier}
             />
           </View>
-          <Text style={{ fontSize: 14, color: "#3f4040" }}>
-            Indiquez à quelle date et horaire vous avez besoin d'un(e)
-            infirmier(ère)
-          </Text>
-          <Text
-            style={{
-              fontSize: 14,
-              fontWeight: "bold",
-              marginTop: 10,
-              color: "#7BBCB5",
-            }}
-          >
-            Date et horaire
-          </Text>
+          <View>
+            
+            <Text
+              style={{
+                fontSize: 17,
+                fontWeight: "bold",
+                marginTop: 10,
+                color: "#7BBCB5",
+              }}
+            >
+              Date et horaire
+            </Text>
+            <Text style={{ fontSize: 14, color: "#3f4040", paddingTop: 10 }}>
+              Indiquez à quelle date et horaire vous avez besoin d'un(e)
+              infirmier(ère)
+            </Text>
+          </View>
+          
 
           {/* <Button title="Open" onPress={() => setOpen(true)} />
           <DatePicker
