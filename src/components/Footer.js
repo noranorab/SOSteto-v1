@@ -30,10 +30,9 @@ const notificationsName = 'Notifications'
 
 const Header = () => {
     const navigation = useNavigation();
-    
 
     return (
-        <View style={{width: '100%', marginLeft: 160, flexDirection: 'row', position: 'relative', alignItems: 'center'}}>
+        <View style={{width: '100%', height: 50, marginLeft: 160, flexDirection: 'row', position: 'relative', alignItems: 'center'}}>
                 
                 <Ionicons style={{paddingRight: 10}} name="help-circle-outline" color="black" size={28} onPress={() => {
                 navigation.navigate("home3")
@@ -58,20 +57,20 @@ const HomeStack = createNativeStackNavigator();
 function HomeStackGroup(){
     return(
         <HomeStack.Navigator>
-            <HomeStack.Screen name="home2" component={HomeScreen}  options={{
-                    header:() => (
+            <HomeStack.Screen name="home2" component={HomeScreen} options={{
+                  header:() => (
     
-                        <View style={{flexDirection:'row', alignItems:'center', justifyContent: 'space-between', paddingTop: 40, backgroundColor: 'white', marginLeft: 5}}>
-                            <Image
-                                source={require("../../assets/SOS.png")}
-                                style={{width: 100, height: 40}}
-        
-                                />
-                            <Header/>
-                        </View>
-                    )
-    }}/>
-            <HomeStack.Screen name="home3" component={HelpScreen}/>
+                    <View style={{flexDirection:'row', alignItems:'center', justifyContent: 'space-between', paddingTop: 40, backgroundColor: 'white', marginLeft: 5}}>
+                        <Image
+                            source={require("../../assets/SOS.png")}
+                            style={{width: 100, height: 40}}
+    
+                            />
+                        <Header/>
+                    </View>
+                )
+            }} />
+            <HomeStack.Screen name="home3" component={HelpScreen} />
             <HomeStack.Screen name="home4" component={NotificationsScreen}/>
             <HomeStack.Screen name="home5" component={PublicProfileScreen}/>
             <HomeStack.Screen
@@ -92,7 +91,7 @@ function HomeStackGroup(){
 export default function Footer(){
     return (
 
-            <Tab.Navigator
+            <Tab.Navigator 
                 screenOptions={({route}) => ({
                     tabBarIcon: ({color, focused, size}) =>{
                         let iconName;
@@ -113,16 +112,65 @@ export default function Footer(){
                 })}
             >
                 <Tab.Screen 
-                name={homeName} component={HomeStackGroup} options={{headerShown: false}}/>
+                name={homeName} component={HomeStackGroup} options={{headerShown:false}}
+                  />
             
                 <Tab.Screen 
-                name={searchName} component={SearchScreen}/>
+                name={searchName} component={SearchScreen} options={{
+                    header:() => (
+    
+                        <View style={{flexDirection:'row', alignItems:'center', justifyContent: 'space-between', paddingTop: 40, backgroundColor: 'white', marginLeft: 5}}>
+                            <Image
+                                source={require("../../assets/SOS.png")}
+                                style={{width: 100, height: 40}}
+        
+                                />
+                            <Header/>
+                        </View>
+                    )
+    }}/>
             <Tab.Screen 
-                name={favouritesName} component={FavouritesScreen}/>
+                name={favouritesName} component={FavouritesScreen} options={{
+                    header:() => (
+    
+                        <View style={{flexDirection:'row', alignItems:'center', justifyContent: 'space-between', paddingTop: 40, backgroundColor: 'white', marginLeft: 5}}>
+                            <Image
+                                source={require("../../assets/SOS.png")}
+                                style={{width: 100, height: 40}}
+        
+                                />
+                            <Header/>
+                        </View>
+                    )
+    }} />
               <Tab.Screen 
-                name={messageName} component={AjouterScreen}/>
+                name={messageName} component={AjouterScreen} options={{
+                    header:() => (
+    
+                        <View style={{flexDirection:'row', alignItems:'center', justifyContent: 'space-between', paddingTop: 40, backgroundColor: 'white', marginLeft: 5}}>
+                            <Image
+                                source={require("../../assets/SOS.png")}
+                                style={{width: 100, height: 40}}
+        
+                                />
+                            <Header/>
+                        </View>
+                    )
+    }}/>
             <Tab.Screen 
-                name={parametersName} component={ParameterScreen}/>
+                name={parametersName} component={ParameterScreen} options={{
+                    header:() => (
+    
+                        <View style={{flexDirection:'row', alignItems:'center', justifyContent: 'space-between', paddingTop: 40, backgroundColor: 'white', marginLeft: 5}}>
+                            <Image
+                                source={require("../../assets/SOS.png")}
+                                style={{width: 100, height: 40}}
+        
+                                />
+                            <Header/>
+                        </View>
+                    )
+    }}/>
             </Tab.Navigator>
 
  
