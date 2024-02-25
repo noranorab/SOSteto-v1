@@ -10,7 +10,16 @@ import { specialities } from '../data/specialities';
 import { useNavigation } from '@react-navigation/core';
 import { Button } from '../components/Button';
 
+const buttonStyles = {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 10,
+    width: 100,
+    borderRadius: 4,
+    
+};
 
+  
 
 const Header = () => {
     const {navigate} = useNavigation()
@@ -45,7 +54,7 @@ const Header = () => {
                     </View>
 
                             <Button 
-                            onPress={() => navigate('home7')} title='Rechercher' />
+                            onPress={() => navigate('home7')} style={buttonStyles} title='Rechercher' />
         </View>
         
     )
@@ -87,7 +96,7 @@ export default function MainPageScreen() {
                 </View>
                 <View style={styles.additionalSection}>
                     <Icon1 name="cursor-default-click" size={40} color="#fff" style={{marginTop: 20}}/>
-                    <Text style={{fontSize: 20, fontWeight: 'bold', color:'white', width: 300, paddingBottom: 10, textAlign: 'center', paddingTop: 15}}>Ne perdez pas de temps! Créez un compte sur SOSteto et trouvez l'infirmière dont vous avez besoin à tout moment et n'importe où.</Text>
+                    <Text style={{fontSize: 17, color:'white', width: 300, paddingBottom: 10, textAlign: 'center', paddingTop: 15}}>Ne perdez pas de temps! Créez un compte sur SOSteto et trouvez l'infirmière dont vous avez besoin à tout moment et n'importe où.</Text>
                 </View>
               
             </ScrollView>
