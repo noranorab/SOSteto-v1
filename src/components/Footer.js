@@ -16,6 +16,7 @@ import VoirProfileDetailsScreen from '../screens/VoirProfileDetailsScreen';
 import HelpScreen from '../screens/HelpScreen';
 import NotificationsScreen from '../screens/NotificationsScreen';
 import PublicProfileScreen from '../screens/PublicProfileScreen';
+import ToutesMesDemandesScreen from '../screens/ToutesMesDemandesScreen';
 
 
 const Tab = createBottomTabNavigator();
@@ -78,6 +79,17 @@ function HomeStackGroup(){
                 component={VoirProfileDetailsScreen}
                 options={{
                 headerTitle: "Posts Details",
+                headerShown: true,
+                contentStyle: {
+                    backgroundColor: 'white'
+                }
+                }}
+            />
+            <HomeStack.Screen
+                name="ToutesMesDemandesScreen"
+                component={ToutesMesDemandesScreen}
+                options={{
+                headerTitle: "Mes Demandes",
                 headerShown: true,
                 contentStyle: {
                     backgroundColor: 'white'

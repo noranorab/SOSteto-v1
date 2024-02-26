@@ -46,7 +46,7 @@ export default function VoirProfileDetailsScreen() {
                         }}/>
             </ImageBackground>
 
-            <View>
+            <View style={{marginTop: 55}}>
                     <View style={{
                         
                         paddingBottom: 10,
@@ -54,7 +54,7 @@ export default function VoirProfileDetailsScreen() {
                         borderBottomWidth : 5,
                     
                     }}>
-                        <Ionicons style={{marginLeft: 320, height: 50, marginTop: 5}} name='pencil-sharp' size={25} color='#C1C1C1'/>
+                        
                             <View style={{ marginLeft: 10}}>
                                 <View style={{
                                             flexDirection: 'row',

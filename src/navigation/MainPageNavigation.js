@@ -50,6 +50,7 @@ function MainPageNavigation(){
                 headerShown : false
             }}/>
             
+            
         </HomeStack.Navigator>
     )
 }
