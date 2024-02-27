@@ -4,13 +4,6 @@ import { View, Text, Image, FlatList, Pressable, ImageBackground, Switch, Scroll
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-
-
-
-
-
-
-
 export default function VoirProfileDetailsScreen() {
     const {
         params: { item },
