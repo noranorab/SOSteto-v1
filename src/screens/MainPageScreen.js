@@ -12,7 +12,7 @@ import { useNavigation } from '@react-navigation/core';
 import { Button } from '../components/Button';
 import FooterMainPage from '../components/FooterMainPage';
 import { GestureHandlerRootView, TextInput } from 'react-native-gesture-handler';
-import RNDateTimePicker from '@react-native-community/datetimepicker';
+
 
 
 const buttonStyles = {
