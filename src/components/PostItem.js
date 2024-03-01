@@ -1,10 +1,11 @@
 import { useNavigation } from '@react-navigation/core';
 import * as React from 'react';
-import { View, Text, Image, Pressable} from 'react-native';
+import { View, Text, Image, Pressable } from 'react-native';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Button } from './Button';
 import { PostContent } from './PostContent';
+
 
 
 const buttonStyles = {
@@ -15,13 +16,13 @@ const buttonStyles = {
     width: 100,
     borderRadius: 4,
     backgroundColor: '#84c0c7'
-    
+
 };
 
-  
+
 
 export const PostItem = ({ item }) => {
-    const {navigate} = useNavigation();
+    const { navigate } = useNavigation();
     return (
         <View style={{
             marginLeft: 0,
@@ -30,18 +31,20 @@ export const PostItem = ({ item }) => {
             borderBottomWidth: 1,
             borderBottomColor: '#E6E6E6',
             paddingBottom: 10,
-            backgroundColor: 'white'}}>
+            backgroundColor: 'white'
+        }}>
 
-            <PostContent item={item}/>
-            <Button onPress={() => { 
-                navigate("VoirProfileDetailsScreen", {item}) }} style={buttonStyles}  title='Voir Profile' />
-                
+            <PostContent item={item} />
+            <Button onPress={() => {
+                navigate("VoirProfileDetailsScreen", { item })
+            }} style={buttonStyles} title='Voir Profile' />
 
-        </View>    
-      
-           
-            
-       
+
+        </View>
+
+
+
+
     )
 }
 

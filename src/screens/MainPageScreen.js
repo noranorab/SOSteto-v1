@@ -18,10 +18,10 @@ const buttonStyles = {
     width: 100,
     borderRadius: 4,
     marginTop: 20
-    
+
 };
 
-  
+
 
 const Header = () => {
     const { navigate } = useNavigation()
@@ -32,11 +32,11 @@ const Header = () => {
 
     return (
         <View style={{ backgroundColor: '#84c7c0', padding: 10, }}>
-            <Text style={{fontSize: 20, fontWeight: 'bold', color: 'white', paddingLeft: 10, paddingTop: 20, width: 190}}>Trouvez votre infirmier(ère) avec un seul click</Text>
-            <Text style={{fontSize: 14, fontWeight: 'bold', color: 'white', paddingLeft: 10, paddingTop: 20}}>
+            <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'white', paddingLeft: 10, paddingTop: 20, width: 190 }}>Trouvez votre infirmier(ère) avec un seul click</Text>
+            <Text style={{ fontSize: 14, fontWeight: 'bold', color: 'white', paddingLeft: 10, paddingTop: 20 }}>
                 Faîte une recherche rapide !
             </Text>
-            <View style={{ alignItems: 'center', width: '85%', marginLeft: 10, paddingTop:10 }}>
+            <View style={{ alignItems: 'center', width: '85%', marginLeft: 10, paddingTop: 10 }}>
                 <RNPickerSelect
                     placeholder={{ label: 'Ville', value: null }}
                     items={villes ? villes.map((ville) => ({ label: ville.name, value: ville.id })) : []}
@@ -51,15 +51,15 @@ const Header = () => {
                     style={pickerSelectStyles}
                     value={selectedSpecialite}
                 />
-                
+
 
 
             </View>
-            <TouchableOpacity style={styles.submitButton} onPress={() => navigate('home7')}>
+            <TouchableOpacity style={styles.submitButton} onPress={() => navigate('homeSearch')}>
                 <Text style={styles.submitButtonText}>Rechercher </Text>
             </TouchableOpacity>
 
-            
+
 
         </View>
 
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 5,
         width: 110,
-        
+
         // alignItems: 'center',
     },
     submitButtonText: {

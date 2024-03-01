@@ -9,9 +9,7 @@ const Header = ({ navigation }) => {
                 source={require('../assets/SOS.png')}
                 style={{ width: 110, height: 45 }}
             />
-            <TouchableOpacity onPress={() => navigation.openDrawer()}>
-                <Icon name="bars" size={35} color="#8CD2CA" />
-            </TouchableOpacity>
+
         </View>
     );
 };
@@ -19,11 +17,12 @@ const Header = ({ navigation }) => {
 const styles = StyleSheet.create({
     headerContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        padding: 25,
+        justifyContent: 'center',
+        padding: 20,
         marginTop: 25,
         borderBottomWidth: 1,  // Fix the typo here
-        borderBottomColor: 'rgba(0, 0, 0, 0.1)'
+        borderBottomColor: 'rgba(0, 0, 0, 0.1)',
+        backgroundColor: "white",
     },
 });
 

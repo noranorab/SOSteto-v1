@@ -12,45 +12,59 @@ import { specialities } from '../data/specialities';
 import MainPageScreen from '../screens/MainPageScreen';
 import { Button } from '../components/Button';
 import Footer from '../components/Footer';
-import { NavigationContainer, DefaultTheme} from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import HelpScreen from '../screens/HelpScreen';
+import SearchResultNonConnct from '../screens/SearchResultNonConnct';
+import VoirProfileDetailsScreen from '../screens/VoirProfileDetailsScreen';
+import Connect from '../screens/Connect';
 
 
 const MyTheme = {
     ...DefaultTheme,
     colors: {
-      ...DefaultTheme.colors,
-      primary: '#84c4c0',
+        ...DefaultTheme.colors,
+        primary: '#84c4c0',
     },
-  };
+};
 
 
 const HomeStack = createNativeStackNavigator();
 
 
 
-function MainPageNavigation(){
-    return(
-        <HomeStack.Navigator  headerMode="float">
-            
-            <HomeStack.Screen name="home6" component={MainPageScreen}  options={{
-                    header:() => (
-                        
-                            <View style={{paddingTop: 50}}>
-                            <Image
-                                source={require("../../assets/SOS.png")}
-                                style={{width: 100, height: 40, marginLeft: 150, marginBottom: 10}}
-                                />
-                            </View>    
-                    )
-                    
-            }}/>
-             <HomeStack.Screen name="home7" component={Footer}  options={{
-                    
-                headerShown : false
-            }}/>
-            
-            
+function MainPageNavigation() {
+    return (
+        <HomeStack.Navigator headerMode="float">
+
+            <HomeStack.Screen name="home6" component={MainPageScreen} options={{
+                header: () => (
+
+                    <View style={{ paddingTop: 50 }}>
+                        <Image
+                            source={require("../../assets/SOS.png")}
+                            style={{ width: 100, height: 40, marginLeft: 150, marginBottom: 10 }}
+                        />
+                    </View>
+                )
+
+            }} />
+            <HomeStack.Screen name="home7" component={Footer} options={{
+
+                headerShown: false
+            }} />
+            <HomeStack.Screen name="homeSearch" component={SearchResultNonConnct} options={{
+
+                headerShown: false
+            }} />
+            <HomeStack.Screen name="VoirProfileDetailsScreen" component={VoirProfileDetailsScreen} options={{
+
+                headerShown: false
+            }} />
+            <HomeStack.Screen name="connect" component={Connect} options={{
+
+                headerShown: false
+            }} />
+
         </HomeStack.Navigator>
     )
 }
@@ -58,24 +72,24 @@ function MainPageNavigation(){
 
 
 
-export default function Navigation(){
+export default function Navigation() {
     return (
-        <NavigationContainer style={{ backgroundColor : 'white'}} theme={MyTheme}>
-          <View style={{
-              flex: 1
-          }}>
-              <MainPageNavigation/>
-             
+        <NavigationContainer style={{ backgroundColor: 'white' }} theme={MyTheme}>
+            <View style={{
+                flex: 1
+            }}>
+                <MainPageNavigation />
 
-           
-            
-             {/* <MainPageScreen/> */}
-         
-            {/* <Footer/> */}
-          </View>
-        
-      </NavigationContainer>
-  
+
+
+
+                {/* <MainPageScreen/> */}
+
+                {/* <Footer/> */}
+            </View>
+
+        </NavigationContainer>
+
     )
 }
 
@@ -101,7 +115,7 @@ const styles = StyleSheet.create({
         marginTop: 0,
         padding: 10,
     },
-   
+
     button: {
         backgroundColor: '#fff',
         padding: 10,
