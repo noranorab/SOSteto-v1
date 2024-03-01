@@ -48,7 +48,10 @@ export default function PublicProfileScreen() {
                         
                     
                     }}>
-                            <Ionicons style={{marginLeft: 330, height: 50, marginTop: 5}} name='pencil-sharp' size={25} color='#C1C1C1'/>
+                            <Pressable onPress={() => navigate("Modifier le profil")}>
+                                <Ionicons style={{marginLeft: 330, height: 50, marginTop: 5}} name='pencil-sharp' size={25} color='#C1C1C1'/>
+                            </Pressable>
+                                
                             <View style={{ marginLeft: 10}}>
                                 <View style={{
                                             flexDirection: 'row',
