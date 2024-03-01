@@ -13,7 +13,7 @@ import { Button } from '../components/Button';
 import FooterMainPage from '../components/FooterMainPage';
 import { GestureHandlerRootView, TextInput } from 'react-native-gesture-handler';
 
-
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const buttonStyles = {
     alignItems: 'center',
@@ -100,7 +100,7 @@ const Header = () => {
     }
     
     return (
-        <View style={{ backgroundColor: '#84c7c0', padding: 10, height: 500 }}>
+        <View style={{ backgroundColor: '#84c7c0', padding: 10 }}>
             <Text style={{fontSize: 20, fontWeight: 'bold', color: 'white', paddingLeft: 10, paddingTop: 20, width: 190}}>Trouvez votre infirmier(ère) avec un seul click</Text>
             <Text style={{fontSize: 14, fontWeight: 'bold', color: 'white', paddingLeft: 10, paddingTop: 10}}>
                 Faîte une recherche rapide !
@@ -129,138 +129,12 @@ const Header = () => {
                 
                 
             </View>
-            <GestureHandlerRootView style={{marginLeft: 10, paddingTop:5, style: 'relative'}}>
-                <View >
-                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <View style={{position: 'relative'}}>
-                            <Text style={{fontSize: 14, fontWeight: 'bold', color: 'white', marginRight: 50}}>Date :</Text>
-                            <View style={{flexDirection: 'column'}}>
-                                {showPicker && ( <DateTimePicker mode="date" testID='dateID' textColor='white' display="spinner" value={date} onChange={onChange} style={{height: 120, marginTop: -20, flex: 1}}/>)}
-                                
-                                
-                                {showPicker && Platform.OS == 'ios' && (
-                                    <View style={{flexDirection: 'row', justifyContent:'space-around'}}>
-                                        <TouchableOpacity onPress={toggleDatePicker}>
-                                            <Text style={{marginTop: 10, fontWeight:'bold', color:'white', borderColor: 'white', borderRadius: 10, borderWidth: 1, paddingHorizontal: 10, paddingVertical: 5}}>Annuler</Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity onPress={confirmIOSDate}>
-                                            <Text style={{marginTop: 10, fontWeight:'bold', color:'white', borderColor: 'white', borderRadius: 10, borderWidth: 1, paddingHorizontal: 10, paddingVertical: 5}}>Confirmer</Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                )}
-                            </View>
-                        </View>
-                    {!showPicker && (
-                        <Pressable 
-                        onPress={toggleDatePicker}
-                        >
-                            <TextInput
-                            style={{marginTop: 5, paddingTop: 5,fontSize: 14, borderColor:'white', backgroundColor: 'white', borderRadius: 5, width: 230, height: 40, paddingLeft: 10, paddingBottom: 5}}
-                            placeholder='Lun 26 Fév 2024'
-                            value={dateOfSelection}
-                            onChangeText={setDateOfSelection}
-                            placeholderTextColor="#C1C1C1"
-                            editable={false}
-                            onPressIn={toggleDatePicker}
-                            />
-                        </Pressable>
-                    )}
-                    </View>
-                    
-                    {/* horaire */}
-                    <View style={{marginRight: 5}}>
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <Text style={{fontSize: 14, fontWeight: 'bold', color: 'white', marginRight: 30}}>Horaire :</Text>
-                        
-                        <View style={{position: 'relative', top: 20}}>
 
-                        
-                            <View style={{flexDirection: 'row'}}>
-                                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                    <Text style={{color: 'white', fontWeight: 'bold', marginRight: 10, }}>De</Text>
-                                    <View style={{flexDirection: 'column' }}>
-                                    {showStartTimePicker && ( <DateTimePicker testID="timeStartPicker" is24Hour={true} mode="time" display="spinner" value={startTime} onChange={handleTimeChange} style={{width: 100, height: 100, textColor: 'white', top: 20}}/>)}
-                                    {showStartTimePicker && Platform.OS == 'ios' && (
-                                        <View style={{flexDirection: 'row', justifyContent:'space-around'}}>
-                                            <TouchableOpacity onPress={toggleStartTimePicker}>
-                                                <Text style={{marginTop: 10, fontWeight:'bold', color:'white', borderColor: 'white', borderRadius: 10, borderWidth: 1, paddingHorizontal: 10, paddingVertical: 5}}>Annuler</Text>
-                                            </TouchableOpacity>
-                                            <TouchableOpacity onPress={() => confirmIOSTime(true)}>
-                                                <Text style={{marginTop: 10, fontWeight:'bold', color:'white', borderColor: 'white', borderRadius: 10, borderWidth: 1, paddingHorizontal: 10, paddingVertical: 5, marginLeft: 20}}>Confirmer</Text>
-                                            </TouchableOpacity>
-                                    </View>
-                                )}
-                                </View>
-                                
-                                
-                                {!showStartTimePicker && (
-                                    <Pressable 
-                                    onPress={toggleStartTimePicker}
-                                    >
-                                        <TextInput
-                                        style={{marginTop: 5, paddingTop: 5,fontSize: 14, borderColor:'white', backgroundColor: 'white', borderRadius: 5, width: 85, height: 40, paddingLeft: 10, paddingBottom: 5, marginRight: 15}}
-                                        placeholder='HH:MM'
-                                        value={startTimeOfSelection}
-                                        onChangeText={setStartTimeOfSelection}
-                                        placeholderTextColor="#C1C1C1"
-                                        editable={false}
-                                        onPressIn={toggleStartTimePicker}
-                                        />
-                                    </Pressable>
-                                )}
-
-                              
-                                
-                            </View>
-                        </View>
-
-                        <View style={{position: 'relative'}}>
-                            <View style={{flexDirection: 'row', alignItems: 'center', left: 130, bottom: 45}}>
-                                <Text style={{color: 'white', fontWeight: 'bold', marginRight: 10, }}>A</Text>
-                                <View style={{flexDirection: 'column'}}>
-                                {showEndTimePicker && ( 
-                                <DateTimePicker testID="endTimePicker" is24Hour={true} mode="time" display="spinner" value={time} onChange={handleTimeChange} style={{height: 120, marginTop: -10}}/>
-                                )}
-                                {showEndTimePicker && Platform.OS == 'ios' && (
-                                    <View style={{flexDirection: 'row', justifyContent:'space-around'}}>
-                                        <TouchableOpacity onPress={toggleEndTimePicker}>
-                                            <Text style={{marginTop: 10, fontWeight:'bold', color:'white', borderColor: 'white', borderRadius: 10, borderWidth: 1, paddingHorizontal: 10, paddingVertical: 5}}>Annuler</Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity onPress={() => confirmIOSTime(false)}>
-                                            <Text style={{marginTop: 10, fontWeight:'bold', color:'white', borderColor: 'white', borderRadius: 10, borderWidth: 1, paddingHorizontal: 10, paddingVertical: 5}}>Confirmer</Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                )}
-                                </View>
-                                {!showEndTimePicker && (
-                                    <Pressable 
-                                    onPress={toggleEndTimePicker}
-                                    >
-                                        <TextInput
-                                        style={{marginTop: 5, paddingTop: 5,fontSize: 14, borderColor:'white', backgroundColor: 'white', borderRadius: 5, width: 85, height: 40, paddingLeft: 10, paddingBottom: 5}}
-                                        placeholder='HH:MM'
-                                        value={endTimeOfSelection}
-                                        onChangeText={setEndTimeOfSelection}
-                                        placeholderTextColor="#C1C1C1"
-                                        editable={false}
-                                        onPressIn={toggleEndTimePicker}
-                                        />
-                                    </Pressable>
-                                )}
-                                
-                            </View>    
-                            </View>
-                        </View>
-                    
-
-                    </View>
-                </View>
-
-                </View>
-            </GestureHandlerRootView>
+            
 
             
             <TouchableOpacity style={styles.submitButton} onPress={() => navigate('home7')}>
+                <Ionicons name="search-outline" size={20} color='#C1C1C1'/>
                 <Text style={styles.submitButtonText}>Rechercher </Text>
             </TouchableOpacity>
 
@@ -309,6 +183,9 @@ export default function MainPageScreen() {
                     <Icon1 name="cursor-default-click" size={40} color="#fff" style={{ marginTop: 20 }} />
                     <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'white', width: 300, paddingBottom: 10, textAlign: 'center', paddingTop: 15 }}>Ne perdez pas de temps! Créez un compte sur SOSteto et trouvez l'infirmière dont vous avez besoin à tout moment et n'importe où.</Text>
                 </View>
+                <View>
+                    <Text>Vous êtes infirmière ?</Text>
+                </View>
                 <FooterMainPage></FooterMainPage>
 
             </ScrollView>
@@ -346,13 +223,15 @@ const styles = StyleSheet.create({
     },
 
     submitButton: {
-        
-        marginTop: 60,
-        marginLeft: 120,
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginLeft: 10,
         backgroundColor: '#fff',
         padding: 10,
         borderRadius: 5,
-        width: 110,
+        width: 330,
+        paddingHorizontal: 50
         
         // alignItems: 'center',
     },

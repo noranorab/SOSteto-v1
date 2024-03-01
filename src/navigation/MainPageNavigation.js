@@ -14,6 +14,8 @@ import { Button } from '../components/Button';
 import Footer from '../components/Footer';
 import { NavigationContainer, DefaultTheme} from '@react-navigation/native';
 import HelpScreen from '../screens/HelpScreen';
+import PublicProfileScreen from '../screens/PublicProfileScreen';
+import EditPublicProfileScreen from '../screens/EditPublicProfileScreen';
 
 
 const MyTheme = {
@@ -47,6 +49,9 @@ function MainPageNavigation(){
             }}/>
              <HomeStack.Screen name="home7" component={Footer}  options={{
                     
+                headerShown : false
+            }}/>
+            <HomeStack.Screen name="Modifier le profil" component={EditPublicProfileScreen} options={{            
                 headerShown : false
             }}/>
             
