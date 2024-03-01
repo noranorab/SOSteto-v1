@@ -66,40 +66,14 @@ function MainPageNavigation() {
 
                 headerShown: false
             }} />
-
-            function MainPageNavigation(){
-    return(
-            <HomeStack.Navigator headerMode="float">
-
-                <HomeStack.Screen name="home6" component={MainPageScreen} options={{
-                    header: () => (
-
-                        <View style={{ paddingTop: 50 }}>
-                            <Image
-                                source={require("../../assets/SOS.png")}
-                                style={{ width: 100, height: 40, marginLeft: 150, marginBottom: 10 }}
-                            />
-                        </View>
-                    )
-
-                }} />
-                <HomeStack.Screen name="home7" component={Footer} options={{
-
-                    headerShown: false
-                }} />
-                <HomeStack.Screen name="Modifier le profil" component={EditPublicProfileScreen} options={{
-                    headerShown: false
-                }} />
-
-
             </HomeStack.Navigator>
-            )
-}
+)}
+
+            
 
 
 
-
-            export default function Navigation() {
+export default function Navigation() {
     return (
             <NavigationContainer style={{ backgroundColor: 'white' }} theme={MyTheme}>
                 <View style={{
@@ -122,7 +96,7 @@ function MainPageNavigation() {
 
 
 
-            const styles = StyleSheet.create({
+const styles = StyleSheet.create({
                 container: {
                 flex: 1,
     },
