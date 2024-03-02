@@ -33,89 +33,13 @@ const Header = () => {
     const [selectedVille, setSelectedVille] = React.useState(null);
     const [selectedSpecialite, setSelectedSpecialite] = React.useState(null);
 
-    const [date, setDate] = React.useState(new Date())
-    const [showPicker, setShowPicker] = React.useState(false)
-    const [dateOfSelection, setDateOfSelection] = React.useState("")
-
-    const [time, setTime] = React.useState(new Date())
-    const [startTime, setStartTime] = React.useState(new Date());
-    const [endTime, setEndTime] = React.useState(new Date());
-    const [showStartTimePicker, setShowStartTimePicker] = React.useState(false);
-    const [showEndTimePicker, setShowEndTimePicker] = React.useState(false);
-    const [startTimeOfSelection, setStartTimeOfSelection] = React.useState("");
-    const [endTimeOfSelection, setEndTimeOfSelection] = React.useState("");
-
-
-
-
-    const toggleDatePicker = () => {
-        setShowPicker(!showPicker)
-    }
-    const toggleStartTimePicker = () => {
-        setShowStartTimePicker(!showStartTimePicker);
-    };
-
-    const toggleEndTimePicker = () => {
-        setShowEndTimePicker(!showEndTimePicker);
-    };
-
-
-    const confirmIOSDate = () => {
-        setDateOfSelection(date.toDateString())
-        toggleDatePicker()
-    }
-    const confirmIOSTime = (isStartTime) => {
-        if (isStartTime) {
-            setStartTimeOfSelection(startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
-            toggleStartTimePicker();
-        } else {
-            setEndTimeOfSelection(endTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
-            toggleEndTimePicker();
-        }
-    };
-    const handleTimeChange = ({ type }, selectedTime, isStartTime) => {
-        if (type == 'set') {
-            const currentTime = selectedTime || (isStartTime ? startTime : endTime); // Use current time if no time selected
-            if (isStartTime) {
-                setStartTime(currentTime);
-            } else {
-                setEndTime(currentTime);
-            }
-        } else {
-            if (isStartTime) {
-                toggleStartTimePicker();
-            } else {
-                toggleEndTimePicker();
-            }
-        }
-    };
-
-    const onChange = ({ type }, selectedDate) => {
-        if (type == 'set') {
-            const currentDate = selectedDate;
-            setDate(currentDate)
-        } else {
-            toggleDatePicker()
-        }
-    }
-
     return (
         <View style={{ backgroundColor: '#84c7c0', padding: 10 }}>
-            <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'white', paddingLeft: 10, paddingTop: 20, width: 190 }}>Trouvez votre infirmier(ère) avec un seul click</Text>
+            <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'white', paddingLeft: 10, paddingTop: 20, width: '100%' }}>Trouvez votre infirmier(ère) avec un seul click</Text>
             <Text style={{ fontSize: 14, fontWeight: 'bold', color: 'white', paddingLeft: 10, paddingTop: 10 }}>
                 Faîte une recherche rapide !
             </Text>
             <View style={{ width: '100%', marginLeft: 10, paddingTop: 20, flexDirection: 'column' }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={{ fontWeight: 'bold', color: 'white', marginBottom: 5, marginRight: 40 }}>Ville :</Text>
-                    <RNPickerSelect
-                        placeholder={{ label: 'Ville', value: null }}
-                        items={villes ? villes.map((ville) => ({ label: ville.name, value: ville.id })) : []}
-                        onValueChange={(value) => setSelectedVille(value)}
-                        style={pickerSelectStyles}
-                        value={selectedVille}
-                    />
-                </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Text style={{ fontWeight: 'bold', color: 'white', marginBottom: 5 }}>Spécialité : </Text>
                     <RNPickerSelect
@@ -126,6 +50,17 @@ const Header = () => {
                         value={selectedSpecialite}
                     />
                 </View>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Text style={{ fontWeight: 'bold', color: 'white', marginBottom: 5, marginRight: 40 }}>Ville :</Text>
+                    <RNPickerSelect
+                        placeholder={{ label: 'Ville', value: null }}
+                        items={villes ? villes.map((ville) => ({ label: ville.name, value: ville.id })) : []}
+                        onValueChange={(value) => setSelectedVille(value)}
+                        style={pickerSelectStyles}
+                        value={selectedVille}
+                    />
+                </View>
+
 
 
             </View>
@@ -133,10 +68,19 @@ const Header = () => {
 
 
 
-            <TouchableOpacity style={styles.submitButton} onPress={() => navigate('home7')}>
+            <TouchableOpacity style={styles.submitButton} onPress={() => navigate('homeSearch')}>
                 <Ionicons name="search-outline" size={20} color='#C1C1C1' />
                 <Text style={styles.submitButtonText}>Rechercher </Text>
             </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => navigate('home7')}>
+                <Text style={{ fontSize: 14, color: '#0B0A62', padding: 8, marginBottom: 5, textDecorationLine: 'underline', marginTop: 8 }}>
+                    Vous êtes infirmière ?
+                </Text>
+            </TouchableOpacity>
+
+
+
 
 
 
@@ -183,9 +127,7 @@ export default function MainPageScreen() {
                     <Icon1 name="cursor-default-click" size={40} color="#fff" style={{ marginTop: 20 }} />
                     <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'white', width: 300, paddingBottom: 10, textAlign: 'center', paddingTop: 15 }}>Ne perdez pas de temps! Créez un compte sur SOSteto et trouvez l'infirmière dont vous avez besoin à tout moment et n'importe où.</Text>
                 </View>
-                <View>
-                    <Text>Vous êtes infirmière ?</Text>
-                </View>
+
                 <FooterMainPage></FooterMainPage>
 
             </ScrollView>
@@ -231,7 +173,8 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 5,
         width: 330,
-        paddingHorizontal: 50
+        paddingHorizontal: 50,
+        marginTop: 15,
 
         // alignItems: 'center',
     },

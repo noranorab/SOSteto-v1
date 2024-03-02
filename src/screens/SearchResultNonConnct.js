@@ -9,40 +9,16 @@ import Icon from 'react-native-vector-icons/Ionicons'; // Import the icon librar
 import { PostItem } from '../components/PostItem';
 import { posts } from '../data/posts';
 import { useNavigation } from '@react-navigation/core';
+import Filtre from '../components/Filtre';
 
 
 export default function SearchResultNonConnect() {
-    const { navigate } = useNavigation()
-    const [selectedVille, setSelectedVille] = React.useState(null);
-    const [selectedSpecialite, setSelectedSpecialite] = React.useState(null);
-    const [selectedDate, setSelectedDate] = React.useState(new Date());
-    const [isDatePickerVisible, setDatePickerVisible] = React.useState(false);
+    const { navigate } = useNavigation();
 
-    const [isStartTimePickerVisible, setStartTimePickerVisible] = React.useState(false);
-    const [selectedStartTime, setSelectedStartTime] = React.useState(null);
+    const [showFilters, setShowFilters] = React.useState(false);
 
-    const [isEndTimePickerVisible, setEndTimePickerVisible] = React.useState(false);
-    const [selectedEndTime, setSelectedEndTime] = React.useState(null);
-
-    const showDatePicker = () => setDatePickerVisible(true);
-    const hideDatePicker = () => setDatePickerVisible(false);
-    const handleDateConfirm = (date) => {
-        hideDatePicker();
-        setSelectedDate(date);
-    };
-
-    const showStartTimePicker = () => setStartTimePickerVisible(true);
-    const hideStartTimePicker = () => setStartTimePickerVisible(false);
-    const handleStartTimeConfirm = (time) => {
-        hideStartTimePicker();
-        setSelectedStartTime(time);
-    };
-
-    const showEndTimePicker = () => setEndTimePickerVisible(true);
-    const hideEndTimePicker = () => setEndTimePickerVisible(false);
-    const handleEndTimeConfirm = (time) => {
-        hideEndTimePicker();
-        setSelectedEndTime(time);
+    const handleToggleFilters = () => {
+        setShowFilters(!showFilters);
     };
     return (
         <View style={styles.container}>
@@ -59,77 +35,14 @@ export default function SearchResultNonConnect() {
                     </View>
 
                     <View style={styles.titleContainer}>
-                        <Text style={styles.title}>Filtrer</Text>
-                        <Text style={styles.subtitle}>Créer votre propre filtre</Text>
 
-                        <View style={styles.pickerContainer}>
-                            <RNPickerSelect
-                                placeholder={{ label: 'Ville', value: null }}
-                                items={villes ? villes.map((ville) => ({ label: ville.name, value: ville.id })) : []}
-                                onValueChange={(value) => setSelectedVille(value)}
-                                style={pickerSelectStyles}
-                                value={selectedVille}
-                            />
-                        </View>
-
-                        <View style={styles.pickerContainer}>
-                            <RNPickerSelect
-                                placeholder={{ label: 'Spécialité', value: null }}
-                                items={specialities ? specialities.map((specialite) => ({ label: specialite.name, value: specialite.id })) : []}
-                                onValueChange={(value) => setSelectedSpecialite(value)}
-                                style={pickerSelectStyles}
-                                value={selectedSpecialite}
-                            />
-                        </View>
-
-                        {/* Date Picker */}
-                        <View style={styles.datePickerContainer}>
-                            <Text style={{ fontSize: 17, fontWeight: 'bold', color: '#84c7c0' }} >Date : </Text>
-                            <Text style={styles.selectedDateText}> </Text>
-                            <TouchableOpacity onPress={showDatePicker}>
-                                <Icon name="calendar-outline" size={24} color="blue" />
-                            </TouchableOpacity>
-                            <Text style={styles.selectedDateText}>{selectedDate.toDateString()}</Text>
-                        </View>
-                        <DateTimePickerModal
-                            isVisible={isDatePickerVisible}
-                            mode="date"
-                            onConfirm={handleDateConfirm}
-                            onCancel={hideDatePicker}
-                        />
-
-                        {/* Start Time Picker */}
-                        <View style={styles.datePickerContainer}>
-                            <Text style={{ fontSize: 17, fontWeight: 'bold', color: '#84c7c0' }} >Horaire de début : </Text>
-                            <TouchableOpacity onPress={showStartTimePicker}>
-                                <Icon name="time-outline" size={24} color="blue" />
-                            </TouchableOpacity>
-                            <Text style={styles.selectedTimeText}>{selectedStartTime ? selectedStartTime.toTimeString().slice(0, 5) : '  00:00'}</Text>
-                        </View>
-                        <DateTimePickerModal
-                            isVisible={isStartTimePickerVisible}
-                            mode="time"
-                            onConfirm={handleStartTimeConfirm}
-                            onCancel={hideStartTimePicker}
-                        />
-
-                        {/* End Time Picker */}
-                        <View style={styles.datePickerContainer}>
-                            <Text style={{ fontSize: 17, fontWeight: 'bold', color: '#84c7c0' }} >Horaire de fin :  </Text>
-                            <TouchableOpacity onPress={showEndTimePicker}>
-                                <Icon name="time-outline" size={24} color="blue" />
-                            </TouchableOpacity>
-                            <Text style={styles.selectedTimeText}>{selectedEndTime ? selectedEndTime.toTimeString().slice(0, 5) : '   00:00'}</Text>
-                        </View>
-                        <DateTimePickerModal
-                            isVisible={isEndTimePickerVisible}
-                            mode="time"
-                            onConfirm={handleEndTimeConfirm}
-                            onCancel={hideEndTimePicker}
-                        />
-                        <TouchableOpacity style={styles.searchButton2} onPress={() => navigate('homeSearch')}>
-                            <Text style={styles.searchButtonText}>Rechercher</Text>
+                        <TouchableOpacity onPress={handleToggleFilters} style={styles.filterToggle}>
+                            <Text style={styles.title}>Filtrer</Text>
+                            <Icon name={showFilters ? 'chevron-up' : 'chevron-down'} size={17} color="black" />
                         </TouchableOpacity>
+                        {showFilters && <Filtre />}
+
+
                     </View>
                 </View>
                 <View >
@@ -194,39 +107,16 @@ const styles = StyleSheet.create({
         color: 'black',
         fontSize: 16,
     },
-    searchButton2: {
-        backgroundColor: 'white',
-        padding: 8,
-        borderRadius: 50,
-        borderColor: 'black',
-        borderWidth: 1,
-        marginTop: 10,
-        width: 110,
-        marginBottom: 15,
-    },
-    pickerContainer: {
-        borderColor: 'black',
-        borderWidth: 1,
-        borderRadius: 5,
-        overflow: 'hidden',
-        marginBottom: 10,
-        width: 300,
-        alignItems: 'center',
-        marginLeft: 5,
-    },
-    datePickerContainer: {
-        marginLeft: 2,
+    filterToggle: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 10,
-        padding: 8,
-        marginBottom: 8,
+        justifyContent: 'space-between',
+        width: '20%',
     },
-    selectedDateText: {
-        marginLeft: 10,
-        fontSize: 16,
-        color: 'black',
-    },
+
+
+
+
 
 });
 
