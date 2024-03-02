@@ -32,7 +32,7 @@ const Header = () => {
 
     const [selectedVille, setSelectedVille] = React.useState(null);
     const [selectedSpecialite, setSelectedSpecialite] = React.useState(null);
-
+    
     return (
         <View style={{ backgroundColor: '#84c7c0', padding: 10 }}>
             <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'white', paddingLeft: 10, paddingTop: 20, width: '100%' }}>Trouvez votre infirmier(ère) avec un seul click</Text>
@@ -127,7 +127,7 @@ export default function MainPageScreen() {
                     <Icon1 name="cursor-default-click" size={40} color="#fff" style={{ marginTop: 20 }} />
                     <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'white', width: 300, paddingBottom: 10, textAlign: 'center', paddingTop: 15 }}>Ne perdez pas de temps! Créez un compte sur SOSteto et trouvez l'infirmière dont vous avez besoin à tout moment et n'importe où.</Text>
                 </View>
-
+                
                 <FooterMainPage></FooterMainPage>
 
             </ScrollView>
