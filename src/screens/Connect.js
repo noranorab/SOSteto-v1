@@ -42,14 +42,14 @@ const SignInScreen = () => {
                     onChangeText={(text) => setPassword(text)}
                 />
 
-                <TouchableOpacity style={styles.signInButton} onPress={handleSignIn}>
+                <TouchableOpacity style={styles.signInButton} onPress={() => navigate('home2')}>
                     <Text style={styles.signInButtonText}>Se connecter</Text>
                 </TouchableOpacity>
 
                 <Text style={styles.signText}>Vous n'avez pas de compte ?</Text>
-                <Link to={{ screen: 'Profile', params: { id: 'jane' } }}>
+                {/* <Link to={{ screen: 'Profile', params: { id: 'jane' } }}>
                     Go to Jane's profile
-                </Link>
+                </Link> */}
 
             </View></View >
 
