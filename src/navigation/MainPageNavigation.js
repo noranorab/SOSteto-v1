@@ -77,120 +77,121 @@ function MainPageNavigation() {
 
 
 export default function Navigation() {
-    return (
-        <NavigationContainer style={{ backgroundColor: 'white' }} theme={MyTheme}>
-            <View style={{
-                flex: 1
-            }}>
-                <MainPageNavigation />
+    export default function Navigation() {
+        return (
+            <NavigationContainer style={{ backgroundColor: 'white' }} theme={MyTheme}>
+                <View style={{
+                    flex: 1
+                }}>
+                    <MainPageNavigation />
 
 
 
 
-                {/* <MainPageScreen/> */}
+                    {/* <MainPageScreen/> */}
 
-                {/* <Footer/> */}
-            </View>
+                    {/* <Footer/> */}
+                </View>
 
-        </NavigationContainer>
+            </NavigationContainer>
 
-    )
-}
+        )
+    }
 
 
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    scrollContainer: {
-        flex: 1,
-        marginTop: 0,
-    },
+    const styles = StyleSheet.create({
+        container: {
+            flex: 1,
+        },
+        scrollContainer: {
+            flex: 1,
+            marginTop: 0,
+        },
 
-    additionalSection: {
-        backgroundColor: '#84c7c0',
-        alignItems: 'center',
-    },
-    sectionText: {
-        color: '#fff',
-        fontSize: 20,
-        marginBottom: 0,
-        marginTop: 0,
-        padding: 10,
-    },
+        additionalSection: {
+            backgroundColor: '#84c7c0',
+            alignItems: 'center',
+        },
+        sectionText: {
+            color: '#fff',
+            fontSize: 20,
+            marginBottom: 0,
+            marginTop: 0,
+            padding: 10,
+        },
 
-    button: {
-        backgroundColor: '#fff',
-        padding: 10,
-        borderRadius: 5,
-        alignItems: 'center',
-        marginBottom: 10,
-        width: 90,
-    },
-    buttonText: {
-        color: 'red',
-        fontSize: 16,
-    },
-    submitButton: {
-        backgroundColor: '#fff',
-        padding: 10,
-        borderRadius: 5,
-        alignItems: 'center',
-    },
-    submitButtonText: {
-        color: 'black',
-        fontSize: 16,
-    },
-    imageContainer: {
-        alignItems: 'center',
-        marginTop: 0,
-    },
-    image: {
+        button: {
+            backgroundColor: '#fff',
+            padding: 10,
+            borderRadius: 5,
+            alignItems: 'center',
+            marginBottom: 10,
+            width: 90,
+        },
+        buttonText: {
+            color: 'red',
+            fontSize: 16,
+        },
+        submitButton: {
+            backgroundColor: '#fff',
+            padding: 10,
+            borderRadius: 5,
+            alignItems: 'center',
+        },
+        submitButtonText: {
+            color: 'black',
+            fontSize: 16,
+        },
+        imageContainer: {
+            alignItems: 'center',
+            marginTop: 0,
+        },
+        image: {
 
-        width: '100%',
-        height: 350,
-        resizeMode: 'cover',
-    },
-    Section2: {
-        backgroundColor: '#fff',
-        padding: 10,
-        alignItems: 'center',
-    },
-    sectionText2: {
-        fontWeight: 'bold',
-        color: 'black',
-        fontSize: 20,
-        marginBottom: 0,
-        marginTop: 0,
-        padding: 10,
-    },
-    sectionText22: {
-        color: 'black',
-        fontSize: 17,
-        marginBottom: 0,
-        marginTop: 0,
-        padding: 10,
-    },
-    icon: {
-        color: '#fff',
-        fontSize: 24,
-    },
-});
+            width: '100%',
+            height: 350,
+            resizeMode: 'cover',
+        },
+        Section2: {
+            backgroundColor: '#fff',
+            padding: 10,
+            alignItems: 'center',
+        },
+        sectionText2: {
+            fontWeight: 'bold',
+            color: 'black',
+            fontSize: 20,
+            marginBottom: 0,
+            marginTop: 0,
+            padding: 10,
+        },
+        sectionText22: {
+            color: 'black',
+            fontSize: 17,
+            marginBottom: 0,
+            marginTop: 0,
+            padding: 10,
+        },
+        icon: {
+            color: '#fff',
+            fontSize: 24,
+        },
+    });
 
-const pickerSelectStyles = StyleSheet.create({
-    inputIOS: {
-        backgroundColor: '#fff',
-        paddingVertical: 12,
-        paddingHorizontal: 10,
-        marginBottom: 10,
-        borderRadius: 5,
-    },
-    inputAndroid: {
-        backgroundColor: '#fff',
-        paddingVertical: 8,
-        paddingHorizontal: 10,
-        marginBottom: 10,
-        borderRadius: 5,
-    },
-});
+    const pickerSelectStyles = StyleSheet.create({
+        inputIOS: {
+            backgroundColor: '#fff',
+            paddingVertical: 12,
+            paddingHorizontal: 10,
+            marginBottom: 10,
+            borderRadius: 5,
+        },
+        inputAndroid: {
+            backgroundColor: '#fff',
+            paddingVertical: 8,
+            paddingHorizontal: 10,
+            marginBottom: 10,
+            borderRadius: 5,
+        },
+    });

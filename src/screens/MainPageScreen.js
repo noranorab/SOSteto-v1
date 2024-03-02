@@ -233,6 +233,7 @@ const styles = StyleSheet.create({
         width: 330,
         paddingHorizontal: 50
 
+
         // alignItems: 'center',
     },
     submitButtonText: {
