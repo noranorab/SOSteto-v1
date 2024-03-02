@@ -32,72 +32,6 @@ const Header = () => {
 
     const [selectedVille, setSelectedVille] = React.useState(null);
     const [selectedSpecialite, setSelectedSpecialite] = React.useState(null);
-
-    const [date, setDate] = React.useState(new Date())
-    const [showPicker, setShowPicker] = React.useState(false)
-    const [dateOfSelection, setDateOfSelection] = React.useState("")
-
-    const [time, setTime] = React.useState(new Date() )
-    const [startTime, setStartTime] = React.useState(new Date());
-    const [endTime, setEndTime] = React.useState(new Date());
-    const [showStartTimePicker, setShowStartTimePicker] = React.useState(false);
-    const [showEndTimePicker, setShowEndTimePicker] = React.useState(false);
-    const [startTimeOfSelection, setStartTimeOfSelection] = React.useState("");
-    const [endTimeOfSelection, setEndTimeOfSelection] = React.useState("");
-
-
-
-    
-    const toggleDatePicker = () => {
-        setShowPicker(!showPicker)
-    }
-    const toggleStartTimePicker = () => {
-        setShowStartTimePicker(!showStartTimePicker);
-    };
-
-    const toggleEndTimePicker = () => {
-        setShowEndTimePicker(!showEndTimePicker);
-    };
-
-
-    const confirmIOSDate = () => {
-        setDateOfSelection(date.toDateString())
-        toggleDatePicker()
-    }
-    const confirmIOSTime = (isStartTime) => {
-        if (isStartTime) {
-            setStartTimeOfSelection(startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
-            toggleStartTimePicker();
-        } else {
-            setEndTimeOfSelection(endTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
-            toggleEndTimePicker();
-        }
-    };
-    const handleTimeChange = ({ type }, selectedTime, isStartTime) => {
-        if (type == 'set') {
-            const currentTime = selectedTime || (isStartTime ? startTime : endTime); // Use current time if no time selected
-            if (isStartTime) {
-                setStartTime(currentTime);
-            } else {
-                setEndTime(currentTime);
-            }
-        } else {
-            if (isStartTime) {
-                toggleStartTimePicker();
-            } else {
-                toggleEndTimePicker();
-            }
-        }
-    };
-
-    const onChange = ({type}, selectedDate) => {
-        if (type == 'set') {
-            const currentDate = selectedDate;
-            setDate(currentDate)
-        }else {
-            toggleDatePicker()
-        }
-    }
     
     return (
         <View style={{ backgroundColor: '#84c7c0', padding: 10 }}>
@@ -183,9 +117,7 @@ export default function MainPageScreen() {
                     <Icon1 name="cursor-default-click" size={40} color="#fff" style={{ marginTop: 20 }} />
                     <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'white', width: 300, paddingBottom: 10, textAlign: 'center', paddingTop: 15 }}>Ne perdez pas de temps! Créez un compte sur SOSteto et trouvez l'infirmière dont vous avez besoin à tout moment et n'importe où.</Text>
                 </View>
-                <View>
-                    <Text>Vous êtes infirmière ?</Text>
-                </View>
+                
                 <FooterMainPage></FooterMainPage>
 
             </ScrollView>

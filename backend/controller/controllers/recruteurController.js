@@ -1,4 +1,4 @@
-const { Recruteur } = require("../../model/schema")
+const { Recruteur } = require('../../model/schema')
 
 exports.createRecruteur =  async (req, res) => {
     try {
