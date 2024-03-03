@@ -38,19 +38,12 @@ export default function SearchResultNonConnect() {
 
                         <TouchableOpacity onPress={handleToggleFilters} style={styles.filterToggle}>
                             <Text style={styles.title}>Filtrer</Text>
-                            <Icon name={showFilters ? 'chevron-up' : 'chevron-down'} size={17} color="black" />
+                            <Icon style={{marginBottom: 5, marginLeft: 10}} name={showFilters ? 'chevron-up' : 'chevron-down'} size={17} color="black" />
                         </TouchableOpacity>
                         {showFilters && <Filtre />}
 
 
                     </View>
-                </View>
-                <View >
-                    <FlatList
-                        data={posts}
-                        renderItem={({ item }) => <PostItem item={item} />}
-                        keyExtractor={(item) => item.id.toString()}
-                    />
                 </View>
                 <View >
                     <FlatList
@@ -110,7 +103,7 @@ const styles = StyleSheet.create({
     filterToggle: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         width: '20%',
     },
 
