@@ -35,8 +35,12 @@ const userSchema = {
 
 const userInputSchema = {
     type: 'object',
-    required: ['nom', 'prenom', 'email', 'role'],
+    required: ['idUser','nom', 'prenom', 'email', 'role'],
     properties: {
+      idUser: {
+        type: 'string',
+        description: 'The unique identifier for the user'
+      },
       nom: {
         type: 'string',
         description: 'The last name of the user.'

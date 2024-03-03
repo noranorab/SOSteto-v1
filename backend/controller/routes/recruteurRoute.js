@@ -3,7 +3,7 @@ const router = express.Router();
 const RecruteurController = require('../controllers/recruteurController');
 
 /**
- * @swagger
+ * @openapi
  * /api/recruteurs:
  *   post:
  *     summary: Create a new recruteur
@@ -40,7 +40,7 @@ router.post('/api/recruteurs/', RecruteurController.createRecruteur);
  *               items:
  *                 $ref: '#/components/schemas/Recruteur'
  */
-router.post('/api/recruteurs/', RecruteurController.getAllRecruteurs);
+router.get('/api/recruteurs/', RecruteurController.getAllRecruteurs);
 
 /**
  * @swagger
