@@ -1,7 +1,9 @@
 import { useRoute } from '@react-navigation/native';
 import * as React from 'react';
 import { View, Text, Image, FlatList, Pressable, ImageBackground, Switch, ScrollView} from 'react-native';
-
+import { PostContent } from '../components/PostContent';
+import { PostItem } from '../components/PostItem';
+import { posts } from '../data/posts';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default function VoirProfileDetailsScreen() {
