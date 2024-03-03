@@ -33,7 +33,7 @@ security: [
 
 const options = {
 swaggerDefinition,
-apis: ['./controller/routes/userRoute.js', './model/schema.js'], // Path to the API routes in your Node.js application
+apis: ['./controller/routes/userRoute.js'], // Path to the API routes in your Node.js application
 };  
 
 const swaggerSpec = swaggerJSDoc(options);
