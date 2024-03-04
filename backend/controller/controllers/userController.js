@@ -1,14 +1,16 @@
-const {User} = require('../../model/schema');
+const { User } = require('../../model/schema');
+
+
 
 exports.createUser = async (req, res) => {
     try {
-        const newUser = await User.create(req.body);
+        const { nom, prenom, email, mdp, role, estConnecte } = req.body;
+        const newUser = await User.create({ nom, prenom, email, mdp, role, estConnecte });
         res.status(201).json(newUser);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
-
 exports.getAllUsers = async (req, res) => {
     try {
         const users = await User.find();

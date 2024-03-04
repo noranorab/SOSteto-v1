@@ -39,7 +39,7 @@ const infirmierSchema = new Schema({
 
 //langue
 const langueSchema = new Schema({
-    langue : String
+    langue: String
 })
 
 // Profil Infirmier
@@ -133,19 +133,19 @@ const demandeSoinsSchema = new Schema({
 // infirmier-soins
 const infirmierSoinsSchema = new Schema({
     id_infirmiere: { type: Schema.Types.ObjectId, ref: 'Infirmier' },
-    nom_soin:  { type: Schema.Types.ObjectId, ref: 'Soin' }
+    nom_soin: { type: Schema.Types.ObjectId, ref: 'Soin' }
 });
 
 // favoris_demandes
 const favorisDemandesSchema = new Schema({
     id_infirmier: { type: Schema.Types.ObjectId, ref: 'Infirmier' },
-    id_demande:  { type: Schema.Types.ObjectId, ref: 'Demande' }
+    id_demande: { type: Schema.Types.ObjectId, ref: 'Demande' }
 });
 
 // favoris_infirmiers
 const favorisInfirmiersSchema = new Schema({
-    id_recruteur:  { type: Schema.Types.ObjectId, ref: 'Recruteur' },
-    id_infirmier:  { type: Schema.Types.ObjectId, ref: 'Infirmier' }
+    id_recruteur: { type: Schema.Types.ObjectId, ref: 'Recruteur' },
+    id_infirmier: { type: Schema.Types.ObjectId, ref: 'Infirmier' }
 });
 
 // Exporting schemas
@@ -169,5 +169,5 @@ module.exports = {
     InfirmierSoins: mongoose.model('InfirmierSoins', infirmierSoinsSchema),
     FavorisDemandes: mongoose.model('FavorisDemandes', favorisDemandesSchema),
     FavorisInfirmiers: mongoose.model('FavorisInfirmiers', favorisInfirmiersSchema),
-    Langue : mongoose.model('Langue', langueSchema)
+    Langue: mongoose.model('Langue', langueSchema)
 };
