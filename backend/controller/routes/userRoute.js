@@ -8,6 +8,8 @@ const UserController = require('../controllers/userController');
  *   get:
  *     summary: Get all users
  *     description: Retrieve a list of all users.
+ *     tags:
+ *       - Users
  *     responses:
  *       '200':
  *         description: A list of users
@@ -28,6 +30,8 @@ router.get('/api/users', UserController.getAllUsers);
  *   post:
  *     summary: Create a new user
  *     description: Create a new user with the provided details.
+ *     tags:
+ *       - Users
  *     requestBody:
  *       required: true
  *       content:
@@ -52,6 +56,8 @@ router.post('/api/users', UserController.createUser);
  *   put:
  *     summary: Update a user
  *     description: Update a user with the provided details.
+ *     tags:
+ *       - Users
  *     parameters:
  *       - in: path
  *         name: id
@@ -73,6 +79,27 @@ router.post('/api/users', UserController.createUser);
  */
 router.put('/api/users/:id', UserController.updateUser);
 
+/**
+ * @openapi
+ * /api/users/{id}:
+ *   delete:
+ *     summary: Update a user
+ *     description: Update a user with the provided details.
+ *     tags:
+ *       - Users
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: The ID of the user to update
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '204':
+ *         description: User deleted successfully
+ *       '404':
+ *         description: User not found
+ */
 router.delete('/api/users/:id', UserController.deleteUser);
 
 module.exports = router

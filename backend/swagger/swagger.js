@@ -29,6 +29,11 @@ security: [
     bearerAuth: [],
   }
 ],
+tags : [
+  {
+    name: 'Users'
+  }
+]
 };
 
 const options = {
@@ -44,7 +49,7 @@ function swaggerDocs(app, port){
     res.setHeader("Content-Type", "application/json");
     res.send(swaggerSpec)
   });
-  console.log(`Docs available at http://localhost:${port}/docs`)
+  console.log(`Docs available at http://localhost:${port}/api-docs`)
 }
 
 module.exports = swaggerDocs
