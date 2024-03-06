@@ -22,6 +22,7 @@ const userSchema = new Schema({
     },
     estConnecte: {
         type: String,
+        default: false,
     }
 });
 

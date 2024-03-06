@@ -102,5 +102,59 @@ router.put('/api/users/:id', UserController.updateUser);
  */
 router.delete('/api/users/:id', UserController.deleteUser);
 
+/** POST Methods */
+/**
+ * @openapi
+ * '/api/users/register':
+ *  post:
+ *     tags:
+ *     - Users
+ *     summary: Register a user
+ *     requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UserInput' 
+ *     responses:
+ *      201:
+ *        description: Created
+ *      409:
+ *        description: Conflict
+ *      404:
+ *        description: Not Found
+ *      500:
+ *        description: Server Error
+ */
+
+
+router.post('/api/users/register', UserController.register);
+
+/**
+ * @openapi
+ * '/api/users/login':
+ *  post:
+ *     tags:
+ *     - Users
+ *     summary: Login as a user
+ *     requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UserLogin' 
+ *     responses:
+ *      201:
+ *        description: Created
+ *      409:
+ *        description: Conflict
+ *      404:
+ *        description: Not Found
+ *      500:
+ *        description: Server Error
+ */
+
+router.post('/api/users/login', UserController.login);
+
 module.exports = router
 

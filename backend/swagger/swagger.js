@@ -3,6 +3,7 @@ const swaggerUi = require('swagger-ui-express');
 
 const { userSchema } = require('../schema/userSchema')
 const { userInputSchema } = require('../schema/userSchema')
+const { userloginSchema } = require('../schema/userSchema')
 
 const swaggerDefinition = {
   openapi: '3.0.0',
@@ -22,6 +23,7 @@ const swaggerDefinition = {
     schemas: {
       User: userSchema,
       UserInput: userInputSchema,
+      UserLogin: userloginSchema,
     }
   },
   security: [

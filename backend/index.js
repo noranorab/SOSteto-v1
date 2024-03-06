@@ -1,7 +1,8 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 // connect to database
-const connectToDatabase = require('./Database');
+const connectToDatabase = require('./database');
 // model imports 
 const models = require('./model/schema');
 // route imports
@@ -25,6 +26,8 @@ app.use(cors({
 }));
 app.use('/', userRoutes);
 // app.use('/api/recruteurs', recruteurRoutes)
+
+console.log('JWT_SECRET:', process.env.JWT_SECRET);
 
 const PORT = process.env.PORT || 3000
 
