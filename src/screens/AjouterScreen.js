@@ -8,11 +8,12 @@ import {
   TouchableOpacity,
   ScrollView,
   Button,
+  StyleSheet,
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import RNPickerSelect from "react-native-picker-select";
-import DatePicker from 'react-native-date-picker';
-
+import Filtre from "../components/Filtre";
+import { useNavigation } from '@react-navigation/core';
 
 function InputWithIcon({ inputHeight, onPressIcon, iconName = "add-outline" }) {
   return (
@@ -21,8 +22,8 @@ function InputWithIcon({ inputHeight, onPressIcon, iconName = "add-outline" }) {
       style={{
         position: "absolute",
         top: inputHeight / 2 - 12,
-        right: 25,
-        marginTop: 15
+        right: 30,
+        marginTop: 15,
       }}
     >
       <Ionicons name={iconName} size={24} color="grey" />
@@ -36,7 +37,6 @@ function InfoSection({
   placeholder,
   inputHeight = 30,
   onPressIcon,
-  textAlign,
 }) {
   return (
     <>
@@ -50,7 +50,9 @@ function InfoSection({
       >
         {title}
       </Text>
-      <Text style={{ fontSize: 14, color: "#3f4040", paddingTop: 5 }}>{description}</Text>
+      <Text style={{ fontSize: 14, color: "#3f4040", paddingTop: 5 }}>
+        {description}
+      </Text>
       <View style={{ position: "relative" }}>
         <TextInput
           style={{
@@ -65,9 +67,9 @@ function InfoSection({
             color: "gray",
             marginTop: 10,
             paddingRight: 10,
-            textAlignVertical: 'center',
+            textAlignVertical: "top",
             borderRadius: 5,
-            fontSize: 14
+            fontSize: 14,
           }}
           placeholder={placeholder}
           multiline={true}
@@ -81,11 +83,11 @@ function InfoSection({
 }
 
 export default function AjouterScreen({ navigation }) {
+
+  const { navigate } = useNavigation();
   const [additionalInputs, setAdditionalInputs] = useState([]);
   const [selectedVille, setSelectedVille] = useState(null);
   const [selectedQuartier, setSelectedQuartier] = useState(null);
-  const [date, setDate] = useState(new Date());
-  const [open, setOpen] = useState(false);
 
   const handleAddAct = () => {
     setAdditionalInputs((prevInputs) => [...prevInputs, {}]);
@@ -97,22 +99,28 @@ export default function AjouterScreen({ navigation }) {
 
   return (
     <TouchableWithoutFeedback onPress={dismissKeyboard}>
-      <ScrollView style={{backgroundColor: 'white', borderColor: '#E6E6E6', borderWidth: 1, marginLeft: 10,}}>
-        <View style={{ marginTop: 15, marginTop: 20 }}>
-          <Text style={{ fontSize: 20, fontWeight: "bold", paddingBottom: 10,  }}>
+      <ScrollView
+        style={{
+          backgroundColor: "white",
+          borderColor: "#E6E6E6",
+          borderWidth: 1,
+        }}
+      >
+        <View style={{ marginTop: 15, margin: 20 }}>
+          <Text style={{ fontSize: 20, fontWeight: "bold", paddingBottom: 10 }}>
             Votre demande
           </Text>
           <InfoSection
             title="Titre"
             description="Choisissez un titre précis et court"
             placeholder="  e.g Besoin d'une infirmière pour personne âgée"
+            inputHeight={50}
           />
           <InfoSection
             title="Description de la demande"
             description="Précisez le profil de l'infirmière recherchée ( spécialité, type de soins, sexe etc. ) et la personne à qui sont destinés les soins."
             placeholder="  e.g J'ai besoin d'une infirmière pour faire des piqures à une personne âgée..."
             inputHeight={120}
-            textAlign={"top"}
           />
           <InfoSection
             title="Soins et actes"
@@ -124,19 +132,20 @@ export default function AjouterScreen({ navigation }) {
             <View key={index}>
               <TextInput
                 style={{
-                  height: 30,
+                  height: 40,
                   borderColor: "#C1C1C1",
                   borderWidth: 1,
+                  borderRadius: 5,
                   marginRight: 20,
                   color: "gray",
-                  marginTop: 5,
+                  marginTop: 15,
                 }}
-                placeholder="  Ajouter un acte"
+                placeholder="      Ajouter un acte"
               />
               {index >= 0 && (
                 <InputWithIcon
                   iconName="remove-outline"
-                  inputHeight={30}
+                  inputHeight={40}
                   onPressIcon={() =>
                     setAdditionalInputs((prevInputs) =>
                       prevInputs.filter((_, i) => i !== index)
@@ -161,16 +170,14 @@ export default function AjouterScreen({ navigation }) {
               borderColor: "#C1C1C1",
               borderWidth: 1,
               marginRight: 20,
-              paddingTop: 10,
               paddingLeft: 15,
-              paddingBottom: 10,
               width: 350,
               color: "gray",
               marginTop: 10,
               paddingRight: 10,
-              textAlignVertical: 'center',
+              textAlignVertical: "center",
               borderRadius: 5,
-              fontSize: 17
+              fontSize: 17,
             }}
           >
             <RNPickerSelect
@@ -205,16 +212,14 @@ export default function AjouterScreen({ navigation }) {
               borderColor: "#C1C1C1",
               borderWidth: 1,
               marginRight: 20,
-              paddingTop: 10,
               paddingLeft: 15,
-              paddingBottom: 10,
               width: 350,
               color: "gray",
               marginTop: 10,
               paddingRight: 10,
-              textAlignVertical: 'center',
+              textAlignVertical: "center",
               borderRadius: 5,
-              fontSize: 14
+              fontSize: 14,
             }}
           >
             <RNPickerSelect
@@ -235,7 +240,6 @@ export default function AjouterScreen({ navigation }) {
             />
           </View>
           <View>
-            
             <Text
               style={{
                 fontSize: 17,
@@ -251,24 +255,33 @@ export default function AjouterScreen({ navigation }) {
               infirmier(ère)
             </Text>
           </View>
-          
 
-          {/* <Button title="Open" onPress={() => setOpen(true)} />
-          <DatePicker
-            value={date}
-            modal
-            open={open}
-            date={date}
-            onConfirm={(date) => {
-              setOpen(false);
-              setDate(date);
-            }}
-            onCancel={() => {
-              setOpen(false);
-            }} 
-          />*/}
+          <Filtre show={false} />
+          <View style={{alignItems:'center' }}>
+            <TouchableOpacity
+              style={styles.searchButton}
+              // onPress={() => navigate("homeSearch")}
+            >
+              <Text style={styles.searchButtonText}>Valider la demande</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
     </TouchableWithoutFeedback>
   );
 }
+const styles = StyleSheet.create({
+  searchButton: {
+    backgroundColor: "white",
+    padding: 8,
+    borderRadius: 50,
+    borderColor: "black",
+    borderWidth: 1,
+    marginTop: 15,
+    marginBottom: 15,
+  },
+  searchButtonText: {
+    color: "black",
+    fontSize: 16,
+  },
+});

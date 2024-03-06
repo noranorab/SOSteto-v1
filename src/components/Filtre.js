@@ -10,7 +10,7 @@ import { PostItem } from '../components/PostItem';
 import { posts } from '../data/posts';
 import { useNavigation } from '@react-navigation/core';
 
-export default function Filtre() {
+export default function Filtre({ show = true}) {
     const [selectedVille, setSelectedVille] = React.useState(null);
     const [selectedSpecialite, setSelectedSpecialite] = React.useState(null);
     const [selectedDate, setSelectedDate] = React.useState(new Date());
@@ -50,25 +50,29 @@ export default function Filtre() {
 
             <Text ></Text>
 
-            <View style={styles.pickerContainer}>
-                <RNPickerSelect
-                    placeholder={{ label: 'Spécialité', value: null }}
-                    items={specialities ? specialities.map((specialite) => ({ label: specialite.name, value: specialite.id })) : []}
-                    onValueChange={(value) => setSelectedSpecialite(value)}
-                    style={pickerSelectStyles}
-                    value={selectedSpecialite}
-                />
-            </View>
+            {show && (
+                <View style={styles.pickerContainer}>
+                    <RNPickerSelect
+                        placeholder={{ label: 'Spécialité', value: null }}
+                        items={specialities ? specialities.map((specialite) => ({ label: specialite.name, value: specialite.id })) : []}
+                        onValueChange={(value) => setSelectedSpecialite(value)}
+                        style={pickerSelectStyles}
+                        value={selectedSpecialite}
+                    />
+                </View>
+            )}
 
-            <View style={styles.pickerContainer}>
-                <RNPickerSelect
-                    placeholder={{ label: 'Ville', value: null }}
-                    items={villes ? villes.map((ville) => ({ label: ville.name, value: ville.id })) : []}
-                    onValueChange={(value) => setSelectedVille(value)}
-                    style={pickerSelectStyles}
-                    value={selectedVille}
-                />
-            </View>
+            {show && (
+                <View style={styles.pickerContainer}>
+                    <RNPickerSelect
+                        placeholder={{ label: 'Ville', value: null }}
+                        items={villes ? villes.map((ville) => ({ label: ville.name, value: ville.id })) : []}
+                        onValueChange={(value) => setSelectedVille(value)}
+                        style={pickerSelectStyles}
+                        value={selectedVille}
+                    />
+                </View>
+            )}
 
 
             <View style={styles.datePickerContainer}>
@@ -115,9 +119,11 @@ export default function Filtre() {
                 onConfirm={handleEndTimeConfirm}
                 onCancel={hideEndTimePicker}
             />
+            {show && (
             <TouchableOpacity style={styles.searchButton} onPress={() => navigate('homeSearch')}>
                 <Text style={styles.searchButtonText}>Rechercher</Text>
             </TouchableOpacity>
+            )}
         </View>
     )
 }
