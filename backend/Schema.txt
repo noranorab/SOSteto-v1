@@ -88,7 +88,7 @@
     "objet" : String
 }
 
-//Document
+// 
 {
     "id_document": Long,
     "#id_infirmier" : Long,

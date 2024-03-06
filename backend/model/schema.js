@@ -3,13 +3,26 @@ const Schema = mongoose.Schema;
 
 // User
 const userSchema = new Schema({
-    nom: String,
-    prenom: String,
-    email: String,
-    mdp: String,
-    role: String,
-    id_image_profile: { type: Schema.Types.ObjectId, ref: 'Image' },
-    estConnecte: Boolean
+    nom: {
+        type: String,
+    },
+    prenom: {
+        type: String,
+    },
+    email: {
+        type: String,
+        required: true,
+    },
+    mdp: {
+        type: String,
+        required: true
+    },
+    role: {
+        type: String,
+    },
+    estConnecte: {
+        type: String,
+    }
 });
 
 // Image

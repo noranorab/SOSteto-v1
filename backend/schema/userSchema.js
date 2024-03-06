@@ -22,10 +22,6 @@ const userSchema = {
         type: 'string',
         description: 'The role of the user.'
       },
-      image_profile: {
-        type: 'string',
-        description: 'The URL of the user\'s profile image.'
-      },
       estConnecte: {
         type: 'boolean',
         description: 'Indicates whether the user is currently connected.'
@@ -57,10 +53,6 @@ const userInputSchema = {
       role: {
         type: 'string',
         description: 'The role of the user.'
-      },
-      image_profile: {
-        type: 'string',
-        description: "The URL of the user's profile image."
       },
       estConnecte: {
         type: 'boolean',
