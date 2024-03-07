@@ -5,6 +5,7 @@ const { userSchema } = require('../schema/userSchema')
 const { userInputSchema } = require('../schema/userSchema')
 const { userloginSchema } = require('../schema/userSchema')
 const { villeSchema } = require('../schema/villeSchema')
+const { quartierSchema } = require('../schema/quartierSchema')
 
 const swaggerDefinition = {
   openapi: '3.0.0',
@@ -26,6 +27,7 @@ const swaggerDefinition = {
       UserInput: userInputSchema,
       UserLogin: userloginSchema,
       Ville: villeSchema,
+      Quartier: quartierSchema,
     }
   },
   security: [
@@ -41,13 +43,17 @@ const swaggerDefinition = {
     {
       name: 'Villes',
       description: 'Endpoints related to city management'
+    },
+    {
+      name: 'Quartiers',
+      description: 'Endpoints related to district management'
     }
   ]
 };
 
 const options = {
   swaggerDefinition,
-  apis: ['./controller/routes/userRoute.js', './controller/routes/villeRoute.js'], // Path to the API routes in your Node.js application
+  apis: ['./controller/routes/userRoute.js', './controller/routes/villeRoute.js', './controller/routes/quartierRoute.js'], // Path to the API routes in your Node.js application
 };
 
 const swaggerSpec = swaggerJSDoc(options);

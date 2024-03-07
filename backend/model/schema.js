@@ -130,7 +130,7 @@ const specialiteSchema = new Schema({
 const quartierSchema = new Schema({
     nom_quartier: String,
     nom_ville: { type: Schema.Types.ObjectId, ref: 'Ville' }
-});
+}, { timestamps: true });
 //ville-quartier
 
 // Soins
