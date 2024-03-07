@@ -4,6 +4,7 @@ const swaggerUi = require('swagger-ui-express');
 const { userSchema } = require('../schema/userSchema')
 const { userInputSchema } = require('../schema/userSchema')
 const { userloginSchema } = require('../schema/userSchema')
+const { villeSchema } = require('../schema/villeSchema')
 
 const swaggerDefinition = {
   openapi: '3.0.0',
@@ -24,6 +25,7 @@ const swaggerDefinition = {
       User: userSchema,
       UserInput: userInputSchema,
       UserLogin: userloginSchema,
+      Ville: villeSchema,
     }
   },
   security: [
@@ -33,14 +35,19 @@ const swaggerDefinition = {
   ],
   tags: [
     {
-      name: 'Users'
+      name: 'Users',
+      description: 'Endpoints related to user management'
+    },
+    {
+      name: 'Villes',
+      description: 'Endpoints related to city management'
     }
   ]
 };
 
 const options = {
   swaggerDefinition,
-  apis: ['./controller/routes/userRoute.js'], // Path to the API routes in your Node.js application
+  apis: ['./controller/routes/userRoute.js', './controller/routes/villeRoute.js'], // Path to the API routes in your Node.js application
 };
 
 const swaggerSpec = swaggerJSDoc(options);
@@ -51,7 +58,6 @@ function swaggerDocs(app, port) {
     res.setHeader("Content-Type", "application/json");
     res.send(swaggerSpec)
   });
-  console.log(`Docs available at http://localhost:${port}/api-docs`)
   console.log(`Docs available at http://localhost:${port}/api-docs`)
 }
 

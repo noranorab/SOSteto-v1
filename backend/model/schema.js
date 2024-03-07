@@ -114,11 +114,12 @@ const documentSchema = new Schema({
 });
 
 // Tables de références
+
 // ville
 const villeSchema = new Schema({
     nom_ville: { type: String, required: true, unique: true },
     code_postal: Number
-});
+}, { timestamps: true });
 
 // specialite
 const specialiteSchema = new Schema({

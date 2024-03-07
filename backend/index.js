@@ -7,6 +7,7 @@ const connectToDatabase = require('./database');
 const models = require('./model/schema');
 // route imports
 const userRoutes = require('./controller/routes/userRoute');
+const villeRoutes = require('./controller/routes/villeRoute');
 const recruteurRoutes = require('./controller/routes/recruteurRoute')
 const swaggerDocs = require('./swagger/swagger');
 const bodyParser = require('body-parser');
@@ -25,6 +26,7 @@ app.use(cors({
     origin: 'http://localhost:3001'
 }));
 app.use('/', userRoutes);
+app.use('/', villeRoutes);
 // app.use('/api/recruteurs', recruteurRoutes)
 
 console.log('JWT_SECRET:', process.env.JWT_SECRET);

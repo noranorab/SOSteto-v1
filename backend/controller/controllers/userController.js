@@ -4,8 +4,7 @@ const jwt = require('jsonwebtoken');
 const { User } = require('../../model/schema');
 
 
-
-
+//User
 exports.createUser = async (req, res) => {
     try {
         const { nom, prenom, email, mdp, role, estConnecte } = req.body;
@@ -61,6 +60,8 @@ exports.deleteUser = async (req, res) => {
 };
 
 
+
+// Register and login
 const bcrypt = require('bcrypt');
 
 exports.register = async (req, res) => {
