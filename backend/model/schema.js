@@ -23,19 +23,25 @@ const userSchema = new Schema({
     estConnecte: {
         type: String,
         default: false,
-    }
+    },
 });
 
 // Image
 const imageSchema = new Schema({
-    idUser: { type: Schema.Types.ObjectId, ref: 'User' },
     desc: String,
     data: Buffer
 });
 
+const imageUserSchema = new Schema({
+    id_User: { type: Schema.Types.ObjectId, ref: 'User' },
+    id_image: { type: Schema.Types.ObjectId, ref: 'Image' }
+});
+
+
 // Recruteur
 const recruteurSchema = new Schema({
     idUser: { type: Schema.Types.ObjectId, ref: 'User' },
+    imageId: { type: Schema.Types.ObjectId, ref: 'Image' },
     ville: { type: Schema.Types.ObjectId, ref: 'VilleQuartier' },
     quartier: { type: Schema.Types.ObjectId, ref: 'VilleQuartier' },
     telephone: String
@@ -58,6 +64,7 @@ const langueSchema = new Schema({
 
 // Profil Infirmier
 const profilInfirmierSchema = new Schema({
+    imageId: { type: Schema.Types.ObjectId, ref: 'Image' },
     a_propos: String,
     id_disponibilite: { type: Schema.Types.ObjectId, ref: 'Disponibilite' },
     id_cv: { type: Schema.Types.ObjectId, ref: 'Document' }
@@ -184,5 +191,6 @@ module.exports = {
     InfirmierSoins: mongoose.model('InfirmierSoins', infirmierSoinsSchema),
     FavorisDemandes: mongoose.model('FavorisDemandes', favorisDemandesSchema),
     FavorisInfirmiers: mongoose.model('FavorisInfirmiers', favorisInfirmiersSchema),
-    Langue: mongoose.model('Langue', langueSchema)
+    Langue: mongoose.model('Langue', langueSchema),
+    ImageUser: mongoose.model('ImageUser', imageUserSchema)
 };

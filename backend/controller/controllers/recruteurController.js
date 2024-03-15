@@ -21,7 +21,7 @@ exports.getAllRecruteurs = async (req, res) => {
 
 exports.getRecruteurById = async (req, res) => {
     try {
-        const recruteur = await Recruteur.findById(req.params.id);
+        const recruteur = await Recruteur.findById(req.params._id);
         if (!recruteur) {
             return res.status(404).send('Recruteur not found');
         }
@@ -34,7 +34,7 @@ exports.getRecruteurById = async (req, res) => {
 
 exports.updateRecruteurById = async (req, res) => {
     try {
-        const recruteur = await Recruteur.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        const recruteur = await Recruteur.findByIdAndUpdate(req.params._id, req.body, { new: true });
         if (!recruteur) {
             return res.status(404).send('Recruteur not found');
         }
@@ -46,7 +46,7 @@ exports.updateRecruteurById = async (req, res) => {
 
 exports.deleteRecruteurById = async (req, res) => {
     try {
-        const recruteur = await Recruteur.findByIdAndDelete(req.params.id);
+        const recruteur = await Recruteur.findByIdAndDelete(req.params._id);
         if (!recruteur) {
             return res.status(404).send('Recruteur not found');
         }

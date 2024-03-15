@@ -5,7 +5,9 @@ const { userSchema } = require('../schema/userSchema')
 const { userInputSchema } = require('../schema/userSchema')
 const { userloginSchema } = require('../schema/userSchema')
 const { villeSchema } = require('../schema/villeSchema')
-const { quartierSchema } = require('../schema/quartierSchema')
+const { quartierSchema} = require('../schema/quartierSchema')
+const {recruteurSchema} = require('../schema/recruteurSchema')
+const {imageSchema} = require('../schema/imageSchema')
 
 const swaggerDefinition = {
   openapi: '3.0.0',
@@ -28,6 +30,8 @@ const swaggerDefinition = {
       UserLogin: userloginSchema,
       Ville: villeSchema,
       Quartier: quartierSchema,
+      Recruteur: recruteurSchema,
+      Image: imageSchema
     }
   },
   security: [
@@ -47,13 +51,21 @@ const swaggerDefinition = {
     {
       name: 'Quartiers',
       description: 'Endpoints related to district management'
+    },
+    {
+      name: 'Recruteurs',
+      description: 'Endpoints related to recruteurs management'
+    },
+    {
+      name: 'Image of User',
+      description: 'Endpoints related to users image management'
     }
   ]
 };
 
 const options = {
   swaggerDefinition,
-  apis: ['./controller/routes/userRoute.js', './controller/routes/villeRoute.js', './controller/routes/quartierRoute.js'], // Path to the API routes in your Node.js application
+  apis: ['./controller/routes/userRoute.js', './controller/routes/villeRoute.js', './controller/routes/quartierRoute.js', './controller/routes/recruteurRoute.js', './controller/routes/imageRoute.js' ], // Path to the API routes in your Node.js application
 };
 
 const swaggerSpec = swaggerJSDoc(options);

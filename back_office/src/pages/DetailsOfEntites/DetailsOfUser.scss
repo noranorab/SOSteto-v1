@@ -1,0 +1,22 @@
+.usersPage {
+    display: flex;
+    .usersContainer {
+        flex: 1;
+    }
+}
+
+section{
+    .userProfile{
+        flex: 1;
+        .box1{
+            background-color: aqua;
+        }
+        .box2{
+            background-color: rgb(32, 32, 32);
+        }
+        .box3{
+            background-color: rgb(255, 0, 0);
+        }
+    
+    }
+}
