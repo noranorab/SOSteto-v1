@@ -90,7 +90,7 @@ exports.register = async (req, res) => {
 
                 const savedUser = await user.save();
 
-                return res.status(201).json({ msg: `User registered successfully. UserId is ${savedUser._id}` });
+                return res.status(201).json({ msg: `User registered successfully.` });
             } catch (hashingError) {
                 console.error('Error hashing password:', hashingError);
                 return res.status(500).json({ error: "Unable to create user. Please try again later." });

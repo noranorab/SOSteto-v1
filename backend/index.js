@@ -11,6 +11,8 @@ const recruteurRoutes = require('./controller/routes/recruteurRoute')
 const swaggerDocs = require('./swagger/swagger');
 const bodyParser = require('body-parser');
 const app = express();
+app.use(express.json());
+
 
 connectToDatabase();
 
@@ -22,12 +24,11 @@ for (const modelName in models) {
 }
 app.use(bodyParser.json());
 app.use(cors({
-    origin: 'http://localhost:3001'
+    origin: 'http://localhost:3000'
 }));
 app.use('/', userRoutes);
 // app.use('/api/recruteurs', recruteurRoutes)
 
-console.log('JWT_SECRET:', process.env.JWT_SECRET);
 
 const PORT = process.env.PORT || 3000
 
