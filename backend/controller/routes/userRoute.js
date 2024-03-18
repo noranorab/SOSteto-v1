@@ -26,6 +26,62 @@ router.get('/api/users', UserController.getAllUsers);
 
 /**
  * @openapi
+ * /api/users/{userId}:
+ *   get:
+ *     summary: Get a user of id userId
+ *     description: Retrieve a user of id userId.
+ *     tags:
+ *       - Users
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         description: The ID of the user to update
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         description: user of id userId
+ *         content:
+ *           application/json:
+ *             schema:
+ *                 $ref: '#/components/schemas/UserOutput'  
+ *       '404':
+ *         description: User not found
+ */
+router.get('/api/users/:userId', UserController.getUserById);
+
+
+/**
+ * @openapi
+ * /api/users:
+ *   get:
+ *     summary: Get a user by role
+ *     description: Retrieve a user by role
+ *     tags:
+ *       - Users
+ *     parameters:
+ *       - in: query
+ *         name: role
+ *         required: true
+ *         description: The role of the user to enter
+ *         schema:
+ *           type: string
+ *           enum: [recruteur, infirmier]
+ *     responses:
+ *       '200':
+ *         description: user of role either recruteur or infirmier
+ *         content:
+ *           application/json:
+ *             schema:
+ *                 $ref: '#/components/schemas/User'  
+ *       '404':
+ *         description: Users not found
+ */
+router.get('/api/users', UserController.getUserByRole);
+
+/**
+ * @openapi
  * /api/users:
  *   post:
  *     summary: Create a new user
@@ -37,7 +93,7 @@ router.get('/api/users', UserController.getAllUsers);
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/UserInput'  
+ *             $ref: '#/components/schemas/User'  
  *     responses:
  *       '201':
  *         description: User created successfully
@@ -70,7 +126,7 @@ router.post('/api/users', UserController.createUser);
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/UserInput'  
+ *             $ref: '#/components/schemas/UserOutput'  
  *     responses:
  *       '200':
  *         description: User updated successfully
@@ -115,7 +171,7 @@ router.delete('/api/users/:id', UserController.deleteUser);
  *      content:
  *        application/json:
  *           schema:
- *             $ref: '#/components/schemas/UserInput' 
+ *             $ref: '#/components/schemas/User' 
  *     responses:
  *      201:
  *        description: Created

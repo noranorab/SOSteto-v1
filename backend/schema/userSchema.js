@@ -1,10 +1,9 @@
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
 const userSchema = {
   type: 'object',
   properties: {
-    idUser: {
-      type: 'string',
-      description: 'The unique identifier for the user.'
-    },
     nom: {
       type: 'string',
       description: 'The last name of the user.'
@@ -30,18 +29,25 @@ const userSchema = {
     estConnecte: {
       type: 'boolean',
       description: 'Indicates whether the user is currently connected.'
+    },
+    ville:{
+      type: Schema.Types.ObjectId,
+      ref: 'Ville'
+    },
+    quartier: {
+      type: Schema.Types.ObjectId,
+      ref: 'Quartier'
+    },
+    telephone: {
+      type: 'string',
+      description: 'telephone of user'
     }
   }
 };
 
-const userInputSchema = {
+const userOutputSchema = {
   type: 'object',
-  required: ['idUser', 'nom', 'prenom', 'password', 'email', 'role'],
   properties: {
-    idUser: {
-      type: 'string',
-      description: 'The unique identifier for the user'
-    },
     nom: {
       type: 'string',
       description: 'The last name of the user.'
@@ -67,9 +73,21 @@ const userInputSchema = {
     estConnecte: {
       type: 'boolean',
       description: 'Indicates whether the user is currently connected.'
+    },
+    ville:{
+      type: 'string',
+      description: 'ville of user'
+    },
+    quartier: {
+      type: 'string',
+      description: 'quartier of user'
+    },
+    telephone: {
+      type: 'string',
+      description: 'telephone of user'
     }
   }
-}
+};
 
 const userloginSchema = {
   type: 'object',
@@ -89,4 +107,4 @@ const userloginSchema = {
   }
 }
 
-module.exports = { userSchema, userInputSchema, userloginSchema }
+module.exports = { userSchema, userloginSchema, userOutputSchema }

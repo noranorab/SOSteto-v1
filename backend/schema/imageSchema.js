@@ -12,7 +12,7 @@ const imageSchema = {
         description: 'Base64 encoded image data.'
       }
     },
-    required: ['idUser', 'desc', 'data']
+    required: ['desc', 'data']
   };
   
   module.exports = { imageSchema };

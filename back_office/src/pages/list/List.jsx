@@ -12,11 +12,6 @@ export async function loader(){
   return { data }
 }
 
-const toEdit = (e, user, rowIndex) => {
-  e.preventDefault();
-  console.log("Editing user:", user);
-  // Implement your edit logic here, e.g., open a modal with user data for editing
-};
 
 const toDelete = (e, rowIndex) => {
   e.preventDefault();
@@ -24,9 +19,9 @@ const toDelete = (e, rowIndex) => {
   // Implement your delete logic here, e.g., prompt confirmation and then delete the user
 };
 
+
 const List = () => {
   const {data} = useLoaderData();
-  console.log(data)
   return (
     <div className="usersPage">
       <Sidebar />
@@ -51,12 +46,10 @@ const List = () => {
                     <td>{user.email}</td>
                     <td>{user.role}</td>
                     <td>
-                      <a href="#" onClick={(e) => toEdit(e, user, rowIdx)}>
                       <Link to={`/users/${user._id}`}>
                         <EditIcon className='iconEdit'/>
                       </Link>
-                      
-                      </a>{' '}
+                      {' '}
                       <a
                         href="#"
                         onClick={(e) => {

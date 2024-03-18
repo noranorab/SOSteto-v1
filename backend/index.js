@@ -9,8 +9,8 @@ const models = require('./model/schema');
 const userRoutes = require('./controller/routes/userRoute');
 const villeRoutes = require('./controller/routes/villeRoute');
 const quartierRoutes = require('./controller/routes/quartierRoute');
-const recruteurRoutes = require('./controller/routes/recruteurRoute')
 const imageRoutes = require('./controller/routes/imageRoute')
+const roleRoutes = require('./controller/routes/roleRoute')
 const swaggerDocs = require('./swagger/swagger');
 const bodyParser = require('body-parser');
 const app = express();
@@ -30,8 +30,8 @@ app.use(cors({
 app.use('/', userRoutes);
 app.use('/', villeRoutes);
 app.use('/', quartierRoutes);
-app.use('/', recruteurRoutes);
 app.use('/', imageRoutes);
+app.use('/', roleRoutes);
 // app.use('/api/recruteurs', recruteurRoutes)
 
 console.log('JWT_SECRET:', process.env.JWT_SECRET);

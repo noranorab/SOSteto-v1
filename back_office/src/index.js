@@ -8,6 +8,7 @@ import ErrorPage from './error-page';
 import DetailsOfUser from './pages/DetailsOfEntites/DetailsOfUser';
 import Home from './pages/home/Home';
 import List, {loader as usersLoader } from './pages/list/List';
+import {loader as dataLoader} from './pages/DetailsOfEntites/DetailsOfUser'
 
 
 
@@ -24,8 +25,11 @@ const router = createBrowserRouter([
   },
   {
     path: "users/:userId",
-    element: <DetailsOfUser/>
+    element: <DetailsOfUser/>,
+    loader: dataLoader,
   }
+  
+  
 ])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

@@ -24,6 +24,34 @@ const VilleController = require('../controllers/villeController');
  */
 villeRouter.get('/api/villes', VilleController.getVille);
 
+
+/**
+ * @openapi
+ * /api/villes/{nom_ville}:
+ *   get:
+ *     summary: Get a city by name
+ *     description: Retrieve a city.
+ *     tags:
+ *       - Villes
+ *     parameters:
+ *       - in: path
+ *         name: nom_ville
+ *         required: true
+ *         description: The name of the city to get
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         description: Retrieved a city successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *                 $ref: '#/components/schemas/Ville'  
+ *       '404':
+ *         description: there is no citie by name nom_ville
+ */
+villeRouter.get('/api/villes/:nom_ville', VilleController.getVilleByName);
+
 /**
  * @openapi
  * /api/villes:

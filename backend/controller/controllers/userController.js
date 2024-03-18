@@ -1,14 +1,16 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
+var ObjectId = require('mongoose').Types.ObjectId; 
 
-const { User } = require('../../model/schema');
+const { User, Role, Ville, Quartier } = require('../../model/schema');
+const VilleController = require('./villeController');
 
 
 //User
 exports.createUser = async (req, res) => {
     try {
-        const { nom, prenom, email, mdp, role, estConnecte } = req.body;
-        const newUser = await User.create({ nom, prenom, email, mdp, role, estConnecte });
+        const { nom, prenom, email, mdp, role, estConnecte, ville, quartier, telephone } = req.body;
+        const newUser = await User.create({ nom, prenom, email, mdp, role, estConnecte, ville, quartier, telephone });
         res.status(201).json(newUser);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -25,19 +27,62 @@ exports.getAllUsers = async (req, res) => {
 
 exports.getUserById = async (req, res) => {
     try {
-        const user = await User.findById(req.params._id);
-        if (!user) {
+        const user = await User.findById(req.params.userId);
+        console.log(user.ville)
+        const {nom_ville} = await Ville.findOne(user.ville)
+        const {nom_quartier} = await Quartier.findOne(user.quartier)
+        const userRes = {
+            _id : user._id,
+            nom : user.nom,
+            prenom: user.prenom,
+            email : user.email,
+            mdp: user.mdp,
+            role: user.role,
+            estConnecte: user.estConnecte,
+            ville: nom_ville,
+            quartier: nom_quartier,
+            telephone: user.telephone,
+        }
+        if (!userRes) {
             return res.status(404).json({ message: 'User not found' });
         }
-        res.json(user);
+        res.json(userRes);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
 
+
+exports.getUserByRole = async (req, res) => {
+    try {
+        const { role } = req.query
+        const users = await User.find({ role });
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+
 exports.updateUser = async (req, res) => {
     try {
-        const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        console.log(req.body)
+        const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        const {ville, quartier} = req.body
+        const userVille = await Ville.findOne(new ObjectId(ville))
+        const userQuartier = await Quartier.findOne(new ObjectId(quartier))
+        const updatedUser = {
+            _id : user._id,
+            nom : user.nom,
+            prenom: user.prenom,
+            email : user.email,
+            mdp: user.mdp,
+            role: user.role,
+            estConnecte: user.estConnecte,
+            ville: userVille.nom_ville,
+            quartier: userQuartier.nom_quartier,
+            telephone: user.telephone,
+        }
         if (!updatedUser) {
             return res.status(404).json({ message: 'User not found' });
         }
@@ -63,6 +108,7 @@ exports.deleteUser = async (req, res) => {
 
 // Register and login
 const bcrypt = require('bcrypt');
+const { getVille } = require('./villeController');
 
 exports.register = async (req, res) => {
     try {
