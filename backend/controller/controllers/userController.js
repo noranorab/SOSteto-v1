@@ -67,26 +67,27 @@ exports.getUserByRole = async (req, res) => {
 exports.updateUser = async (req, res) => {
     try {
         console.log(req.body)
-        const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
         const {ville, quartier} = req.body
-        const userVille = await Ville.findOne(new ObjectId(ville))
-        const userQuartier = await Quartier.findOne(new ObjectId(quartier))
+        const userVille = await Ville.findOne({nom_ville: ville})
+        const userQuartier = await Quartier.findOne({nom_quartier : quartier})
         const updatedUser = {
-            _id : user._id,
-            nom : user.nom,
-            prenom: user.prenom,
-            email : user.email,
-            mdp: user.mdp,
-            role: user.role,
-            estConnecte: user.estConnecte,
-            ville: userVille.nom_ville,
-            quartier: userQuartier.nom_quartier,
-            telephone: user.telephone,
+            nom : req.body.nom,
+            prenom: req.body.prenom,
+            email : req.body.email,
+            mdp: req.body.mdp,
+            role: req.body.role,
+            estConnecte: req.body.estConnecte,
+            ville: new ObjectId(userVille._id),
+            quartier: new ObjectId(userQuartier._id),
+            telephone: req.body.telephone,
+            status : req.body.status
         }
-        if (!updatedUser) {
+        const new_user = await User.findByIdAndUpdate(req.params.id, updatedUser, { new: true });
+
+        if (!new_user) {
             return res.status(404).json({ message: 'User not found' });
         }
-        res.json(updatedUser);
+        res.json(new_user);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -108,11 +109,10 @@ exports.deleteUser = async (req, res) => {
 
 // Register and login
 const bcrypt = require('bcrypt');
-const { getVille } = require('./villeController');
 
 exports.register = async (req, res) => {
     try {
-        const { nom, prenom, email, mdp, role, estConnecte } = req.body;
+        const { nom, prenom, email, mdp, role, estConnecte, ville, quartier, telephone, status } = req.body;
 
         // Check for existing email
         const existingEmail = await User.findOne({ email });
@@ -133,6 +133,10 @@ exports.register = async (req, res) => {
                     mdp: hashedMdp,
                     role,
                     estConnecte,
+                    ville,
+                    quartier,
+                    telephone,
+                    status,
                 });
 
                 const savedUser = await user.save();

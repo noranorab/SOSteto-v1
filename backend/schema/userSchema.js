@@ -85,6 +85,11 @@ const userOutputSchema = {
     telephone: {
       type: 'string',
       description: 'telephone of user'
+    },
+    status: {
+      type: 'boolean',
+      description: 'logic status of user',
+      default: true,
     }
   }
 };

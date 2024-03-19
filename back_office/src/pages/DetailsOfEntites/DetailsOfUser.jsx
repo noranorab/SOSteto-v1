@@ -4,7 +4,7 @@ import Navbar from '../../components/navbar/Navbar';
 import './DetailsOfUser.scss'
 
 import {json, useLoaderData } from 'react-router-dom';
-import { getUserById, postFormUserDetails } from '../../data/users';
+import { getUserById, updateUserDetails } from '../../data/users';
 import { getQuartiersFromVilleName, getVilles } from '../../data/villesetquartiers';
 
 
@@ -51,7 +51,7 @@ const DetailsOfUser = () => {
   };
   const handleSave = (event) => {
     console.log(formData)
-    postFormUserDetails(formData, data._id)
+    updateUserDetails(formData, data._id)
     setEditMode(false);
     event.preventDefault();
     

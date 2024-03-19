@@ -30,12 +30,24 @@ export async function getfullUserDetails({params}) {
     throw error; // Rethrow the error to be caught by the caller
   }
 }
-export async function postFormUserDetails(userData, id) {
+export async function updateUserDetails(userData, id) {
   try {
     const response = await axios.put(`http://localhost:3000/api/users/${id}`, userData);
+    
     return response.data;
   } catch (error) {
     console.error('Error posting user details:', error);
+    throw error; // Rethrow the error to be caught by the caller
+  }
+}
+
+export async function deleteUserDetails(id) {
+  try {
+    const response = await axios.delete(`http://localhost:3000/api/users/${id}`);
+    
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting user details:', error);
     throw error; // Rethrow the error to be caught by the caller
   }
 }

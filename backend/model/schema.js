@@ -27,7 +27,8 @@ const userSchema = new Schema({
     },
     ville: { type: Schema.Types.ObjectId, ref: 'VilleQuartier' },
     quartier: { type: Schema.Types.ObjectId, ref: 'VilleQuartier' },
-    telephone: String
+    telephone: String,
+    status : {type: Boolean, default: true}
 });
 
 // Image

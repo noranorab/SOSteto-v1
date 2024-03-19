@@ -4,7 +4,7 @@ import Navbar from '../../components/navbar/Navbar';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Link, useLoaderData } from "react-router-dom";
-import { getUsers } from "../../data/users";
+import { getUsers, deleteUserDetails } from "../../data/users";
 import './list.scss'
 
 export async function loader(){
@@ -13,10 +13,12 @@ export async function loader(){
 }
 
 
-const toDelete = (e, rowIndex) => {
+const toDelete = async (e, userId) => {
   e.preventDefault();
-  console.log("Deleting user at index:", rowIndex);
-  // Implement your delete logic here, e.g., prompt confirmation and then delete the user
+  if (window.confirm('Are you sure you want to delete this user?')) {
+    
+    deleteUserDetails(userId);
+  }
 };
 
 
@@ -53,7 +55,7 @@ const List = () => {
                       <a
                         href="#"
                         onClick={(e) => {
-                          toDelete(e, rowIdx);
+                          toDelete(e, user._id);
                         }}
                       >
                       <DeleteIcon className='iconDelete'/>
