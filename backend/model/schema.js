@@ -11,6 +11,7 @@ const userSchema = new Schema({
     },
     email: {
         type: String,
+        trim: true,
         required: true,
     },
     mdp: {
@@ -23,19 +24,25 @@ const userSchema = new Schema({
     estConnecte: {
         type: String,
         default: false,
-    }
+    },
 });
 
 // Image
 const imageSchema = new Schema({
-    idUser: { type: Schema.Types.ObjectId, ref: 'User' },
     desc: String,
     data: Buffer
 });
 
+const imageUserSchema = new Schema({
+    id_User: { type: Schema.Types.ObjectId, ref: 'User' },
+    id_image: { type: Schema.Types.ObjectId, ref: 'Image' }
+});
+
+
 // Recruteur
 const recruteurSchema = new Schema({
     idUser: { type: Schema.Types.ObjectId, ref: 'User' },
+    imageId: { type: Schema.Types.ObjectId, ref: 'Image' },
     ville: { type: Schema.Types.ObjectId, ref: 'VilleQuartier' },
     quartier: { type: Schema.Types.ObjectId, ref: 'VilleQuartier' },
     telephone: String
@@ -58,6 +65,7 @@ const langueSchema = new Schema({
 
 // Profil Infirmier
 const profilInfirmierSchema = new Schema({
+    imageId: { type: Schema.Types.ObjectId, ref: 'Image' },
     a_propos: String,
     id_disponibilite: { type: Schema.Types.ObjectId, ref: 'Disponibilite' },
     id_cv: { type: Schema.Types.ObjectId, ref: 'Document' }
@@ -114,11 +122,12 @@ const documentSchema = new Schema({
 });
 
 // Tables de références
+
 // ville
 const villeSchema = new Schema({
     nom_ville: { type: String, required: true, unique: true },
     code_postal: Number
-});
+}, { timestamps: true });
 
 // specialite
 const specialiteSchema = new Schema({
@@ -129,7 +138,7 @@ const specialiteSchema = new Schema({
 const quartierSchema = new Schema({
     nom_quartier: String,
     nom_ville: { type: Schema.Types.ObjectId, ref: 'Ville' }
-});
+}, { timestamps: true });
 //ville-quartier
 
 // Soins
@@ -183,5 +192,6 @@ module.exports = {
     InfirmierSoins: mongoose.model('InfirmierSoins', infirmierSoinsSchema),
     FavorisDemandes: mongoose.model('FavorisDemandes', favorisDemandesSchema),
     FavorisInfirmiers: mongoose.model('FavorisInfirmiers', favorisInfirmiersSchema),
-    Langue: mongoose.model('Langue', langueSchema)
+    Langue: mongoose.model('Langue', langueSchema),
+    ImageUser: mongoose.model('ImageUser', imageUserSchema)
 };

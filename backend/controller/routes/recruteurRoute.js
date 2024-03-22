@@ -4,8 +4,8 @@ const RecruteurController = require('../controllers/recruteurController');
 
 /**
  * @openapi
- * /api/recruteurs:
- *   post:
+ * '/api/recruteurs':
+ *  post:
  *     summary: Create a new recruteur
  *     description: Create a new recruteur with the provided details.
  *     requestBody:
@@ -13,7 +13,7 @@ const RecruteurController = require('../controllers/recruteurController');
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/RecruteurInput'
+ *             $ref: '#/components/schemas/Recruteur'
  *     responses:
  *       '201':
  *         description: Recruteur created successfully
@@ -22,14 +22,16 @@ const RecruteurController = require('../controllers/recruteurController');
  *             schema:
  *               $ref: '#/components/schemas/Recruteur'
  */
-router.post('/api/recruteurs/', RecruteurController.createRecruteur);
+router.post('/api/recruteurs', RecruteurController.createRecruteur);
 
 /**
- * @swagger
- * /api/recruteurs:
- *   get:
+ * @openapi
+ * '/api/recruteurs':
+ *  get:
  *     summary: Get all recruteurs
  *     description: Retrieve a list of all recruteurs.
+ *     tags:
+ *       - Recruteurs
  *     responses:
  *       '200':
  *         description: A list of recruteurs
@@ -40,14 +42,16 @@ router.post('/api/recruteurs/', RecruteurController.createRecruteur);
  *               items:
  *                 $ref: '#/components/schemas/Recruteur'
  */
-router.get('/api/recruteurs/', RecruteurController.getAllRecruteurs);
+router.get('/api/recruteurs', RecruteurController.getAllRecruteurs);
 
 /**
- * @swagger
- * /api/recruteurs/{id}:
- *   get:
+ * @openapi
+ * '/api/recruteurs/{id}':
+ *  get:
  *     summary: Get recruteur by ID
  *     description: Retrieve a single recruteur by their ID.
+ *     tags:
+ *       - Recruteurs
  *     parameters:
  *       - in: path
  *         name: id
@@ -68,11 +72,13 @@ router.get('/api/recruteurs/', RecruteurController.getAllRecruteurs);
 router.get('/api/recruteurs/:id', RecruteurController.getRecruteurById);
 
 /**
- * @swagger
- * /api/recruteurs/{id}:
- *   put:
+ * @openapi
+ * '/api/recruteurs/{id}':
+ *  put:
  *     summary: Update recruteur
  *     description: Update an existing recruteur's details.
+ *     tags:
+ *       - Recruteurs
  *     parameters:
  *       - in: path
  *         name: id
@@ -85,7 +91,7 @@ router.get('/api/recruteurs/:id', RecruteurController.getRecruteurById);
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/RecruteurInput'
+ *             $ref: '#/components/schemas/Recruteur'
  *     responses:
  *       '200':
  *         description: Recruteur updated successfully
@@ -99,11 +105,13 @@ router.get('/api/recruteurs/:id', RecruteurController.getRecruteurById);
 router.put('/api/recruteurs/:id', RecruteurController.updateRecruteurById);
 
 /**
- * @swagger
- * /api/recruteurs/{id}:
- *   delete:
+ * @openapi
+ * '/api/recruteurs/{id}':
+ *  delete:
  *     summary: Delete recruteur
  *     description: Delete an existing recruteur by their ID.
+ *     tags:
+ *       - Recruteurs
  *     parameters:
  *       - in: path
  *         name: id

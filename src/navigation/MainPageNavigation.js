@@ -1,24 +1,12 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import * as React from 'react';
 import { View, Image, TouchableOpacity, Pressable, StyleSheet, Text, ScrollView } from 'react-native';
-import RNPickerSelect from 'react-native-picker-select';
-
-import Ionicons from 'react-native-vector-icons/Ionicons';
-
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/core';
-import { villes } from '../data/villes';
-import { specialities } from '../data/specialities';
 import MainPageScreen from '../screens/MainPageScreen';
-import { Button } from '../components/Button';
 import Footer from '../components/Footer';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
-import HelpScreen from '../screens/HelpScreen';
 import SearchResultNonConnct from '../screens/SearchResultNonConnct';
 import VoirProfileDetailsScreen from '../screens/VoirProfileDetailsScreen';
 import Connect from '../screens/Connect';
-import PublicProfileScreen from '../screens/PublicProfileScreen';
-import EditPublicProfileScreen from '../screens/EditPublicProfileScreen';
 import Header from '../components/Header';
 import RegisterPageScreen from '../screens/RegisterPageScreen';
 

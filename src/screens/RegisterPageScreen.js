@@ -17,9 +17,6 @@ const SignUpScreen = ({ navigation }) => {
 
     const handleSignUp = async () => {
         try {
-            // Show loading indicator or disable the signup button
-            // ...
-
             const response = await axios.post('http://192.168.8.119:3000/api/users/register', {
                 nom,
                 prenom,
@@ -29,10 +26,9 @@ const SignUpScreen = ({ navigation }) => {
                 estConnecte: false,
             });
 
-            // Hide loading indicator or enable the signup button
-            // ...
 
-            console.log('Registration successful:', response.data);
+
+
             if (response.status === 201) {
                 Alert.alert('Success', 'Registered Successfully!', [
                     {
@@ -111,7 +107,7 @@ const SignUpScreen = ({ navigation }) => {
                     />
                     {error ? (
                         <View style={styles.errorContainer}>
-                            {/* <Icon name="error" color="red" size={24} /> */}
+
                             <Text style={styles.errorText}>{error}</Text>
                         </View>
                     ) : null}

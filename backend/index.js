@@ -7,7 +7,10 @@ const connectToDatabase = require('./database');
 const models = require('./model/schema');
 // route imports
 const userRoutes = require('./controller/routes/userRoute');
+const villeRoutes = require('./controller/routes/villeRoute');
+const quartierRoutes = require('./controller/routes/quartierRoute');
 const recruteurRoutes = require('./controller/routes/recruteurRoute')
+const imageRoutes = require('./controller/routes/imageRoute')
 const swaggerDocs = require('./swagger/swagger');
 const bodyParser = require('body-parser');
 const app = express();
@@ -23,10 +26,16 @@ for (const modelName in models) {
     }
 }
 app.use(bodyParser.json());
+
 app.use(cors({
-    origin: 'http://localhost:3000'
+
 }));
+
 app.use('/', userRoutes);
+app.use('/', villeRoutes);
+app.use('/', quartierRoutes);
+app.use('/', recruteurRoutes);
+app.use('/', imageRoutes);
 // app.use('/api/recruteurs', recruteurRoutes)
 
 

@@ -4,8 +4,7 @@ const jwt = require('jsonwebtoken');
 const { User } = require('../../model/schema');
 
 
-
-
+//User
 exports.createUser = async (req, res) => {
     try {
         const { nom, prenom, email, mdp, role, estConnecte } = req.body;
@@ -61,13 +60,15 @@ exports.deleteUser = async (req, res) => {
 };
 
 
-const bcrypt = require('bcrypt');
+
+
+
 
 exports.register = async (req, res) => {
     try {
         const { nom, prenom, email, mdp, role, estConnecte } = req.body;
+        console.log(nom);
 
-        // Check for existing email
         const existingEmail = await User.findOne({ email });
 
         if (existingEmail) {
@@ -77,20 +78,18 @@ exports.register = async (req, res) => {
 
         if (mdp) {
             try {
-                const hashedMdp = await bcrypt.hash(mdp, 10);
-
                 const user = new User({
                     nom,
                     prenom,
                     email,
-                    mdp: hashedMdp,
+                    mdp,
                     role,
                     estConnecte,
-                });
+                }).save();
 
-                const savedUser = await user.save();
-
+                console.log(user);
                 return res.status(201).json({ msg: `User registered successfully.` });
+
             } catch (hashingError) {
                 console.error('Error hashing password:', hashingError);
                 return res.status(500).json({ error: "Unable to create user. Please try again later." });
@@ -113,16 +112,16 @@ exports.login = async (req, res) => {
     const { email, mdp } = req.body;
 
     try {
-        const user = await User.findOne({ email });
 
+        const user = await User.findOne({ email: email });
         if (!user) {
             return res.status(404).json({ error: "Invalid credentials" });
         }
 
-        const passwordCheck = await bcrypt.compare(mdp, user.mdp);
 
-        if (!passwordCheck) {
-            return res.status(400).json({ error: "Invalid credentials" });
+        if (user.mdp !== mdp) {
+            console.log('Incorrect password for email:', email);
+            return res.status(400).json({ error: "Invalid password" });
         }
 
         const token = jwt.sign({
@@ -138,3 +137,6 @@ exports.login = async (req, res) => {
         return res.status(500).json({ error: 'Internal Server Error' });
     }
 };
+
+
+c
