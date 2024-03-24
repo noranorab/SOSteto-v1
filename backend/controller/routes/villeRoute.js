@@ -102,4 +102,34 @@ villeRouter.put('/api/villes/:id', VilleController.updateVille);
  */
 villeRouter.delete('/api/villes/:id', VilleController.deleteVille);
 
+
+/**
+ * @openapi
+ * /api/villes/{villeId}/quartiers:
+ *   get:
+ *     summary: Get all districts by city ID
+ *     description: Retrieve a list of all districts for a given city ID.
+ *     tags:
+ *       - Villes
+ *     parameters:
+ *       - in: path
+ *         name: villeId
+ *         required: true
+ *         description: The ID of the city
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         description: A list of districts
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Quartier'
+ *       '404':
+ *         description: Quartiers not found for the city
+ */
+villeRouter.get('/api/villes/:villeId/quartiers', VilleController.getQuartiersByVilleId);
+
 module.exports = villeRouter;

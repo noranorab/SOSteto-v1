@@ -31,12 +31,3 @@ exports.deleteQuartier = async (req, res) => {
     }
 };
 
-exports.getQuartiersByCity = async (req, res) => {
-    try {
-        const { nom_ville } = req.params;
-        const quartiers = await Quartier.find({ nom_ville });
-        res.status(200).json(quartiers);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
