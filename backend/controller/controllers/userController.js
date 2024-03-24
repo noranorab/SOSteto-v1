@@ -1,14 +1,16 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
+var ObjectId = require('mongoose').Types.ObjectId; 
 
-const { User } = require('../../model/schema');
+const { User, Role, Ville, Quartier } = require('../../model/schema');
+const VilleController = require('./villeController');
 
 
 //User
 exports.createUser = async (req, res) => {
     try {
-        const { nom, prenom, email, mdp, role, estConnecte } = req.body;
-        const newUser = await User.create({ nom, prenom, email, mdp, role, estConnecte });
+        const { nom, prenom, email, mdp, role, estConnecte, ville, quartier, telephone } = req.body;
+        const newUser = await User.create({ nom, prenom, email, mdp, role, estConnecte, ville, quartier, telephone });
         res.status(201).json(newUser);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -25,23 +27,67 @@ exports.getAllUsers = async (req, res) => {
 
 exports.getUserById = async (req, res) => {
     try {
-        const user = await User.findById(req.params._id);
-        if (!user) {
+        const user = await User.findById(req.params.userId);
+        console.log(user.ville)
+        const {nom_ville} = await Ville.findOne(user.ville)
+        const {nom_quartier} = await Quartier.findOne(user.quartier)
+        const userRes = {
+            _id : user._id,
+            nom : user.nom,
+            prenom: user.prenom,
+            email : user.email,
+            mdp: user.mdp,
+            role: user.role,
+            estConnecte: user.estConnecte,
+            ville: nom_ville,
+            quartier: nom_quartier,
+            telephone: user.telephone,
+        }
+        if (!userRes) {
             return res.status(404).json({ message: 'User not found' });
         }
-        res.json(user);
+        res.json(userRes);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
 
+
+exports.getUserByRole = async (req, res) => {
+    try {
+        const { role } = req.query
+        const users = await User.find({ role });
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+
 exports.updateUser = async (req, res) => {
     try {
-        const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        if (!updatedUser) {
+        console.log(req.body)
+        const {ville, quartier} = req.body
+        const userVille = await Ville.findOne({nom_ville: ville})
+        const userQuartier = await Quartier.findOne({nom_quartier : quartier})
+        const updatedUser = {
+            nom : req.body.nom,
+            prenom: req.body.prenom,
+            email : req.body.email,
+            mdp: req.body.mdp,
+            role: req.body.role,
+            estConnecte: req.body.estConnecte,
+            ville: new ObjectId(userVille._id),
+            quartier: new ObjectId(userQuartier._id),
+            telephone: req.body.telephone,
+            status : req.body.status
+        }
+        const new_user = await User.findByIdAndUpdate(req.params.id, updatedUser, { new: true });
+
+        if (!new_user) {
             return res.status(404).json({ message: 'User not found' });
         }
-        res.json(updatedUser);
+        res.json(new_user);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -66,7 +112,7 @@ const bcrypt = require('bcrypt');
 
 exports.register = async (req, res) => {
     try {
-        const { nom, prenom, email, mdp, role, estConnecte } = req.body;
+        const { nom, prenom, email, mdp, role, estConnecte, ville, quartier, telephone, status } = req.body;
 
         // Check for existing email
         const existingEmail = await User.findOne({ email });
@@ -87,6 +133,10 @@ exports.register = async (req, res) => {
                     mdp: hashedMdp,
                     role,
                     estConnecte,
+                    ville,
+                    quartier,
+                    telephone,
+                    status,
                 });
 
                 const savedUser = await user.save();

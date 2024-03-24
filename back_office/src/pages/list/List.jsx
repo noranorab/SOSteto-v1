@@ -4,7 +4,7 @@ import Navbar from '../../components/navbar/Navbar';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Link, useLoaderData } from "react-router-dom";
-import { getUsers } from "../../data/users";
+import { getUsers, deleteUserDetails } from "../../data/users";
 import './list.scss'
 
 export async function loader(){
@@ -12,21 +12,18 @@ export async function loader(){
   return { data }
 }
 
-const toEdit = (e, user, rowIndex) => {
+
+const toDelete = async (e, userId) => {
   e.preventDefault();
-  console.log("Editing user:", user);
-  // Implement your edit logic here, e.g., open a modal with user data for editing
+  if (window.confirm('Are you sure you want to delete this user?')) {
+    
+    deleteUserDetails(userId);
+  }
 };
 
-const toDelete = (e, rowIndex) => {
-  e.preventDefault();
-  console.log("Deleting user at index:", rowIndex);
-  // Implement your delete logic here, e.g., prompt confirmation and then delete the user
-};
 
 const List = () => {
   const {data} = useLoaderData();
-  console.log(data)
   return (
     <div className="usersPage">
       <Sidebar />
@@ -51,16 +48,14 @@ const List = () => {
                     <td>{user.email}</td>
                     <td>{user.role}</td>
                     <td>
-                      <a href="#" onClick={(e) => toEdit(e, user, rowIdx)}>
                       <Link to={`/users/${user._id}`}>
                         <EditIcon className='iconEdit'/>
                       </Link>
-                      
-                      </a>{' '}
+                      {' '}
                       <a
                         href="#"
                         onClick={(e) => {
-                          toDelete(e, rowIdx);
+                          toDelete(e, user._id);
                         }}
                       >
                       <DeleteIcon className='iconDelete'/>

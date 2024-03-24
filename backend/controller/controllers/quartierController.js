@@ -1,4 +1,4 @@
-const { Quartier } = require('../../model/schema');
+const { Quartier, Ville } = require('../../model/schema');
 
 exports.createQuartier = async (req, res) => {
     try {

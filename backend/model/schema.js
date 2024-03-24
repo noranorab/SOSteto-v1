@@ -17,13 +17,18 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    role: {
+    role: { 
         type: String,
-    },
+        required: true
+     },
     estConnecte: {
         type: String,
         default: false,
     },
+    ville: { type: Schema.Types.ObjectId, ref: 'VilleQuartier' },
+    quartier: { type: Schema.Types.ObjectId, ref: 'VilleQuartier' },
+    telephone: String,
+    status : {type: Boolean, default: true}
 });
 
 // Image
@@ -38,23 +43,21 @@ const imageUserSchema = new Schema({
 });
 
 
-// Recruteur
-const recruteurSchema = new Schema({
-    idUser: { type: Schema.Types.ObjectId, ref: 'User' },
-    imageId: { type: Schema.Types.ObjectId, ref: 'Image' },
-    ville: { type: Schema.Types.ObjectId, ref: 'VilleQuartier' },
-    quartier: { type: Schema.Types.ObjectId, ref: 'VilleQuartier' },
-    telephone: String
-});
+
 
 // Infirmier
 const infirmierSchema = new Schema({
     idUser: { type: Schema.Types.ObjectId, ref: 'User' },
-    ville: { type: Schema.Types.ObjectId, ref: 'VilleQuartier' },
-    quartier: { type: Schema.Types.ObjectId, ref: 'VilleQuartier' },
-    telephone: String,
-    langue_parlee: { type: Schema.Types.ObjectId, ref: 'VilleQuartier' },
+    langue_parlee: { type: Schema.Types.ObjectId, ref: 'Langue' },
     specialite: { type: Schema.Types.ObjectId, ref: 'Specialite' }
+});
+// Recruteur
+const roleSchema = new Schema({
+    role: {
+            type: String,
+            unique: true,
+            index: true,
+        }
 });
 
 //langue
@@ -174,7 +177,6 @@ const favorisInfirmiersSchema = new Schema({
 module.exports = {
     User: mongoose.model('User', userSchema),
     Image: mongoose.model('Image', imageSchema),
-    Recruteur: mongoose.model('Recruteur', recruteurSchema),
     Infirmier: mongoose.model('Infirmier', infirmierSchema),
     ProfilInfirmier: mongoose.model('ProfilInfirmier', profilInfirmierSchema),
     Session: mongoose.model('Session', sessionSchema),
@@ -192,5 +194,7 @@ module.exports = {
     FavorisDemandes: mongoose.model('FavorisDemandes', favorisDemandesSchema),
     FavorisInfirmiers: mongoose.model('FavorisInfirmiers', favorisInfirmiersSchema),
     Langue: mongoose.model('Langue', langueSchema),
-    ImageUser: mongoose.model('ImageUser', imageUserSchema)
+    ImageUser: mongoose.model('ImageUser', imageUserSchema),
+    //Role: mongoose.model('Role', roleSchema),
+    //FullRecruteurDetails: mongoose.model('FullRecruteurDetails', fullRecruteurDetailsSchema)
 };
