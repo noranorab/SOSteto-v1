@@ -14,11 +14,7 @@
     "@react-navigation/bottom-tabs": "^6.5.12",
     "@react-navigation/native": "^6.1.10",
     "@react-navigation/native-stack": "^6.9.18",
-<<<<<<< HEAD
     "axios": "^1.6.7",
-=======
-    "axios": "^1.6.8",
->>>>>>> origin/nora
     "cldr-data": "^36.0.1",
     "cors": "^2.8.5",
     "date-fns": "^3.3.1",
