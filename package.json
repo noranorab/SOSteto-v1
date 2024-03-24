@@ -14,7 +14,11 @@
     "@react-navigation/bottom-tabs": "^6.5.12",
     "@react-navigation/native": "^6.1.10",
     "@react-navigation/native-stack": "^6.9.18",
+<<<<<<< HEAD
     "axios": "^1.6.7",
+=======
+    "axios": "^1.6.8",
+>>>>>>> origin/nora
     "cldr-data": "^36.0.1",
     "cors": "^2.8.5",
     "date-fns": "^3.3.1",
@@ -37,6 +41,8 @@
     "react-native-safe-area-context": "4.8.2",
     "react-native-screens": "~3.29.0",
     "react-native-web": "~0.19.6",
+    "react-query": "^3.39.3",
+    "react-router-native": "^6.22.3",
     "swagger-autogen": "^2.23.7"
   },
   "devDependencies": {

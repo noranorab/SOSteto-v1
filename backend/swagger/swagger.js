@@ -7,7 +7,8 @@ const { userloginSchema } = require('../schema/userSchema')
 const { villeSchema } = require('../schema/villeSchema')
 const { quartierSchema} = require('../schema/quartierSchema')
 const {imageSchema} = require('../schema/imageSchema')
-const {roleSchema} = require('../schema/roleSchema')
+const {roleSchema} = require('../schema/roleSchema');
+const { infirmierSchema, infirmierOutputSchema } = require('../schema/infirmierSchema');
 
 const swaggerDefinition = {
   openapi: '3.0.0',
@@ -32,6 +33,8 @@ const swaggerDefinition = {
       Quartier: quartierSchema,
       Image: imageSchema,
       Role: roleSchema,
+      Infirmier: infirmierSchema,
+      InfirmierOutput: infirmierOutputSchema
     }
   },
   security: [
@@ -59,6 +62,10 @@ const swaggerDefinition = {
     {
       name: 'Role of user',
       description: 'Endpoints related to roles management'
+    },
+    {
+      name: 'Infirmiers',
+      description: 'Endpoints related to infirmiers management'
     }
   ]
 };
@@ -66,7 +73,7 @@ const swaggerDefinition = {
 const options = {
   swaggerDefinition,
   apis: ['./controller/routes/userRoute.js', './controller/routes/villeRoute.js', './controller/routes/quartierRoute.js','./controller/routes/imageRoute.js',
-          './controller/routes/roleRoute.js',
+          './controller/routes/roleRoute.js', './controller/routes/infirmierRoute.js'
 ], // Path to the API routes in your Node.js application
 };
 
