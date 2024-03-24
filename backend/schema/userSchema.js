@@ -89,4 +89,18 @@ const userloginSchema = {
   }
 }
 
-module.exports = { userSchema, userInputSchema, userloginSchema }
+const usertokenShema = {
+  type: 'object',
+  required: ['token'],
+  properties: {
+
+    token: {
+      type: 'string',
+      description: 'The token of user'
+    },
+
+
+  }
+}
+
+module.exports = { userSchema, userInputSchema, userloginSchema, usertokenShema }

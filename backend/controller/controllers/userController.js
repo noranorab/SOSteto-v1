@@ -125,11 +125,10 @@ exports.login = async (req, res) => {
         }
 
         const token = jwt.sign({
-            userId: user._id,
+            email: user.email,
         }, process.env.JWT_SECRET, { expiresIn: "24h" });
 
         return res.status(200).json({
-            msg: "Login Successful",
             token
         });
     } catch (error) {
@@ -138,4 +137,29 @@ exports.login = async (req, res) => {
     }
 };
 
+exports.userdatafromtoken = async (req, res) => {
+    const { token } = req.body;
+
+    try {
+        // Verify the token and extract user data
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const userEmail = decoded.email;
+
+        // Find the user in the database based on the email
+        const user = await User.findOne({ email: userEmail });
+
+        if (!user) {
+            // If user not found, return appropriate response
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+
+        // If user found, return user data
+        return res.status(200).json({ status: 200, data: user });
+    } catch (error) {
+        // Handle token verification errors
+        console.error('Error during user data retrieval:', error);
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
 

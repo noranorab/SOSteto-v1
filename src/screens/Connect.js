@@ -7,27 +7,41 @@ import { Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 
 import * as WebBrowser from "expo-web-browser";
+import * as Google from "expo-auth-session/providers/google";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import * as Linking from "expo-linking";
+WebBrowser.maybeCompleteAuthSession();
 
 
 const Connect = ({ navigation }) => {
-    const { navigate } = useNavigation()
 
+    const { navigate } = useNavigation()
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
+
+
+
+
+
+
     const handleSignIn = async () => {
         try {
-            const response = await axios.post('http://192.168.8.119:3000/api/users/login', {
+            const response = await axios.post('http://192.168.58.61:3000/api/users/login', {
                 email: email,
                 mdp: password,
             });
             console.log('Login Response:', response.data); // Log the response data
-            console.log('Registration successful:', response.data);
+
             if (response.status === 200) {
+                // const tokenString = JSON.stringify(response.data.data); // Convert object to string
+                AsyncStorage.setItem("token", response.data.data);
+                // AsyncStorage.setItem("token", tokenString);
+                const token = await AsyncStorage.getItem("token");
+                console.log(token)
                 navigation.navigate('home7');
+
             } else {
                 const errorMessage = error.response?.data?.error || 'An error occurred';
                 Alert.alert('Error', errorMessage);
@@ -39,35 +53,7 @@ const Connect = ({ navigation }) => {
         }
     };
 
-    const YOUR_CLIENT_ID = "1094627412794-kke894bm9r2ocv4q25qmhgh01rdhjno7.apps.googleusercontent.com";
-    const YOUR_REDIRECT_URI = "http://localhost:3000/auth/google/callback";
 
-    const handleSignInGoogle = async () => {
-
-        const result = await WebBrowser.openAuthSessionAsync(
-            `https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=${YOUR_CLIENT_ID}&redirect_uri=${YOUR_REDIRECT_URI}&scope=https://www.googleapis.com/auth/userinfo.email%20https://www.googleapis.com/auth/userinfo.profile&access_type=offline&state=1234_purpleGoogle&prompt=consent`,
-            YOUR_REDIRECT_URI
-        );
-
-        if (result.type === "success") {
-
-            // get back the params from the url
-            const params = Linking.parse(result.url);
-
-            const { email, name, picture } = params.queryParams;
-
-            //pass in all the user data in an object...
-            const user = {
-                email,
-                name,
-                picture,
-            };
-
-            // navigate to the HomeScreen and pass the user object
-            // navigation.navigate("HomeScreen", );
-            navigation.navigate('home7', { user })
-        }
-    };
 
     return (
         <KeyboardAvoidingView
@@ -81,7 +67,7 @@ const Connect = ({ navigation }) => {
                 <Header />
                 <View style={styles.container}>
                     <Text style={styles.title}>Se connecter</Text>
-                    <TouchableOpacity style={styles.signInButtonG} onPress={handleSignInGoogle}>
+                    <TouchableOpacity style={styles.signInButtonG} onPress={() => { promptAsync() }}>
                         <Text style={styles.signInButtonText}>Sign In with Google</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.signInButtonF}>

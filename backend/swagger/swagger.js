@@ -4,6 +4,7 @@ const swaggerUi = require('swagger-ui-express');
 const { userSchema } = require('../schema/userSchema')
 const { userInputSchema } = require('../schema/userSchema')
 const { userloginSchema } = require('../schema/userSchema')
+const { usertokenShema } = require('../schema/userSchema')
 const { villeSchema } = require('../schema/villeSchema')
 const { quartierSchema } = require('../schema/quartierSchema')
 const { recruteurSchema } = require('../schema/recruteurSchema')
@@ -28,6 +29,7 @@ const swaggerDefinition = {
       User: userSchema,
       UserInput: userInputSchema,
       UserLogin: userloginSchema,
+      UserData: usertokenShema,
       Ville: villeSchema,
       Quartier: quartierSchema,
       Recruteur: recruteurSchema,
