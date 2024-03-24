@@ -10,27 +10,34 @@ import { posts } from '../data/posts';
 export default function HomeScreen() {
     const [infirmiers, setInfirmiers] = React.useState([])
 
-
-    
-    const getAllInfirmiers = async () => {
+    const getAllInfirmiers = () => {
         try {
-        
-        const response = await axios.get('http://192.168.62.220:3000/api/users?role=infirmier');
-        const data = response.data
-        console.log(data)
-        setInfirmiers(data)
-        } catch (error) {
+        axios.get('http://192.168.8.104:3000/api/users?role=infirmier').then
+        (res => {
+            setInfirmiers(res.data.data)
+            console.log(infirmiers)
+        })
+        .catch (error => {
             console.error('Error fetching infirmiers info:', error);
+        })
+    } catch (error){
+        console.error("error fetching data")
+    }
+}
         
-        }
-  }
 
     React.useEffect(() => {
-        setTimeout(getAllInfirmiers(),3000)
+        console.log('heeellloo')
+        getAllInfirmiers()
         
     }, [])
+    if (!infirmiers) {
+        return <Text>Loading user data...</Text>
+    }
+
     return(
-        <View >
+        
+        <View>
             <FlatList 
             data={infirmiers}
             renderItem={({item}) => <PostItem item={item} /> }

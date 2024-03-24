@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 // connect to database
-const connectToDatabase = require('./database');
+const connectToDatabase = require('./Database');
 // model imports 
 const models = require('./model/schema');
 const morgan =  require('morgan')
@@ -31,7 +31,7 @@ for (const modelName in models) {
 }
 app.use(bodyParser.json());
 app.use(cors({
-    origin: ['http://localhost:3001', 'http://localhost:8081','exp://192.168.8.104:8081', 'exp://asm7ciw-anonymous-8081.exp.direct', 'http://192.168.62.220:3000']
+    origin: ['http://localhost:3001', 'http://localhost:8081','http://192.168.8.104:8081', 'exp://asm7ciw-anonymous-8081.exp.direct', 'http://192.168.8.104:3000', 'https://us-central1-sosteto-f1066.cloudfunctions.net/api', "exp://192.168.8.104:8081"]
 }));
 app.use('/', userRoutes);
 app.use('/', villeRoutes);
@@ -43,13 +43,12 @@ app.use('/', infirmierRoutes)
 
 
 app.use(morgan('combined'))
-console.log('JWT_SECRET:', process.env.JWT_SECRET);
 
-const PORT = process.env.PORT || 3000
+const port = 3000
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-    swaggerDocs(app, PORT)
-});
+app.listen(port, ()=>{
+    console.log(`App running on port ${port}`)
+    swaggerDocs(app, port)
+})
 
-//exports.app = functions.https.onRequest(app)
+exports.api = functions.https.onRequest(app)
