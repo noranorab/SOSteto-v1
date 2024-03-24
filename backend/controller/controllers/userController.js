@@ -19,6 +19,7 @@ exports.createUser = async (req, res) => {
 exports.getAllUsers = async (req, res) => {
     try {
         const users = await User.find();
+        console.log('i am hree ')
         res.status(200).send(users);
     } catch (error) {
         res.status(500).json(error);
