@@ -20,15 +20,13 @@ export default function PublicProfileScreen() {
         try {
             const storedTokenString = await AsyncStorage.getItem("token");
             if (storedTokenString) {
-                const storedTokenObject = JSON.parse(storedTokenString);
-                const token = storedTokenObject.token;
-                setToken(token);
-                axios.post('http://192.168.58.61:3000/api/users/userdata', { token })
+                setToken(storedTokenString);
+                console.log(token);
+                axios.post('http://192.168.8.119:3000/api/users/userdata', { token: storedTokenString }) // Use storedTokenString here
                     .then(res => {
                         console.log(res.data);
                         setUserData(res.data.data); // Set user data here
                         console.log(userData);
-
                     })
                     .catch(error => {
                         console.error("Error fetching user data:", error);
