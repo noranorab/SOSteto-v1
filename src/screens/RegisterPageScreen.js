@@ -1,19 +1,53 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import Header from '../components/Header';
+import axios from 'axios';
+import { Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/core';
 
 const SignUpScreen = ({ navigation }) => {
     const [nom, setNom] = useState('');
+    const { navigate } = useNavigation()
     const [prenom, setPrenom] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
+    const [error, setError] = useState(null);
 
-    const handleSignUp = () => {
-        // Add your sign-up logic here
-        console.log('Signing up with:', nom, prenom, email, password);
-        // You can navigate to another screen or perform sign-up logic
+
+
+    const handleSignUp = async () => {
+        try {
+            const response = await axios.post('http://192.168.58.61:3000/api/users/register', {
+                nom,
+                prenom,
+                email,
+                mdp: password,
+                role: "recruteur",
+                estConnecte: false,
+            });
+
+
+
+
+            if (response.status === 201) {
+                Alert.alert('Success', 'Registered Successfully!', [
+                    {
+                        text: 'OK',
+                        onPress: () => navigate('connect'),
+                    },
+                ]);
+            } else {
+
+                const errorMessage = error.response?.data?.error || 'An error occurred';
+                Alert.alert('Error', errorMessage);
+            }
+        } catch (error) {
+            const errorMessage = error.response?.data?.error || 'An error occurred';
+            setError(errorMessage);
+
+        }
     };
+
 
     return (
         <KeyboardAvoidingView
@@ -63,6 +97,7 @@ const SignUpScreen = ({ navigation }) => {
                         onChangeText={(text) => setEmail(text)}
                     />
 
+
                     <TextInput
                         style={styles.input}
                         placeholder="Mot de passe"
@@ -70,14 +105,14 @@ const SignUpScreen = ({ navigation }) => {
                         value={password}
                         onChangeText={(text) => setPassword(text)}
                     />
+                    {error ? (
+                        <View style={styles.errorContainer}>
 
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Confirmer le mot de passe"
-                        secureTextEntry
-                        value={confirmPassword}
-                        onChangeText={(text) => setConfirmPassword(text)}
-                    />
+                            <Text style={styles.errorText}>{error}</Text>
+                        </View>
+                    ) : null}
+
+
 
                     <TouchableOpacity style={styles.signUpButton} onPress={handleSignUp}>
                         <Text style={styles.signUpButtonText}>Devenir membre</Text>
@@ -191,6 +226,21 @@ const styles = StyleSheet.create({
         marginRight: 8,
         marginLeft: 8,
         borderRadius: 5,
+    },
+    errorContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'left',
+        width: '80%',
+        // backgroundColor: '#FFD2D2', // Light red background color
+        padding: 3,
+        // borderRadius: 5,
+        // marginTop: 10,
+    },
+    errorText: {
+        color: 'red',
+        marginLeft: 0,
+        fontSize: 13,
     },
 });
 

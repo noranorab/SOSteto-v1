@@ -30,7 +30,7 @@ const userSchema = {
       type: 'boolean',
       description: 'Indicates whether the user is currently connected.'
     },
-    ville:{
+    ville: {
       type: Schema.Types.ObjectId,
       ref: 'Ville'
     },
@@ -74,7 +74,7 @@ const userOutputSchema = {
       type: 'boolean',
       description: 'Indicates whether the user is currently connected.'
     },
-    ville:{
+    ville: {
       type: 'string',
       description: 'ville of user'
     },
@@ -111,5 +111,18 @@ const userloginSchema = {
 
   }
 }
+const usertokenShema = {
+  type: 'object',
+  required: ['token'],
+  properties: {
 
-module.exports = { userSchema, userloginSchema, userOutputSchema }
+    token: {
+      type: 'string',
+      description: 'The token of user'
+    },
+
+
+  }
+}
+
+module.exports = { userSchema, userloginSchema, userOutputSchema, usertokenShema }
