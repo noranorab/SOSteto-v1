@@ -171,7 +171,7 @@ router.delete('/api/users/:id', UserController.deleteUser);
  *      content:
  *        application/json:
  *           schema:
- *             $ref: '#/components/schemas/User' 
+ *             $ref: '#/components/schemas/UserInput' 
  *     responses:
  *      201:
  *        description: Created
@@ -211,6 +211,33 @@ router.post('/api/users/register', UserController.register);
  */
 
 router.post('/api/users/login', UserController.login);
+
+/**
+ * @openapi
+ * '/api/users/userdata':
+ *  post:
+ *     tags:
+ *     - Users
+ *     summary: get data from a valid token
+ *     requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UserData' 
+ *     responses:
+ *      201:
+ *        description: Created
+ *      409:
+ *        description: Conflict
+ *      404:
+ *        description: Not Found
+ *      500:
+ *        description: Server Error
+ */
+
+router.post('/api/users/userdata', UserController.userdatafromtoken);
+
 
 module.exports = router
 

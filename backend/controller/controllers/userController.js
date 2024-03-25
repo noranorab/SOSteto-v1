@@ -1,6 +1,6 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
-var ObjectId = require('mongoose').Types.ObjectId; 
+var ObjectId = require('mongoose').Types.ObjectId;
 
 const { User, Role, Ville, Quartier } = require('../../model/schema');
 const VilleController = require('./villeController');
@@ -30,13 +30,13 @@ exports.getUserById = async (req, res) => {
     try {
         const user = await User.findById(req.params.userId);
         console.log(user.ville)
-        const {nom_ville} = await Ville.findOne(user.ville)
-        const {nom_quartier} = await Quartier.findOne(user.quartier)
+        const { nom_ville } = await Ville.findOne(user.ville)
+        const { nom_quartier } = await Quartier.findOne(user.quartier)
         const userRes = {
-            _id : user._id,
-            nom : user.nom,
+            _id: user._id,
+            nom: user.nom,
             prenom: user.prenom,
-            email : user.email,
+            email: user.email,
             mdp: user.mdp,
             role: user.role,
             estConnecte: user.estConnecte,
@@ -68,20 +68,20 @@ exports.getUserByRole = async (req, res) => {
 exports.updateUser = async (req, res) => {
     try {
         console.log(req.body)
-        const {ville, quartier} = req.body
-        const userVille = await Ville.findOne({nom_ville: ville})
-        const userQuartier = await Quartier.findOne({nom_quartier : quartier})
+        const { ville, quartier } = req.body
+        const userVille = await Ville.findOne({ nom_ville: ville })
+        const userQuartier = await Quartier.findOne({ nom_quartier: quartier })
         const updatedUser = {
-            nom : req.body.nom,
+            nom: req.body.nom,
             prenom: req.body.prenom,
-            email : req.body.email,
+            email: req.body.email,
             mdp: req.body.mdp,
             role: req.body.role,
             estConnecte: req.body.estConnecte,
             ville: new ObjectId(userVille._id),
             quartier: new ObjectId(userQuartier._id),
             telephone: req.body.telephone,
-            status : req.body.status
+            status: req.body.status
         }
         const new_user = await User.findByIdAndUpdate(req.params.id, updatedUser, { new: true });
 
@@ -108,14 +108,11 @@ exports.deleteUser = async (req, res) => {
 
 
 
-// Register and login
-const bcrypt = require('bcrypt');
-
 exports.register = async (req, res) => {
     try {
-        const { nom, prenom, email, mdp, role, estConnecte, ville, quartier, telephone, status } = req.body;
+        const { nom, prenom, email, mdp, role, estConnecte, ville, quartier, telephone, status, } = req.body;
+        console.log(nom);
 
-        // Check for existing email
         const existingEmail = await User.findOne({ email });
 
         if (existingEmail) {
@@ -125,24 +122,22 @@ exports.register = async (req, res) => {
 
         if (mdp) {
             try {
-                const hashedMdp = await bcrypt.hash(mdp, 10);
-
                 const user = new User({
                     nom,
                     prenom,
                     email,
-                    mdp: hashedMdp,
+                    mdp,
                     role,
                     estConnecte,
                     ville,
                     quartier,
                     telephone,
                     status,
-                });
+                }).save();
 
-                const savedUser = await user.save();
+                console.log(user);
+                return res.status(201).json({ msg: `User registered successfully.` });
 
-                return res.status(201).json({ msg: `User registered successfully. UserId is ${savedUser._id}` });
             } catch (hashingError) {
                 console.error('Error hashing password:', hashingError);
                 return res.status(500).json({ error: "Unable to create user. Please try again later." });
@@ -165,28 +160,53 @@ exports.login = async (req, res) => {
     const { email, mdp } = req.body;
 
     try {
-        const user = await User.findOne({ email });
 
+        const user = await User.findOne({ email: email });
         if (!user) {
             return res.status(404).json({ error: "Invalid credentials" });
         }
 
-        const passwordCheck = await bcrypt.compare(mdp, user.mdp);
 
-        if (!passwordCheck) {
-            return res.status(400).json({ error: "Invalid credentials" });
+        if (user.mdp !== mdp) {
+            console.log('Incorrect password for email:', email);
+            return res.status(400).json({ error: "Invalid password" });
         }
 
         const token = jwt.sign({
-            userId: user._id,
+            email: user.email,
         }, process.env.JWT_SECRET, { expiresIn: "24h" });
 
         return res.status(200).json({
-            msg: "Login Successful",
             token
         });
     } catch (error) {
         console.error('Error during login:', error);
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+exports.userdatafromtoken = async (req, res) => {
+    const { token } = req.body;
+
+    try {
+        // Verify the token and extract user data
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const userEmail = decoded.email;
+
+        // Find the user in the database based on the email
+        const user = await User.findOne({ email: userEmail });
+
+        if (!user) {
+            // If user not found, return appropriate response
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+
+        // If user found, return user data
+        return res.status(200).json({ status: 200, data: user });
+    } catch (error) {
+        // Handle token verification errors
+        console.error('Error during user data retrieval:', error);
         return res.status(500).json({ error: 'Internal Server Error' });
     }
 };

@@ -17,18 +17,29 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    role: { 
+    role: {
         type: String,
         required: true
-     },
+    },
     estConnecte: {
         type: String,
         default: false,
     },
-    ville: { type: Schema.Types.ObjectId, ref: 'VilleQuartier' },
-    quartier: { type: Schema.Types.ObjectId, ref: 'VilleQuartier' },
-    telephone: String,
-    status : {type: Boolean, default: true}
+    ville: {
+        type: Schema.Types.ObjectId,
+        ref: 'VilleQuartier',
+        required: false,
+    },
+    quartier: {
+        type: Schema.Types.ObjectId,
+        ref: 'VilleQuartier',
+        required: false,
+    },
+    telephone: {
+        type: String,
+        required: false,
+    },
+    status: { type: Boolean, default: true }
 });
 
 // Image
@@ -67,10 +78,10 @@ const disponibiliteSchema = new Schema({
 // Recruteur
 const roleSchema = new Schema({
     role: {
-            type: String,
-            unique: true,
-            index: true,
-        }
+        type: String,
+        unique: true,
+        index: true,
+    }
 });
 
 //langue
@@ -89,12 +100,12 @@ const profilInfirmierSchema = new Schema({
 
 const langueInfirmierSchema = new Schema({
     userId: { type: Schema.Types.ObjectId, ref: 'User' },
-    languesparlees: {type: Schema.Types.ObjectId, ref: 'Langue'}
+    languesparlees: { type: Schema.Types.ObjectId, ref: 'Langue' }
 });
 
 const specialiteInfirmierSchema = new Schema({
     userId: { type: Schema.Types.ObjectId, ref: 'User' },
-    specialite: {type: Schema.Types.ObjectId, ref: 'Specialite'}
+    specialite: { type: Schema.Types.ObjectId, ref: 'Specialite' }
 });
 
 

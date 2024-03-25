@@ -1,48 +1,39 @@
 import { useNavigation } from '@react-navigation/core';
 import axios from 'axios';
-import * as React from 'react';
-import { View, Text, Image, FlatList, Pressable} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, Image, FlatList, Pressable } from 'react-native';
 import { PostItem } from '../components/PostItem';
 import { posts } from '../data/posts';
 
-
-
 export default function HomeScreen() {
-    const [infirmiers, setInfirmiers] = React.useState([])
+    const [infirmiers, setInfirmiers] = useState([]);
 
-    const getAllInfirmiers = () => {
-        try {
-        axios.get('http://192.168.8.104:3000/api/users?role=infirmier').then
-        (res => {
-            setInfirmiers(res.data.data)
-            console.log(infirmiers)
-        })
-        .catch (error => {
-            console.error('Error fetching infirmiers info:', error);
-        })
-    } catch (error){
-        console.error("error fetching data")
-    }
-}
-        
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                // const response = await axios.get('http://192.168.58.61:3000/api/users?role=infirmier');
+                const response = await axios.get('http://192.168.58.61:3000/api/infirmiers');
+                setInfirmiers(response.data);
+                console.log(response.data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
 
-    React.useEffect(() => {
-        console.log('heeellloo')
-        getAllInfirmiers()
-        
-    }, [])
-    if (!infirmiers) {
-        return <Text>Loading user data...</Text>
-    }
+        fetchData();
+    }, []); // Empty dependency array to ensure it runs only once on component mount
 
-    return(
-        
+    return (
         <View>
-            <FlatList 
-            data={infirmiers}
-            renderItem={({item}) => <PostItem item={item} /> }
-            keyExtractor={(item) => item._id.toString()}
-            />
+            {infirmiers.length === 0 ? (
+                <Text>Loading...</Text>
+            ) : (
+                <FlatList
+                    data={infirmiers}
+                    renderItem={({ item }) => <PostItem item={item} />}
+                    keyExtractor={(item) => item._id.toString()}
+                />
+            )}
         </View>
-    )
+    );
 }

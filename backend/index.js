@@ -5,7 +5,7 @@ const cors = require('cors');
 const connectToDatabase = require('./Database');
 // model imports 
 const models = require('./model/schema');
-const morgan =  require('morgan')
+const morgan = require('morgan')
 
 const functions = require("firebase-functions");
 
@@ -31,7 +31,7 @@ for (const modelName in models) {
 }
 app.use(bodyParser.json());
 app.use(cors({
-    origin: ['http://localhost:3001', 'http://localhost:8081','http://192.168.8.104:8081', 'exp://asm7ciw-anonymous-8081.exp.direct', 'http://192.168.8.104:3000', 'https://us-central1-sosteto-f1066.cloudfunctions.net/api', "exp://192.168.8.104:8081"]
+
 }));
 app.use('/', userRoutes);
 app.use('/', villeRoutes);
@@ -46,7 +46,7 @@ app.use(morgan('combined'))
 
 const port = 3000
 
-app.listen(port, ()=>{
+app.listen(port, () => {
     console.log(`App running on port ${port}`)
     swaggerDocs(app, port)
 })
