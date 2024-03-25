@@ -52,3 +52,13 @@ export async function deleteUserDetails(id) {
   }
 }
 
+export async function getInfirmierById(id){
+  try {
+    const response = await axios.get(`http://localhost:3000/api/infirmiers/${id}`)
+    
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting user details:', error);
+    throw error; // Rethrow the error to be caught by the caller
+  }
+}

@@ -4,7 +4,7 @@ import Navbar from '../../components/navbar/Navbar';
 import './DetailsOfUser.scss'
 
 import {json, useLoaderData } from 'react-router-dom';
-import { getUserById, updateUserDetails } from '../../data/users';
+import { getInfirmierById, getUserById, updateUserDetails } from '../../data/users';
 import { getQuartiersFromVilleName, getVilles } from '../../data/villesetquartiers';
 
 
@@ -12,6 +12,8 @@ export const loader = async ({params}) => {
   const [data, villes] = await Promise.all([
      getUserById({params}),
      getVilles(),
+     
+
   ]);
   return json({ data, villes });
 }
@@ -22,6 +24,7 @@ const DetailsOfUser = () => {
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState(data);
   const [quartiers, setQuartiers] = useState([]);
+  const [infirmier, setInfirmier] = useState({})
   useEffect(() => {
     const fetchQuartiers = async () => {
       try {
@@ -31,11 +34,23 @@ const DetailsOfUser = () => {
         console.error('Error fetching quartiers:', error);
       }
     };
+    const fetchInfirmiers = async () => {
+      try {
+        const infirmier = await getInfirmierById(formData._id);
+        setInfirmier(infirmier);
+      } catch (error) {
+        console.error('Error fetching infirmier:', error);
+      }
+    };
   
     if (formData.ville) {
       fetchQuartiers();
     }
-  }, [formData.ville]);
+    if(formData.role === 'infirmier'){
+      fetchInfirmiers()
+
+    }
+  }, [formData.ville, formData._id, formData.role]);
   
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -128,8 +143,29 @@ const DetailsOfUser = () => {
                   </div>
                 </div>
 
-              
           </section>
+          {
+            formData.role === 'infirmier' ? (
+            
+            <section>
+              <h3>Spécialité et Soins</h3>
+              <div className="userProfile">
+                    <div className="box1">
+                    <form>
+                        <div className="infoperso">
+                          <p className="infoItem">
+                            <input type="text" id="soin" name="nom" value={formData.nom} disabled/>
+                          </p>
+                        </div>
+                      </form>
+                      
+                    </div>
+                  </div>
+  
+            </section>) : null
+          }
+          
+
           
         </div>
       </div>

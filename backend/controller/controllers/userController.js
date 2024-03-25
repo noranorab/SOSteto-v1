@@ -44,6 +44,7 @@ exports.getUserById = async (req, res) => {
             quartier: nom_quartier,
             telephone: user.telephone,
         }
+        
         if (!userRes) {
             return res.status(404).json({ message: 'User not found' });
         }

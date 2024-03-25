@@ -62,6 +62,6 @@ exports.getInfirmierById = async (req, res) => {
         }
         res.json(infirmierRep);
     }catch{
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ message: 'error from server' });
     }  
 }

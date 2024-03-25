@@ -12,11 +12,13 @@ export default function HomeScreen() {
 
     const getAllInfirmiers = () => {
         try {
-        axios.get('http://192.168.8.104:3000/api/users?role=infirmier').then
-        (res => {
-            setInfirmiers(res.data.data)
-            console.log(infirmiers)
-        })
+        axios.get('https://us-central1-sosteto-f1066.cloudfunctions.net/api/api/users?role=infirmier').then
+        (res => res.data)
+        .then(
+            (infirmiers) => {
+                setInfirmiers(infirmiers)
+            }
+        )
         .catch (error => {
             console.error('Error fetching infirmiers info:', error);
         })
