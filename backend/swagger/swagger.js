@@ -4,10 +4,12 @@ const swaggerUi = require('swagger-ui-express');
 const { userSchema, userOutputSchema } = require('../schema/userSchema')
 const { userInputSchema } = require('../schema/userSchema')
 const { userloginSchema } = require('../schema/userSchema')
+const { usertokenShema } = require('../schema/userSchema')
 const { villeSchema } = require('../schema/villeSchema')
-const { quartierSchema} = require('../schema/quartierSchema')
-const {imageSchema} = require('../schema/imageSchema')
-const {roleSchema} = require('../schema/roleSchema')
+const { quartierSchema } = require('../schema/quartierSchema')
+const { imageSchema } = require('../schema/imageSchema')
+const { roleSchema } = require('../schema/roleSchema');
+const { infirmierSchema, infirmierOutputSchema } = require('../schema/infirmierSchema');
 
 const swaggerDefinition = {
   openapi: '3.0.0',
@@ -28,10 +30,13 @@ const swaggerDefinition = {
       User: userSchema,
       UserOutput: userOutputSchema,
       UserLogin: userloginSchema,
+      UserData: usertokenShema,
       Ville: villeSchema,
       Quartier: quartierSchema,
       Image: imageSchema,
       Role: roleSchema,
+      Infirmier: infirmierSchema,
+      InfirmierOutput: infirmierOutputSchema
     }
   },
   security: [
@@ -59,15 +64,19 @@ const swaggerDefinition = {
     {
       name: 'Role of user',
       description: 'Endpoints related to roles management'
+    },
+    {
+      name: 'Infirmiers',
+      description: 'Endpoints related to infirmiers management'
     }
   ]
 };
 
 const options = {
   swaggerDefinition,
-  apis: ['./controller/routes/userRoute.js', './controller/routes/villeRoute.js', './controller/routes/quartierRoute.js','./controller/routes/imageRoute.js',
-          './controller/routes/roleRoute.js',
-], // Path to the API routes in your Node.js application
+  apis: ['./controller/routes/userRoute.js', './controller/routes/villeRoute.js', './controller/routes/quartierRoute.js', './controller/routes/imageRoute.js',
+    './controller/routes/roleRoute.js', './controller/routes/infirmierRoute.js'
+  ], // Path to the API routes in your Node.js application
 };
 
 const swaggerSpec = swaggerJSDoc(options);
