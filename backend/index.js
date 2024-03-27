@@ -24,9 +24,7 @@ for (const modelName in models) {
     }
 }
 app.use(bodyParser.json());
-app.use(cors({
-    origin: ['http://localhost:3001']
-}));
+app.use(cors({}));
 app.use('/', userRoutes);
 app.use('/', villeRoutes);
 app.use('/', quartierRoutes);

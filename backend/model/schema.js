@@ -84,8 +84,6 @@ const demandeSchema = new Schema({
     id_recruteur: { type: Schema.Types.ObjectId, ref: 'User' },
     titre: String,
     objet: String,
-    prix_min: Number,
-    prix_max: Number,
     date: Date,
     heure_debut: Date,
     heure_fin: Date
