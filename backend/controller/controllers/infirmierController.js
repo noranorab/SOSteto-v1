@@ -1,5 +1,5 @@
 const { ObjectId } = require("mongodb");
-const { Infirmier, Specialite, User, Ville, Quartier, SpecialiteInfirmier, LangueInfirmier } = require("../../model/schema")
+const { Infirmier, Specialite, User, Ville, Quartier, SpecialiteInfirmier, LangueInfirmier, InfirmierSoins } = require("../../model/schema")
 
 
 
@@ -32,36 +32,28 @@ exports.getAllInfirmiers = async (req, res) => {
         res.status(500).json(error);
     }
 };
-
 exports.getInfirmierById = async (req, res) => {
-    try{
-        const user = await User.findOne(req.params.id)
-        const {nom_ville} = await Ville.findOne(user.ville)
-        const {nom_quartier} = await Quartier.findOne(user.quartier)
-        const {nom_specialites} = await SpecialiteInfirmier.find({userId : new ObjectId(user._id)})
-        const {langue_parlees} = await LangueInfirmier.find({userId : new ObjectId(user._id)})
-        const infirmierRep = {
-            nom : user.nom,
-            prenom: user.prenom,
-            email : user.email,
-            mdp: user.mdp,
-            role: user.role,
-            estConnecte: user.estConnecte,
-            ville: nom_ville,
-            quartier: nom_quartier,
-            telephone: user.telephone,
-            status: user.status,
-            langue_parlee : langue_parlees,
-            specialite: nom_specialites
-        }
+    try {
+        const user = await User.findById(req.params.id);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
-        if (!nom_quartier) {
-            return res.status(404).json({ message: 'Quartier not found' });
-        }
+
+        console.log(user);
+
+        const specialite = await SpecialiteInfirmier.find({ userId: user._id.valueOf() });
+        const languesparlees = await LangueInfirmier.find({ userId: user._id.valueOf() });
+        const nom_soin = await InfirmierSoins.find({ id_infirmiere: user._id.valueOf() });
+        console.log(specialite)
+        const infirmierRep = {
+            langue_parlee: languesparlees.length>0 ? languesparlees.map((langue) => langue.langue) : [],
+            specialite: specialite.length>0 ? specialite.map((specialite) => specialite.specialite) : [],
+            soins: nom_soin.length>0 ? nom_soin.map((soin) => soin.nom_soin) : [],
+        };
+
         res.json(infirmierRep);
-    }catch{
-        res.status(500).json({ message: 'error from server' });
-    }  
-}
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error from server' });
+    }
+};

@@ -123,9 +123,9 @@ const demandeSchema = new Schema({
     objet: String,
     prix_min: Number,
     prix_max: Number,
-    date: Date,
-    heure_debut: Date,
-    heure_fin: Date
+    date: String,
+    heure_debut: String,
+    heure_fin: String
 });
 
 
@@ -225,7 +225,8 @@ module.exports = {
     Langue: mongoose.model('Langue', langueSchema),
     ImageUser: mongoose.model('ImageUser', imageUserSchema),
     LangueInfirmier: mongoose.model('LangueInfirmier', langueInfirmierSchema),
-    SpecialiteInfirmier: mongoose.model('SpecialiteInfirmier', specialiteInfirmierSchema)
+    SpecialiteInfirmier: mongoose.model('SpecialiteInfirmier', specialiteInfirmierSchema),
+    //DemandeRecruteur: mongoose.model('DemandeRecruteur', demandeRecruteurSchema)
     //Role: mongoose.model('Role', roleSchema),
     //FullRecruteurDetails: mongoose.model('FullRecruteurDetails', fullRecruteurDetailsSchema)
 };

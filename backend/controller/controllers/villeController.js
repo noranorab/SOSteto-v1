@@ -1,3 +1,4 @@
+const { ObjectId } = require('mongodb');
 const { Ville, Quartier } = require('../../model/schema');
 
 
@@ -55,10 +56,11 @@ exports.deleteVille = async (req, res) => {
     }
 };
 
-exports.getQuartiersByVilleId = async (req, res) => {
+exports.getQuartiersByVilleName = async (req, res) => {
     try {
-        const villeId = req.params.villeId;
-        const quartiers = await Quartier.find({ nom_ville: villeId });
+        const ville = await Ville.findOne({nom_ville : req.params.nom_ville})
+
+        const quartiers = await Quartier.find({ nom_ville: ville });
         res.status(200).json(quartiers);
     } catch (error) {
         console.error("Error fetching Quartiers:", error);

@@ -4,32 +4,34 @@ import Navbar from '../../components/navbar/Navbar';
 import './DetailsOfUser.scss'
 
 import {json, useLoaderData } from 'react-router-dom';
-import { getInfirmierById, getUserById, updateUserDetails } from '../../data/users';
+import { getAllDemandesOfUser, getInfirmierById, getUserById, updateUserDetails } from '../../data/users';
 import { getQuartiersFromVilleName, getVilles } from '../../data/villesetquartiers';
+import { Link } from 'react-router-native';
 
 
 export const loader = async ({params}) => {
-  const [data, villes] = await Promise.all([
+  const [data, villes, demandes] = await Promise.all([
      getUserById({params}),
      getVilles(),
-     
-
-  ]);
-  return json({ data, villes });
+     getAllDemandesOfUser({params})
+     ]);
+  return json({ data, villes, demandes });
 }
 
 
 const DetailsOfUser = () => {
-  const {data, villes} = useLoaderData();
+  const {data, villes, demandes} = useLoaderData();
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState(data);
   const [quartiers, setQuartiers] = useState([]);
-  const [infirmier, setInfirmier] = useState({})
+  const [specialite, setSpecialite] = useState([])
+  const [soins, setSoins] = useState([])
   useEffect(() => {
     const fetchQuartiers = async () => {
       try {
         const quartiersByVilles = await getQuartiersFromVilleName(formData.ville);
         setQuartiers(quartiersByVilles);
+        console.log(quartiersByVilles)
       } catch (error) {
         console.error('Error fetching quartiers:', error);
       }
@@ -37,7 +39,9 @@ const DetailsOfUser = () => {
     const fetchInfirmiers = async () => {
       try {
         const infirmier = await getInfirmierById(formData._id);
-        setInfirmier(infirmier);
+        setSpecialite(infirmier.specialite)
+        setSoins(infirmier.soins)
+        console.log(infirmier)
       } catch (error) {
         console.error('Error fetching infirmier:', error);
       }
@@ -79,7 +83,7 @@ const DetailsOfUser = () => {
       <div className='usersContainer'>
         <Navbar />
         <div className="usersList">
-          <h1>User Profile</h1>
+          <h3>Profil</h3>
           <section>
             <div className="userProfile">
                   <div className="box1">
@@ -110,7 +114,7 @@ const DetailsOfUser = () => {
                         <p className="infoItem">
                           <label htmlFor="quartier">Quartier:</label>
                           <select id="quartier" name="quartier" value={formData.quartier} onChange={handleInputChange} disabled={!editMode}>
-                            {quartiers.map((quartier) => (
+                            { quartiers.map((quartier) => (
                               <option key={quartier._id} value={quartier.nom_quartier}>{quartier.nom_quartier}</option>
                             ))}
                           </select>
@@ -142,6 +146,32 @@ const DetailsOfUser = () => {
                     </form>
                   </div>
                 </div>
+                <div className="demandes">
+                  <h3>Demandes</h3>
+                  <div className="userProfile">
+                  <table>
+                      <thead>
+                          <tr>
+                            <th>Id</th>
+                            <th>Intitulé</th>
+                            <th>Détails</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          { demandes && demandes.map((demande, rowIdx) => (
+                            <tr key={demande._id}>
+                              <td>{demande._id}</td>
+                              <td>{demande.titre}</td>
+                              <Link to={`/demande/${demande._id}/details`}>
+                                <td>Voir détails</td>
+                              </Link>
+                            </tr>
+                          ))}
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+                
 
           </section>
           {
@@ -151,18 +181,25 @@ const DetailsOfUser = () => {
               <h3>Spécialité et Soins</h3>
               <div className="userProfile">
                     <div className="box1">
-                    <form>
-                        <div className="infoperso">
-                          <p className="infoItem">
-                            <input type="text" id="soin" name="nom" value={formData.nom} disabled/>
-                          </p>
-                        </div>
-                      </form>
+                    <div className="info">
+                        <p className="infoInfirmier">
+                            {specialite.length > 0 ?
+                                <label htmlFor='specialite'>{specialite.join(', ')}</label> :
+                                <span>Pas de spécialités trouvées,</span>
+                            }
+                        </p>
+                        <p className="infoInfirmier">
+                            {soins.length > 0 ?
+                                <label htmlFor='soins'>{soins.join(', ')}</label> :
+                                <span>Pas de soins trouvés</span>
+                            }
+                        </p>
+                    </div>
                       
                     </div>
                   </div>
-  
-            </section>) : null
+            </section>
+            ) : null
           }
           
 

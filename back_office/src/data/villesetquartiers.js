@@ -12,7 +12,7 @@ export async function getVilles() {
 
 export async function getQuartiersFromVilleName(nom_ville) {
     try {
-      const quartiers = await axios.get(`http://localhost:3000/api/quartiers/ville/${nom_ville}`);
+      const quartiers = await axios.get(`http://localhost:3000/api/villes/${nom_ville}/quartiers`);
       return quartiers.data
     } catch (error) {
       console.error('Error fetching villes:', error);
