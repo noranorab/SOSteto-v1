@@ -65,9 +65,22 @@ export async function getInfirmierById(id){
 
 export async function getAllDemandesOfUser({params}) {
   try{
-    const response = await axios.get(`http:localhost:3000/api/demandes/${params.userId}`)
+    const response = await axios.get(`http://localhost:3000/api/users/${params.userId}/demandes`)
+    console.log(response.data)
     return response.data;
   }catch(error){
-    console.error('Error retrieving demandes');
+    console.error('Error retrieving demandes:', error);
+    throw error;
+  }
+}
+
+export async function getDemandeById({params}) {
+  try{
+    const response = await axios.get(`http://localhost:3000/api/demandes/${params.demandeId}`)
+    console.log(response.data)
+    return response.data;
+  }catch(error){
+    console.error('Error retrieving demandes:', error);
+    throw error;
   }
 }

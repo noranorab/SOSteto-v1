@@ -235,9 +235,9 @@ exports.createADemande = async (req, res) => {
 
 exports.getAllDemandesFromUser = async (req, res) => {
     try{
-        const user = User.findById(req.params.userId)
-        const demandes = Demande.find({id_recruteur: user._id.valueOf()});
-        res.status(200).send(demandes);
+        const user = await User.findById(req.params.userId)
+        const demandes = await Demande.find({id_recruteur: new Object(user._id)});
+        res.status(200).json(demandes);
         if (!user){
             return res.status(404).json({error: 'No user found'})
         }
@@ -245,4 +245,16 @@ exports.getAllDemandesFromUser = async (req, res) => {
         res.status(500).json(error);
     }
 
+}
+
+exports.getDemandeById = async(req, res) => {
+    try{
+        const demande = await Demande.findById(req.params.demandeId)
+        res.status(200).json(demande);
+        if (!demande){
+            return res.status(404).json({error: 'No demande found'})
+        }
+    }catch(error){
+        res.status(500).json(error);
+    }
 }

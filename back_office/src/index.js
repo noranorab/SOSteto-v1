@@ -9,6 +9,8 @@ import DetailsOfUser from './pages/DetailsOfEntites/DetailsOfUser';
 import Home from './pages/home/Home';
 import List, {loader as usersLoader } from './pages/list/List';
 import {loader as dataLoader} from './pages/DetailsOfEntites/DetailsOfUser'
+import DetailsOfDemande from './pages/DetailsOfEntites/DetailsOfDemandes';
+import {loader as demandeLoader} from './pages/DetailsOfEntites/DetailsOfDemandes'
 
 
 
@@ -27,6 +29,11 @@ const router = createBrowserRouter([
     path: "users/:userId",
     element: <DetailsOfUser/>,
     loader: dataLoader,
+  },
+  {
+    path: "demandes/:demandeId",
+    element: <DetailsOfDemande/>,
+    loader: demandeLoader,
   }
   
   

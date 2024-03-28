@@ -14,13 +14,16 @@ export const loader = async ({params}) => {
      getUserById({params}),
      getVilles(),
      getAllDemandesOfUser({params})
+     
      ]);
+     console.log(demandes)
   return json({ data, villes, demandes });
 }
 
 
 const DetailsOfUser = () => {
   const {data, villes, demandes} = useLoaderData();
+
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState(data);
   const [quartiers, setQuartiers] = useState([]);
@@ -146,7 +149,7 @@ const DetailsOfUser = () => {
                     </form>
                   </div>
                 </div>
-                <div className="demandes">
+                { formData.role === 'recruteur' ?(<div className="demandes">
                   <h3>Demandes</h3>
                   <div className="userProfile">
                   <table>
@@ -154,6 +157,7 @@ const DetailsOfUser = () => {
                           <tr>
                             <th>Id</th>
                             <th>Intitulé</th>
+                            <th>Objet</th>
                             <th>Détails</th>
                           </tr>
                       </thead>
@@ -162,15 +166,17 @@ const DetailsOfUser = () => {
                             <tr key={demande._id}>
                               <td>{demande._id}</td>
                               <td>{demande.titre}</td>
-                              <Link to={`/demande/${demande._id}/details`}>
-                                <td>Voir détails</td>
-                              </Link>
+                              <td>{demande.objet}</td>
+                              {/* <Link to={`/demandes/${demande._id}`}>
+                                <td>Voir détail</td>
+                              </Link> */}
+                              <td>Voir détail</td>
                             </tr>
                           ))}
                         </tbody>
                     </table>
                     </div>
-                </div>
+                </div>): null}
                 
 
           </section>
