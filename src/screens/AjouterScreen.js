@@ -98,35 +98,34 @@ export default function AjouterScreen({ navigation }) {
 
   useEffect(() => {
 
-    setTimeout(()=> fetchVilles(), 10000);
+    fetchVilles();
   }, []);
 
   const fetchVilles = async () => {
     try {
-      const response = await fetch("https://us-central1-sosteto-f1066.cloudfunctions.net/api/api/villes");
+      const response = await fetch("http://192.168.60.184:3000/api/villes");
       const data = await response.json();
+      console.log(data);
       setVilles(data);
     } catch (error) {
       console.error("Error fetching Villes:", error);
     }
   };
 
-  const handleVilleChange = (value) => {
+  const handleVilleChange = async(value) => {
     setSelectedVille(value);
-    if (value) {
-      fetchVilles();
-    }
-  };
+    try {
+      const cityResponse = await fetch(`http://192.168.60.184:3000/api/villes/${value}`);
+      const data = await cityResponse.json();
+      const quartiersResponse = await fetch(`http://192.168.60.184:3000/api/villes/${data._id}/quartiers`);
+      const data2 = await quartiersResponse.json();
+      setQuartiers(data2.map(quartier => ({ label: quartier.nom_quartier, value: quartier.nom_quartier, id: quartier._id })));
+      console.log(quartiers);
+  } catch (error) {
+      console.error("Failed to fetch city or quartiers data:", error);
+  }
 
-  // const fetchQuartiers = async (villeId) => {
-  //   try {
-  //     const response = await fetch(`/api/villes/${villeId}/quartiers`);
-  //     const data = await response.json();
-  //     setQuartiers(data.quartiers);
-  //   } catch (error) {
-  //     console.error("Error fetching Quartiers:", error);
-  //   }
-  // };
+  };
 
   return (
     <TouchableWithoutFeedback onPress={dismissKeyboard}>
@@ -251,17 +250,17 @@ export default function AjouterScreen({ navigation }) {
               fontSize: 14,
             }}
           >
-            {/* <RNPickerSelect
+            <RNPickerSelect
               placeholder={{ label: "Choisir un quartier", value: null }}
               onValueChange={(value) => setSelectedQuartier(value)}
-              items={quartiers.map(quartier => ({ label: quartier.name, value: quartier.name }))}
+              items={quartiers}
               value={selectedQuartier}
               style={{
                 inputAndroid: {
                   color: "grey",
                 },
               }}
-            /> */}
+            />
           </View>
           <View>
             <Text
