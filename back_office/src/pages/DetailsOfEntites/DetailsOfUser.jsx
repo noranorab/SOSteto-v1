@@ -3,10 +3,10 @@ import Sidebar from '../../components/sidebar/Sidebar';
 import Navbar from '../../components/navbar/Navbar';
 import './DetailsOfUser.scss'
 
-import {json, useLoaderData } from 'react-router-dom';
+import {json, useLoaderData, Link } from 'react-router-dom';
 import { getAllDemandesOfUser, getInfirmierById, getUserById, updateUserDetails } from '../../data/users';
 import { getQuartiersFromVilleName, getVilles } from '../../data/villesetquartiers';
-import { Link } from 'react-router-native';
+
 
 
 export const loader = async ({params}) => {
@@ -86,7 +86,7 @@ const DetailsOfUser = () => {
       <div className='usersContainer'>
         <Navbar />
         <div className="usersList">
-          <h3>Profil</h3>
+          <h3>Profil utilisateur n°: {formData._id}</h3>
           <section>
             <div className="userProfile">
                   <div className="box1">
@@ -167,10 +167,10 @@ const DetailsOfUser = () => {
                               <td>{demande._id}</td>
                               <td>{demande.titre}</td>
                               <td>{demande.objet}</td>
-                              {/* <Link to={`/demandes/${demande._id}`}>
+                              <Link to={`/demandes/${demande._id}`}>
                                 <td>Voir détail</td>
-                              </Link> */}
-                              <td>Voir détail</td>
+                              </Link>
+                              {' '}
                             </tr>
                           ))}
                         </tbody>

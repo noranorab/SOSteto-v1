@@ -10,7 +10,7 @@
     padding: 20px;
 }
   
-form {
+form, .box1 {
     box-shadow: 2px 4px 10px 1px rgba(201,201,201,0.47);
     border-radius: 10px;
     margin-top: 20px;
@@ -107,4 +107,14 @@ form {
   .userProfile{
     margin-top: 20px;
 
+  }
+
+  label{
+    font-weight: bold;
+  }
+
+  .demande{
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 20px;
   }

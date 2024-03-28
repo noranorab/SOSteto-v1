@@ -121,9 +121,9 @@ const demandeSchema = new Schema({
     id_recruteur: { type: Schema.Types.ObjectId, ref: 'User' },
     titre: String,
     objet: String,
-    date: Date,
-    heure_debut: Date,
-    heure_fin: Date
+    date: String,
+    heure_debut: String,
+    heure_fin: String
 });
 
 

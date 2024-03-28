@@ -218,11 +218,9 @@ exports.createADemande = async (req, res) => {
     try{
         const demande = req.body;
         const newdemande = {
-            id_recruteur: req.params.userId,
+            id_recruteur: req.body.id_recruteur,
             titre: req.body.titre,
             objet: req.body.objet,
-            prix_min: parseInt(req.body.prix_min), // Convert to Number
-            prix_max: parseInt(req.body.prix_max), // Convert to Number
             date: req.body.date,
             heure_debut: req.body.heure_debut,
             heure_fin: req.body.heure_fin,
