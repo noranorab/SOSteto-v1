@@ -16,6 +16,7 @@ const quartierRoutes = require('./controller/routes/quartierRoute');
 const imageRoutes = require('./controller/routes/imageRoute')
 const roleRoutes = require('./controller/routes/roleRoute')
 const infirmierRoutes = require('./controller/routes/infirmierRoute')
+const SpecialiteRoute = require('./controller/routes/specialiteRoute')
 const swaggerDocs = require('./swagger/swagger');
 const bodyParser = require('body-parser');
 const app = express();
@@ -39,6 +40,7 @@ app.use('/', quartierRoutes);
 app.use('/', imageRoutes);
 app.use('/', roleRoutes);
 app.use('/', infirmierRoutes)
+app.use('/', SpecialiteRoute)
 // app.use('/api/recruteurs', recruteurRoutes)
 
 

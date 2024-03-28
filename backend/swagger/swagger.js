@@ -9,6 +9,7 @@ const { villeSchema } = require('../schema/villeSchema')
 const { quartierSchema } = require('../schema/quartierSchema')
 const { imageSchema } = require('../schema/imageSchema')
 const { roleSchema } = require('../schema/roleSchema');
+const { specialiteSchema } = require('../schema/specialiteSchema');
 const { infirmierSchema, infirmierOutputSchema } = require('../schema/infirmierSchema');
 
 const swaggerDefinition = {
@@ -36,7 +37,8 @@ const swaggerDefinition = {
       Image: imageSchema,
       Role: roleSchema,
       Infirmier: infirmierSchema,
-      InfirmierOutput: infirmierOutputSchema
+      InfirmierOutput: infirmierOutputSchema,
+      Specialite: specialiteSchema,
     }
   },
   security: [
@@ -68,6 +70,10 @@ const swaggerDefinition = {
     {
       name: 'Infirmiers',
       description: 'Endpoints related to infirmiers management'
+    },
+    {
+      name: 'Specialties',
+      description: 'Endpoints related to specialties management'
     }
   ]
 };
@@ -75,7 +81,7 @@ const swaggerDefinition = {
 const options = {
   swaggerDefinition,
   apis: ['./controller/routes/userRoute.js', './controller/routes/villeRoute.js', './controller/routes/quartierRoute.js', './controller/routes/imageRoute.js',
-    './controller/routes/roleRoute.js', './controller/routes/infirmierRoute.js'
+    './controller/routes/roleRoute.js', './controller/routes/infirmierRoute.js', './controller/routes/specialiteRoute.js'
   ], // Path to the API routes in your Node.js application
 };
 

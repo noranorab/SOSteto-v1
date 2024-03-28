@@ -98,7 +98,7 @@ export default function AjouterScreen({ navigation }) {
 
   useEffect(() => {
 
-    setTimeout(()=> fetchVilles(), 10000);
+    setTimeout(() => fetchVilles(), 10000);
   }, []);
 
   const fetchVilles = async () => {
@@ -284,7 +284,7 @@ export default function AjouterScreen({ navigation }) {
           <View style={{ alignItems: "center" }}>
             <TouchableOpacity
               style={styles.searchButton}
-              // onPress={() => navigate("homeSearch")}
+            // onPress={() => navigate("homeSearch")}
             >
               <Text style={styles.searchButtonText}>Valider la demande</Text>
             </TouchableOpacity>

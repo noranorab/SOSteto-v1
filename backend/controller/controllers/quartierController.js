@@ -30,4 +30,12 @@ exports.deleteQuartier = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
-
+exports.getQuartierByName = async (req, res) => {
+    try {
+        const quartier = await Quartier.findOne({ nom_quartier: req.params.nom_quartier });
+        console.log(quartier)
+        res.status(200).send(quartier);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+};

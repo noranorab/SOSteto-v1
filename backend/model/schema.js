@@ -12,6 +12,7 @@ const userSchema = new Schema({
     email: {
         type: String,
         required: true,
+        trim: true,
     },
     mdp: {
         type: String,
@@ -39,7 +40,7 @@ const userSchema = new Schema({
         type: String,
         required: false,
     },
-    status: { type: Boolean, default: true }
+    status: { type: Boolean, default: true, required: false, }
 });
 
 // Image
