@@ -69,7 +69,7 @@ exports.getInfirmierById = async (req, res) => {
             console.error(error);
             res.status(500).json({ message: 'Error from server' });
         }
-    };
+    
 } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error from server' });
