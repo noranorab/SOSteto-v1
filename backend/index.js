@@ -31,9 +31,11 @@ for (const modelName in models) {
     }
 }
 app.use(bodyParser.json());
+
 app.use(cors({
 
 }));
+
 app.use('/', userRoutes);
 app.use('/', villeRoutes);
 app.use('/', quartierRoutes);

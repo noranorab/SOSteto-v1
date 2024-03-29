@@ -68,8 +68,7 @@ const Header = () => {
     const handleCityChange = async (value) => {
         setSelectedVille(value);
     };
-    console.log(selectedSpecialite);
-    console.log(selectedVille);
+
 
 
     const handleRecherche = async () => {
@@ -78,7 +77,7 @@ const Header = () => {
                 ville: selectedVille,
                 specialite: selectedSpecialite,
             });
-            setInfirmiers(rechercheInfer);
+            setInfirmiers(rechercheInfer.data);
             console.log(infirmiers);
         } catch (error) {
             console.error("Failed to fetch cities:", error);

@@ -22,7 +22,7 @@ exports.getVille = async (req, res) => {
 };
 exports.getVilleByName = async (req, res) => {
     try {
-        const ville = await Ville.findOne({nom_ville : req.params.nom_ville});
+        const ville = await Ville.findOne({ nom_ville: req.params.nom_ville });
         console.log(ville)
         res.status(200).send(ville);
     } catch (error) {
