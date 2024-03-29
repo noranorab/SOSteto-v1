@@ -174,7 +174,7 @@ exports.login = async (req, res) => {
         }
 
         const token = jwt.sign({
-            email: user.email,
+            _id: user._id,
         }, process.env.JWT_SECRET, { expiresIn: "24h" });
         console.log(token);
 
@@ -194,19 +194,33 @@ exports.userdatafromtoken = async (req, res) => {
     try {
         // Verify the token and extract user data
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const userEmail = decoded.email;
+        const userId = decoded._id;
 
         // Find the user in the database based on the email
-        const user = await User.findOne({ email: userEmail });
+        const user = await User.findOne({ _id: userId });
+        const { nom_ville } = await Ville.findOne(user.ville)
+        const { nom_quartier } = await Quartier.findOne(user.quartier)
+        const userRes = {
+            _id: user._id,
+            nom: user.nom,
+            prenom: user.prenom,
+            email: user.email,
+            mdp: user.mdp,
+            role: user.role,
+            estConnecte: user.estConnecte,
+            ville: nom_ville,
+            quartier: nom_quartier,
+            telephone: user.telephone,
+        }
 
-        if (!user) {
+        if (!userRes) {
             // If user not found, return appropriate response
             return res.status(404).json({ error: 'User not found' });
         }
 
 
         // If user found, return user data
-        return res.status(200).json({ status: 200, data: user });
+        return res.status(200).json({ status: 200, data: userRes });
     } catch (error) {
         // Handle token verification errors
         console.error('Error during user data retrieval:', error);

@@ -1,10 +1,13 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import * as React from 'react';
+import { useState, useEffect } from 'react';
 import { View, Image, TouchableOpacity, Pressable } from 'react-native';
 import AjouterScreen from '../screens/AjouterScreen';
 import FavouritesScreen from '../screens/FavouritesScreen';
 import ParameterScreen from '../screens/ParameterScreen';
 import SearchScreen from '../screens/SearchScreen';
+import axios from 'axios';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -29,8 +32,12 @@ const messageName = 'Ajouter'
 const parametersName = 'Paramètres'
 const notificationsName = 'Notifications'
 
+
+
 const Header = () => {
     const navigation = useNavigation();
+
+
 
     return (
         <View style={{ width: '100%', height: 50, marginLeft: 160, flexDirection: 'row', position: 'relative', alignItems: 'center' }}>

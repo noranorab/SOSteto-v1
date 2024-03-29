@@ -12,7 +12,7 @@ export default function HomeScreen() {
         const fetchData = async () => {
             try {
                 // const response = await axios.get('http://192.168.58.61:3000/api/users?role=infirmier');
-                const response = await axios.get('http://192.168.8.119:3000/api/infirmiers');
+                const response = await axios.get('http://192.168.58.61:3000/api/infirmiers');
                 setInfirmiers(response.data);
                 // console.log(response.data);
             } catch (error) {

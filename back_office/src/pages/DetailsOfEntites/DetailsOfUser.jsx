@@ -1,28 +1,28 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Sidebar from '../../components/sidebar/Sidebar';
 import Navbar from '../../components/navbar/Navbar';
 import './DetailsOfUser.scss'
 
-import {json, useLoaderData, Link } from 'react-router-dom';
+import { json, useLoaderData, Link } from 'react-router-dom';
 import { getAllDemandesOfUser, getInfirmierById, getUserById, updateUserDetails } from '../../data/users';
 import { getQuartiersFromVilleName, getVilles } from '../../data/villesetquartiers';
 
 
 
-export const loader = async ({params}) => {
+export const loader = async ({ params }) => {
   const [data, villes, demandes] = await Promise.all([
-     getUserById({params}),
-     getVilles(),
-     getAllDemandesOfUser({params})
-     
-     ]);
-     console.log(demandes)
+    getUserById({ params }),
+    getVilles(),
+    getAllDemandesOfUser({ params })
+
+  ]);
+  console.log(demandes)
   return json({ data, villes, demandes });
 }
 
 
 const DetailsOfUser = () => {
-  const {data, villes, demandes} = useLoaderData();
+  const { data, villes, demandes } = useLoaderData();
 
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState(data);
@@ -49,16 +49,16 @@ const DetailsOfUser = () => {
         console.error('Error fetching infirmier:', error);
       }
     };
-  
+
     if (formData.ville) {
       fetchQuartiers();
     }
-    if(formData.role === 'infirmier'){
+    if (formData.role === 'infirmier') {
       fetchInfirmiers()
 
     }
   }, [formData.ville, formData._id, formData.role]);
-  
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prevFormData => ({
@@ -76,7 +76,7 @@ const DetailsOfUser = () => {
     updateUserDetails(formData, data._id)
     setEditMode(false);
     event.preventDefault();
-    
+
 
   };
 
@@ -206,9 +206,9 @@ const DetailsOfUser = () => {
             </section>
             ) : null
           }
-          
 
-          
+
+
         </div>
       </div>
     </div>

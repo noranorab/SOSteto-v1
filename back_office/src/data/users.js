@@ -3,16 +3,16 @@ import axios from 'axios';
 
 
 export async function getUsers() {
-    try {
-      const users = await axios.get('http://localhost:3000/api/users');
-      console.log(users.data)
-      return users.data
-    } catch (error) {
-      console.error('Error fetching users:', error);
-    }
+  try {
+    const users = await axios.get('http://localhost:3000/api/users');
+    console.log(users.data)
+    return users.data
+  } catch (error) {
+    console.error('Error fetching users:', error);
+  }
 }
 
-export async function getUserById({params}) {
+export async function getUserById({ params }) {
   try {
     const response = await axios.get(`http://localhost:3000/api/users/${params.userId}`);
     return response.data;
@@ -22,7 +22,7 @@ export async function getUserById({params}) {
   }
 }
 
-export async function getfullUserDetails({params}) {
+export async function getfullUserDetails({ params }) {
   try {
     const response = await axios.get(`http://localhost:3000/api/users/${params.userId}/details`);
     return response.data;
@@ -34,7 +34,7 @@ export async function getfullUserDetails({params}) {
 export async function updateUserDetails(userData, id) {
   try {
     const response = await axios.put(`http://localhost:3000/api/users/${id}`, userData);
-    
+
     return response.data;
   } catch (error) {
     console.error('Error posting user details:', error);
@@ -45,7 +45,7 @@ export async function updateUserDetails(userData, id) {
 export async function deleteUserDetails(id) {
   try {
     const response = await axios.delete(`http://localhost:3000/api/users/${id}`);
-    
+
     return response.data;
   } catch (error) {
     console.error('Error deleting user details:', error);

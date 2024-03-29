@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Image, ScrollView, Platform, Pressable } from 'react-native';
 
 import RNPickerSelect from 'react-native-picker-select';
@@ -14,6 +14,7 @@ import FooterMainPage from '../components/FooterMainPage';
 import { GestureHandlerRootView, TextInput } from 'react-native-gesture-handler';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import axios from 'axios';
 
 const buttonStyles = {
     alignItems: 'center',
@@ -29,10 +30,62 @@ const buttonStyles = {
 
 const Header = () => {
     const { navigate } = useNavigation()
+    const [villes, setVilles] = useState([]);
+    const [specialities, setSpecialities] = useState([]);
 
-    const [selectedVille, setSelectedVille] = React.useState(null);
-    const [selectedSpecialite, setSelectedSpecialite] = React.useState(null);
-    
+    const [selectedVille, setSelectedVille] = useState(null);
+    const [selectedSpecialite, setSelectedSpecialite] = useState(null);
+
+    const [infirmiers, setInfirmiers] = useState(null);
+
+
+
+    useEffect(() => {
+        const fetchVilles = async () => {
+            try {
+                const response = await axios.get('http://192.168.58.61:3000/api/villes');
+                setVilles(response.data.map(ville => ({ label: ville.nom_ville, value: ville.nom_ville, id: ville._id })));
+                // console.log(villes)
+            } catch (error) {
+                console.error("Failed to fetch cities:", error);
+            }
+        };
+        const fetchSpecialities = async () => {
+            try {
+                const response2 = await axios.get('http://192.168.58.61:3000/api/specialites');
+                setSpecialities(response2.data.map(specialite => ({ label: specialite.nom_specialite, value: specialite.nom_specialite })));
+                // console.log(specialities)
+            } catch (error) {
+                console.error("Failed to fetch cities:", error);
+            }
+        };
+        fetchSpecialities()
+        fetchVilles();
+    }, []);
+
+
+
+    const handleCityChange = async (value) => {
+        setSelectedVille(value);
+    };
+
+
+
+    const handleRecherche = async () => {
+        try {
+            const rechercheInfer = await axios.post('http://192.168.58.61:3000/api/infirmiers/filtreByVilleSpe', {
+                ville: selectedVille,
+                specialite: selectedSpecialite,
+            });
+            setInfirmiers(rechercheInfer.data);
+            console.log(infirmiers);
+        } catch (error) {
+            console.error("Failed to fetch cities:", error);
+        }
+    };
+
+
+
     return (
         <View style={{ backgroundColor: '#84c7c0', padding: 10 }}>
             <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'white', paddingLeft: 10, paddingTop: 20, width: '100%' }}>Trouvez votre infirmier(ère) avec un seul click</Text>
@@ -43,19 +96,22 @@ const Header = () => {
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Text style={{ fontWeight: 'bold', color: 'white', marginBottom: 5 }}>Spécialité : </Text>
                     <RNPickerSelect
-                        placeholder={{ label: 'Spécialité', value: null }}
-                        items={specialities ? specialities.map((specialite) => ({ label: specialite.name, value: specialite.id })) : []}
                         onValueChange={(value) => setSelectedSpecialite(value)}
+                        items={specialities}
+                        placeholder={{ label: "Spécialité...", value: null }}
+
                         style={pickerSelectStyles}
                         value={selectedSpecialite}
                     />
                 </View>
+
+
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Text style={{ fontWeight: 'bold', color: 'white', marginBottom: 5, marginRight: 40 }}>Ville :</Text>
                     <RNPickerSelect
-                        placeholder={{ label: 'Ville', value: null }}
-                        items={villes ? villes.map((ville) => ({ label: ville.name, value: ville.id })) : []}
                         onValueChange={(value) => setSelectedVille(value)}
+                        items={villes}
+                        placeholder={{ label: "Ville...", value: null }}
                         style={pickerSelectStyles}
                         value={selectedVille}
                     />
@@ -68,7 +124,7 @@ const Header = () => {
 
 
 
-            <TouchableOpacity style={styles.submitButton} onPress={() => navigate('homeSearch')}>
+            <TouchableOpacity style={styles.submitButton} onPress={(handleRecherche)}>
                 <Ionicons name="search-outline" size={20} color='#C1C1C1' />
                 <Text style={styles.submitButtonText}>Rechercher </Text>
             </TouchableOpacity>
@@ -127,7 +183,7 @@ export default function MainPageScreen() {
                     <Icon1 name="cursor-default-click" size={40} color="#fff" style={{ marginTop: 20 }} />
                     <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'white', width: 300, paddingBottom: 10, textAlign: 'center', paddingTop: 15 }}>Ne perdez pas de temps! Créez un compte sur SOSteto et trouvez l'infirmière dont vous avez besoin à tout moment et n'importe où.</Text>
                 </View>
-                
+
                 <FooterMainPage></FooterMainPage>
 
             </ScrollView>
