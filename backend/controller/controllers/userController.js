@@ -2,7 +2,7 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken');
 var ObjectId = require('mongoose').Types.ObjectId;
 
-const { User, Role, Ville, Quartier } = require('../../model/schema');
+const { User, Ville, Quartier, Demande } = require('../../model/schema');
 const VilleController = require('./villeController');
 
 
@@ -44,6 +44,7 @@ exports.getUserById = async (req, res) => {
             quartier: nom_quartier,
             telephone: user.telephone,
         }
+        
         if (!userRes) {
             return res.status(404).json({ message: 'User not found' });
         }
@@ -226,3 +227,48 @@ exports.userdatafromtoken = async (req, res) => {
         return res.status(500).json({ error: 'Internal Server Error' });
     }
 };
+
+exports.createADemande = async (req, res) => {
+    try{
+        const demande = req.body;
+        const newdemande = {
+            id_recruteur: req.body.id_recruteur,
+            titre: req.body.titre,
+            objet: req.body.objet,
+            date: req.body.date,
+            heure_debut: req.body.heure_debut,
+            heure_fin: req.body.heure_fin,
+        }
+        const demandeObject = await Demande.create(newdemande)
+        res.status(201).json(demandeObject)
+    }catch(error){
+        return res.status(500).json({error: 'Error creating demande'})
+
+    }
+}
+
+exports.getAllDemandesFromUser = async (req, res) => {
+    try{
+        const user = await User.findById(req.params.userId)
+        const demandes = await Demande.find({id_recruteur: new Object(user._id)});
+        res.status(200).json(demandes);
+        if (!user){
+            return res.status(404).json({error: 'No user found'})
+        }
+    }catch(error){
+        res.status(500).json(error);
+    }
+
+}
+
+exports.getDemandeById = async(req, res) => {
+    try{
+        const demande = await Demande.findById(req.params.demandeId)
+        res.status(200).json(demande);
+        if (!demande){
+            return res.status(404).json({error: 'No demande found'})
+        }
+    }catch(error){
+        res.status(500).json(error);
+    }
+}
