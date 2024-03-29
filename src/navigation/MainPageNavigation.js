@@ -9,6 +9,7 @@ import VoirProfileDetailsScreen from '../screens/VoirProfileDetailsScreen';
 import Connect from '../screens/Connect';
 import Header from '../components/Header';
 import RegisterPageScreen from '../screens/RegisterPageScreen';
+import EditPublicProfileScreen from '../screens/EditPublicProfileScreen';
 
 
 const MyTheme = {

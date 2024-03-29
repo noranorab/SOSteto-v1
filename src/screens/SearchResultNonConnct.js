@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
 import Header from '../components/Header';
 import RNPickerSelect from 'react-native-picker-select';
@@ -14,6 +14,9 @@ import Filtre from '../components/Filtre';
 
 export default function SearchResultNonConnect() {
     const { navigate } = useNavigation();
+    const [selectedCity, setSelectedCity] = React.useState(null);
+    const [selectedSpecialties, setSelectedSpecialties] = React.useState([]);
+
 
     const [showFilters, setShowFilters] = React.useState(false);
 
@@ -38,7 +41,7 @@ export default function SearchResultNonConnect() {
 
                         <TouchableOpacity onPress={handleToggleFilters} style={styles.filterToggle}>
                             <Text style={styles.title}>Filtrer</Text>
-                            <Icon style={{marginBottom: 5, marginLeft: 10}} name={showFilters ? 'chevron-up' : 'chevron-down'} size={17} color="black" />
+                            <Icon style={{ marginBottom: 5, marginLeft: 10 }} name={showFilters ? 'chevron-up' : 'chevron-down'} size={17} color="black" />
                         </TouchableOpacity>
                         {showFilters && <Filtre />}
 
@@ -47,7 +50,7 @@ export default function SearchResultNonConnect() {
                 </View>
                 <View >
                     <FlatList
-                        data={posts}
+                        data={infermiers}
                         renderItem={({ item }) => <PostItem item={item} />}
                         keyExtractor={(item) => item.id.toString()}
                     />
