@@ -1,12 +1,12 @@
 const { Recruteur } = require('../../model/schema')
 
-exports.createRecruteur =  async (req, res) => {
+exports.createRecruteur = async (req, res) => {
     try {
         const recruteur = new Recruteur(req.body)
         await recruteur.save()
         res.status(201).send(recruteur)
-    }catch(error) {
-        res.status(500).json({message : error.message})
+    } catch (error) {
+        res.status(500).json({ message: error.message })
     }
 }
 

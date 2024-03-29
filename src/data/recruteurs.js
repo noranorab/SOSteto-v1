@@ -1,3 +1,26 @@
+// import axios from 'axios';
+
+
+// export async function getUserById({params}) {
+//     try {
+//       const response = await axios.get(`http://localhost:3000/api/users/${params.userId}`);
+//       return response.data;
+//     } catch (error) {
+//       console.error('Error fetching user info:', error);
+//       throw error; // Rethrow the error to be caught by the caller
+//     }
+//   }
+
+
+
+
+
+
+
+
+
+
+
 export const recruteurs = [
     {
         id : 1,

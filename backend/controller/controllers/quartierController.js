@@ -1,4 +1,4 @@
-const { Quartier } = require('../../model/schema');
+const { Quartier, Ville } = require('../../model/schema');
 
 exports.createQuartier = async (req, res) => {
     try {
@@ -30,13 +30,12 @@ exports.deleteQuartier = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
-
-exports.getQuartiersByCity = async (req, res) => {
+exports.getQuartierByName = async (req, res) => {
     try {
-        const { nom_ville } = req.params;
-        const quartiers = await Quartier.find({ nom_ville });
-        res.status(200).json(quartiers);
+        const quartier = await Quartier.findOne({ nom_quartier: req.params.nom_quartier });
+        console.log(quartier)
+        res.status(200).send(quartier);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json(error);
     }
 };

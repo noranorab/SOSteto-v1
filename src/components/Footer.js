@@ -108,7 +108,6 @@ function HomeStackGroup() {
 }
 
 export default function Footer() {
-
     return (
 
         <Tab.Navigator

@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import Header from '../components/Header';
@@ -5,12 +6,9 @@ import axios from 'axios';
 import { Alert } from 'react-native';
 
 import { useNavigation } from '@react-navigation/core';
-
-import * as WebBrowser from "expo-web-browser";
-import * as Google from "expo-auth-session/providers/google";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-WebBrowser.maybeCompleteAuthSession();
+
 
 
 const Connect = ({ navigation }) => {
@@ -35,13 +33,14 @@ const Connect = ({ navigation }) => {
             console.log('Login Response:', response.data); // Log the response data
 
             if (response.status === 200) {
-                // const tokenString = JSON.stringify(response.data.data); // Convert object to string
-                AsyncStorage.setItem("token", response.data.data);
-                // AsyncStorage.setItem("token", tokenString);
-                const token = await AsyncStorage.getItem("token");
-                console.log(token)
+                // Remove old token if it exists
+                await AsyncStorage.removeItem("token");
+                // Set new token in AsyncStorage
+                await AsyncStorage.setItem("token", response.data.token);
+                console.log('New token set:', response.data.token); // Log the new token
+                // Navigate after setting the token
+                console.log('Navigating to home7...');
                 navigation.navigate('home7');
-
             } else {
                 const errorMessage = error.response?.data?.error || 'An error occurred';
                 Alert.alert('Error', errorMessage);
@@ -50,8 +49,10 @@ const Connect = ({ navigation }) => {
         } catch (error) {
             const errorMessage = error.response?.data?.error || 'An error occurred';
             setError(errorMessage);
+            console.log(errorMessage);
         }
     };
+
 
 
 

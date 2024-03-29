@@ -7,33 +7,45 @@ import logo from '../../assets/SOS.png'
 const Sidebar = () => {
   return (
     <div className='sidebar'>
-        <div className='top'>
-        <img className="logo" src={logo} alt='SOSteto'/>
-        </div>
-        <div className='center'>
-          <ul>
-            <p className="title">MAIN MENU</p>
-            <li>
-              <Link to={`/`}>
-                <DashboardIcon className='icon' />
-                <span>Dashboard</span>
-              </Link>
-              
-            </li>
-            <p className="title">LISTS MENU</p>
-            <li>
-              <Link to={`/users`}>
-                <GroupIcon className='icon' />
-                <span>Users</span>
-              </Link>
-            </li>
-            
-          </ul>
-        </div>
-        <div className='bottom'>
-          <div className='colorOptions'></div>
-          <div className='colorOptions'></div>
-        </div>
+      <div className='top'>
+        <img className="logo" src={logo} alt='SOSteto' />
+      </div>
+      <div className='center'>
+        <ul>
+          <p className="title">MAIN MENU</p>
+          <li>
+            <Link to={`/`}>
+              <DashboardIcon className='icon' />
+              <span>Dashboard</span>
+            </Link>
+
+          </li>
+          <p className="title">LISTS MENU</p>
+          <li>
+            <Link to={`/users`}>
+              <GroupIcon className='icon' />
+              <span>Users</span>
+            </Link>
+          </li>
+          <li>
+            <Link to={`/villes`}>
+              <GroupIcon className='icon' />
+              <span>Villes</span>
+            </Link>
+          </li>
+          <li>
+            <Link to={`/roles`}>
+              <GroupIcon className='icon' />
+              <span>Roles</span>
+            </Link>
+          </li>
+
+        </ul>
+      </div>
+      <div className='bottom'>
+        <div className='colorOptions'></div>
+        <div className='colorOptions'></div>
+      </div>
     </div>
   )
 }

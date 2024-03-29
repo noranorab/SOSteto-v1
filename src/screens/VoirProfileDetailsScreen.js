@@ -54,13 +54,13 @@ export default function VoirProfileDetailsScreen() {
                                             <Text style={{
                                                 fontWeight : 'bold',
                                                 fontSize : 20
-                                            }}>{item.postOwner}</Text>
+                                            }}>{item.prenom} {item.nom}</Text>
                                         
                                             <Ionicons style={{
                                                 flexDirection: 'row',
                                                 marginLeft: 10,
                                                 marginTop: 5
-                                            }} name="ellipse-sharp" size={10} color={item.actif == 'True' ? "#26ea01" : "#959595" }/>
+                                            }} name="ellipse-sharp" size={10} color={item.status == 'True' ? "#26ea01" : "#959595" }/>
                                 </View>
                             
                                 
@@ -73,7 +73,7 @@ export default function VoirProfileDetailsScreen() {
                                 fontSize : 14,
                                 paddingBottom: 10
 
-                        }}>{item.infirmier.tel}</Text>
+                        }}>{item.tel}</Text>
                         <Text style={{
                                 fontSize : 14,
                                 color: '#808080',

@@ -59,7 +59,7 @@ quartierRouter.put('/api/quartiers/:id', QuartierController.updateQuartier);
 
 /**
  * @openapi
- * /api/quartiers/{id}:
+ * /api/quartiers/{nom_quartier}:
  *   delete:
  *     summary: Delete a district
  *     description: Delete a district with the provided ID.
@@ -80,33 +80,32 @@ quartierRouter.put('/api/quartiers/:id', QuartierController.updateQuartier);
  */
 quartierRouter.delete('/api/quartiers/:id', QuartierController.deleteQuartier);
 
+
 /**
  * @openapi
- * /api/quartiers/ville/{nom_ville}:
+ * /api/quartiers/{nom_ville}:
  *   get:
- *     summary: Get all districts by city name
- *     description: Retrieve a list of all districts for a given city name.
+ *     summary: Get a district by name
+ *     description: Retrieve a district.
  *     tags:
  *       - Quartiers
  *     parameters:
  *       - in: path
  *         name: nom_ville
  *         required: true
- *         description: The name of the district
+ *         description: The name of the district to get
  *         schema:
  *           type: string
  *     responses:
  *       '200':
- *         description: A list of districts
+ *         description: Retrieved a city successfully
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Quartier'
+ *                 $ref: '#/components/schemas/Quartier'  
  *       '404':
- *         description: Quartiers not found for the city
+ *         description: there is no district by name nom_quartier
  */
-quartierRouter.get('/api/quartiers/ville/:nom_ville', QuartierController.getQuartiersByCity);
+quartierRouter.get('/api/quartiers/:nom_quartier', QuartierController.getQuartierByName);
 
 module.exports = quartierRouter;

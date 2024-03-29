@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -7,13 +7,12 @@ import {
   TouchableWithoutFeedback,
   TouchableOpacity,
   ScrollView,
-  Button,
   StyleSheet,
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import RNPickerSelect from "react-native-picker-select";
 import Filtre from "../components/Filtre";
-import { useNavigation } from '@react-navigation/core';
+import { useNavigation } from "@react-navigation/core";
 
 function InputWithIcon({ inputHeight, onPressIcon, iconName = "add-outline" }) {
   return (
@@ -83,11 +82,11 @@ function InfoSection({
 }
 
 export default function AjouterScreen({ navigation }) {
-
-  const { navigate } = useNavigation();
   const [additionalInputs, setAdditionalInputs] = useState([]);
+  const [villes, setVilles] = useState([]);
   const [selectedVille, setSelectedVille] = useState(null);
   const [selectedQuartier, setSelectedQuartier] = useState(null);
+  const [quartiers, setQuartiers] = useState([]);
 
   const handleAddAct = () => {
     setAdditionalInputs((prevInputs) => [...prevInputs, {}]);
@@ -96,6 +95,38 @@ export default function AjouterScreen({ navigation }) {
   const dismissKeyboard = () => {
     Keyboard.dismiss();
   };
+
+  useEffect(() => {
+
+    setTimeout(() => fetchVilles(), 10000);
+  }, []);
+
+  const fetchVilles = async () => {
+    try {
+      const response = await fetch("https://us-central1-sosteto-f1066.cloudfunctions.net/api/api/villes");
+      const data = await response.json();
+      setVilles(data);
+    } catch (error) {
+      console.error("Error fetching Villes:", error);
+    }
+  };
+
+  const handleVilleChange = (value) => {
+    setSelectedVille(value);
+    if (value) {
+      fetchVilles();
+    }
+  };
+
+  // const fetchQuartiers = async (villeId) => {
+  //   try {
+  //     const response = await fetch(`/api/villes/${villeId}/quartiers`);
+  //     const data = await response.json();
+  //     setQuartiers(data.quartiers);
+  //   } catch (error) {
+  //     console.error("Error fetching Quartiers:", error);
+  //   }
+  // };
 
   return (
     <TouchableWithoutFeedback onPress={dismissKeyboard}>
@@ -182,19 +213,17 @@ export default function AjouterScreen({ navigation }) {
           >
             <RNPickerSelect
               placeholder={{ label: "Choisir une ville", value: null }}
-              onValueChange={(value) => setSelectedVille(value)}
-              items={[
-                { label: "Casablanca", value: "Casablanca" },
-                { label: "Rabat", value: "Rabat" },
-                { label: "Marrakech", value: "Marrakech" },
-                { label: "Guelmim", value: "Guelmim" },
-              ]}
+              onValueChange={handleVilleChange}
+              items={villes.map((ville) => ({
+                label: ville.nom_ville,
+                value: ville.nom_ville,
+              }))}
+              value={selectedVille}
               style={{
                 inputAndroid: {
                   color: "grey",
                 },
               }}
-              value={selectedVille}
             />
           </View>
           <Text
@@ -222,22 +251,17 @@ export default function AjouterScreen({ navigation }) {
               fontSize: 14,
             }}
           >
-            <RNPickerSelect
+            {/* <RNPickerSelect
               placeholder={{ label: "Choisir un quartier", value: null }}
               onValueChange={(value) => setSelectedQuartier(value)}
-              items={[
-                { label: "Hay Mohammadi", value: "Hay Mohammadi" },
-                { label: "Hay Farah", value: "Hay Farah" },
-                { label: "Mekka", value: "Mekka" },
-                { label: "Roche noire", value: "Roche noire" },
-              ]}
+              items={quartiers.map(quartier => ({ label: quartier.name, value: quartier.name }))}
+              value={selectedQuartier}
               style={{
                 inputAndroid: {
                   color: "grey",
                 },
               }}
-              value={selectedQuartier}
-            />
+            /> */}
           </View>
           <View>
             <Text
@@ -257,10 +281,10 @@ export default function AjouterScreen({ navigation }) {
           </View>
 
           <Filtre show={false} />
-          <View style={{alignItems:'center' }}>
+          <View style={{ alignItems: "center" }}>
             <TouchableOpacity
               style={styles.searchButton}
-              // onPress={() => navigate("homeSearch")}
+            // onPress={() => navigate("homeSearch")}
             >
               <Text style={styles.searchButtonText}>Valider la demande</Text>
             </TouchableOpacity>

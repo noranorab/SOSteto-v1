@@ -128,3 +128,4 @@ router.put('/api/recruteurs/:id', RecruteurController.updateRecruteurById);
 router.delete('/api/recruteurs/:id', RecruteurController.deleteRecruteurById);
 
 module.exports = router;
+

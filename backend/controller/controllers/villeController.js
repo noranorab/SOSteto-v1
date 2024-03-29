@@ -1,4 +1,4 @@
-const { Ville } = require('../../model/schema');
+const { Ville, Quartier } = require('../../model/schema');
 
 
 exports.createVille = async (req, res) => {
@@ -15,6 +15,15 @@ exports.getVille = async (req, res) => {
     try {
         const villes = await Ville.find();
         res.status(200).send(villes);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+};
+exports.getVilleByName = async (req, res) => {
+    try {
+        const ville = await Ville.findOne({ nom_ville: req.params.nom_ville });
+        console.log(ville)
+        res.status(200).send(ville);
     } catch (error) {
         res.status(500).json(error);
     }
@@ -43,5 +52,16 @@ exports.deleteVille = async (req, res) => {
         res.status(200).json({ message: 'City deleted successfully' });
     } catch (error) {
         res.status(500).json({ message: error.message });
+    }
+};
+
+exports.getQuartiersByVilleId = async (req, res) => {
+    try {
+        const villeId = req.params.villeId;
+        const quartiers = await Quartier.find({ nom_ville: villeId });
+        res.status(200).json(quartiers);
+    } catch (error) {
+        console.error("Error fetching Quartiers:", error);
+        res.status(500).json({ error: "Internal Server Error" });
     }
 };

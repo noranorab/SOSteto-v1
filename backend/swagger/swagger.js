@@ -1,14 +1,16 @@
 const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
-const { userSchema } = require('../schema/userSchema')
+const { userSchema, userOutputSchema } = require('../schema/userSchema')
 const { userInputSchema } = require('../schema/userSchema')
 const { userloginSchema } = require('../schema/userSchema')
 const { usertokenShema } = require('../schema/userSchema')
 const { villeSchema } = require('../schema/villeSchema')
 const { quartierSchema } = require('../schema/quartierSchema')
-const { recruteurSchema } = require('../schema/recruteurSchema')
 const { imageSchema } = require('../schema/imageSchema')
+const { roleSchema } = require('../schema/roleSchema');
+const { specialiteSchema } = require('../schema/specialiteSchema');
+const { infirmierSchema, infirmierOutputSchema } = require('../schema/infirmierSchema');
 
 const swaggerDefinition = {
   openapi: '3.0.0',
@@ -27,13 +29,16 @@ const swaggerDefinition = {
     },
     schemas: {
       User: userSchema,
-      UserInput: userInputSchema,
+      UserOutput: userOutputSchema,
       UserLogin: userloginSchema,
       UserData: usertokenShema,
       Ville: villeSchema,
       Quartier: quartierSchema,
-      Recruteur: recruteurSchema,
-      Image: imageSchema
+      Image: imageSchema,
+      Role: roleSchema,
+      Infirmier: infirmierSchema,
+      InfirmierOutput: infirmierOutputSchema,
+      Specialite: specialiteSchema,
     }
   },
   security: [
@@ -55,19 +60,29 @@ const swaggerDefinition = {
       description: 'Endpoints related to district management'
     },
     {
-      name: 'Recruteurs',
-      description: 'Endpoints related to recruteurs management'
-    },
-    {
       name: 'Image of User',
       description: 'Endpoints related to users image management'
+    },
+    {
+      name: 'Role of user',
+      description: 'Endpoints related to roles management'
+    },
+    {
+      name: 'Infirmiers',
+      description: 'Endpoints related to infirmiers management'
+    },
+    {
+      name: 'Specialties',
+      description: 'Endpoints related to specialties management'
     }
   ]
 };
 
 const options = {
   swaggerDefinition,
-  apis: ['./controller/routes/userRoute.js', './controller/routes/villeRoute.js', './controller/routes/quartierRoute.js', './controller/routes/recruteurRoute.js', './controller/routes/imageRoute.js'], // Path to the API routes in your Node.js application
+  apis: ['./controller/routes/userRoute.js', './controller/routes/villeRoute.js', './controller/routes/quartierRoute.js', './controller/routes/imageRoute.js',
+    './controller/routes/roleRoute.js', './controller/routes/infirmierRoute.js', './controller/routes/specialiteRoute.js'
+  ], // Path to the API routes in your Node.js application
 };
 
 const swaggerSpec = swaggerJSDoc(options);

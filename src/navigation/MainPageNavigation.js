@@ -55,6 +55,10 @@ function MainPageNavigation() {
 
                 headerShown: false
             }} />
+            <HomeStack.Screen name="Modifier le profil" component={EditPublicProfileScreen} options={{
+
+                headerShown: false
+            }} />
 
 
 

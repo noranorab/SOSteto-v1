@@ -1,14 +1,16 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
+var ObjectId = require('mongoose').Types.ObjectId;
 
-const { User } = require('../../model/schema');
+const { User, Role, Ville, Quartier } = require('../../model/schema');
+const VilleController = require('./villeController');
 
 
 //User
 exports.createUser = async (req, res) => {
     try {
-        const { nom, prenom, email, mdp, role, estConnecte } = req.body;
-        const newUser = await User.create({ nom, prenom, email, mdp, role, estConnecte });
+        const { nom, prenom, email, mdp, role, estConnecte, ville, quartier, telephone } = req.body;
+        const newUser = await User.create({ nom, prenom, email, mdp, role, estConnecte, ville, quartier, telephone });
         res.status(201).json(newUser);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -17,6 +19,7 @@ exports.createUser = async (req, res) => {
 exports.getAllUsers = async (req, res) => {
     try {
         const users = await User.find();
+        console.log('i am hree ')
         res.status(200).send(users);
     } catch (error) {
         res.status(500).json(error);
@@ -25,23 +28,67 @@ exports.getAllUsers = async (req, res) => {
 
 exports.getUserById = async (req, res) => {
     try {
-        const user = await User.findById(req.params._id);
-        if (!user) {
+        const user = await User.findById(req.params.userId);
+        console.log(user.ville)
+        const { nom_ville } = await Ville.findOne(user.ville)
+        const { nom_quartier } = await Quartier.findOne(user.quartier)
+        const userRes = {
+            _id: user._id,
+            nom: user.nom,
+            prenom: user.prenom,
+            email: user.email,
+            mdp: user.mdp,
+            role: user.role,
+            estConnecte: user.estConnecte,
+            ville: nom_ville,
+            quartier: nom_quartier,
+            telephone: user.telephone,
+        }
+        if (!userRes) {
             return res.status(404).json({ message: 'User not found' });
         }
-        res.json(user);
+        res.json(userRes);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
 
+
+exports.getUserByRole = async (req, res) => {
+    try {
+        const { role } = req.query
+        const users = await User.find({ role });
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+
 exports.updateUser = async (req, res) => {
     try {
-        const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        if (!updatedUser) {
+        console.log(req.body)
+        const { ville, quartier } = req.body
+        const userVille = await Ville.findOne({ nom_ville: ville })
+        const userQuartier = await Quartier.findOne({ nom_quartier: quartier })
+        const updatedUser = {
+            nom: req.body.nom,
+            prenom: req.body.prenom,
+            email: req.body.email,
+            mdp: req.body.mdp,
+            role: req.body.role,
+            estConnecte: req.body.estConnecte,
+            ville: new ObjectId(userVille._id),
+            quartier: new ObjectId(userQuartier._id),
+            telephone: req.body.telephone,
+            status: req.body.status
+        }
+        const new_user = await User.findByIdAndUpdate(req.params.id, updatedUser, { new: true });
+
+        if (!new_user) {
             return res.status(404).json({ message: 'User not found' });
         }
-        res.json(updatedUser);
+        res.json(new_user);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -61,12 +108,9 @@ exports.deleteUser = async (req, res) => {
 
 
 
-
-
-
 exports.register = async (req, res) => {
     try {
-        const { nom, prenom, email, mdp, role, estConnecte } = req.body;
+        const { nom, prenom, email, mdp, role, estConnecte, ville, quartier, telephone, status, } = req.body;
         console.log(nom);
 
         const existingEmail = await User.findOne({ email });
@@ -85,6 +129,10 @@ exports.register = async (req, res) => {
                     mdp,
                     role,
                     estConnecte,
+                    ville,
+                    quartier,
+                    telephone,
+                    status,
                 }).save();
 
                 console.log(user);
@@ -125,12 +173,14 @@ exports.login = async (req, res) => {
         }
 
         const token = jwt.sign({
-            email: user.email,
+            _id: user._id,
         }, process.env.JWT_SECRET, { expiresIn: "24h" });
+        console.log(token);
 
         return res.status(200).json({
             token
         });
+
     } catch (error) {
         console.error('Error during login:', error);
         return res.status(500).json({ error: 'Internal Server Error' });
@@ -143,23 +193,36 @@ exports.userdatafromtoken = async (req, res) => {
     try {
         // Verify the token and extract user data
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const userEmail = decoded.email;
+        const userId = decoded._id;
 
         // Find the user in the database based on the email
-        const user = await User.findOne({ email: userEmail });
+        const user = await User.findOne({ _id: userId });
+        const { nom_ville } = await Ville.findOne(user.ville)
+        const { nom_quartier } = await Quartier.findOne(user.quartier)
+        const userRes = {
+            _id: user._id,
+            nom: user.nom,
+            prenom: user.prenom,
+            email: user.email,
+            mdp: user.mdp,
+            role: user.role,
+            estConnecte: user.estConnecte,
+            ville: nom_ville,
+            quartier: nom_quartier,
+            telephone: user.telephone,
+        }
 
-        if (!user) {
+        if (!userRes) {
             // If user not found, return appropriate response
             return res.status(404).json({ error: 'User not found' });
         }
 
 
         // If user found, return user data
-        return res.status(200).json({ status: 200, data: user });
+        return res.status(200).json({ status: 200, data: userRes });
     } catch (error) {
         // Handle token verification errors
         console.error('Error during user data retrieval:', error);
         return res.status(500).json({ error: 'Internal Server Error' });
     }
 };
-
