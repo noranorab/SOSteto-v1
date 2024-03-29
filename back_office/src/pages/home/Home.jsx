@@ -3,9 +3,22 @@ import Sidebar from '../../components/sidebar/Sidebar'
 import Navbar from '../../components/navbar/Navbar'
 import Widget from '../../components/widget/Widget'
 import Feature from '../../components/feature/Feature'
-import Chart from '../../components/chart/Chart'
+import DemandsPerUserBarChart from '../../components/chart/Chart'
+import { getRecruteursIds } from '../../data/users'
+
+import { useState, useEffect } from 'react'
+import { useLoaderData } from 'react-router-dom'
+
+
+export async function loader(){
+  const data = await getRecruteursIds()
+
+  return { data }
+}
 
 const Home = () => {
+  const {data} = useLoaderData()
+  console.log(data)
   return (
     <div className="home">
         <Sidebar />
@@ -19,7 +32,7 @@ const Home = () => {
           </div>
           <div className="charts">
             <Feature />
-            <Chart />
+            <DemandsPerUserBarChart userIds={[data]} />
           </div>
         </div>
     </div>

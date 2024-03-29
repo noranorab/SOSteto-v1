@@ -89,7 +89,7 @@ const DetailsOfUser = () => {
           <h3>Profil utilisateur n°: {formData._id}</h3>
           <section>
             <div className="userProfile">
-                  <div className="box1">
+                  <div className="box2">
                     <form>
                       <div className="infoperso">
                         <p className="infoItem">
@@ -187,15 +187,14 @@ const DetailsOfUser = () => {
               <h3>Spécialité et Soins</h3>
               <div className="userProfile">
                     <div className="box1">
-                    <div className="info">
                         <p className="infoInfirmier">
-                            {specialite.length > 0 ?
+                            <p className='specialite'>Spécialités :</p>{specialite.length > 0 ?
                                 <label htmlFor='specialite'>{specialite.join(', ')}</label> :
                                 <span>Pas de spécialités trouvées,</span>
                             }
                         </p>
                         <p className="infoInfirmier">
-                            {soins.length > 0 ?
+                        <p className='soins'>Soins :</p>{soins.length > 0 ?
                                 <label htmlFor='soins'>{soins.join(', ')}</label> :
                                 <span>Pas de soins trouvés</span>
                             }
@@ -203,7 +202,7 @@ const DetailsOfUser = () => {
                     </div>
                       
                     </div>
-                  </div>
+                  
             </section>
             ) : null
           }

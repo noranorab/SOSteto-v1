@@ -258,3 +258,15 @@ exports.getDemandeById = async(req, res) => {
         res.status(500).json(error);
     }
 }
+
+
+exports.countDemandesByUserId = async (req, res) => {
+    try {
+      // Count all demandes with the specified user ID
+      const demandeCount = await Demande.countDocuments({ id_recruteur: req.params.userId });
+      return demandeCount;
+    } catch (error) {
+      console.error('Error counting demandes:', error);
+      throw error;
+    }
+  };

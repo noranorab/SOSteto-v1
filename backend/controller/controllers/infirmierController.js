@@ -1,5 +1,5 @@
 const { ObjectId } = require("mongodb");
-const { Infirmier, Specialite, User, Ville, Quartier, SpecialiteInfirmier, LangueInfirmier, InfirmierSoins } = require("../../model/schema")
+const { Infirmier, Specialite, User, Ville, Quartier, SpecialiteInfirmier, LangueInfirmier, InfirmierSoins, Langue, Soins } = require("../../model/schema")
 
 
 
@@ -41,14 +41,25 @@ exports.getInfirmierById = async (req, res) => {
 
         console.log(user);
 
-        const specialite = await SpecialiteInfirmier.find({ userId: user._id.valueOf() });
-        const languesparlees = await LangueInfirmier.find({ userId: user._id.valueOf() });
-        const nom_soin = await InfirmierSoins.find({ id_infirmiere: user._id.valueOf() });
-        console.log(specialite)
+        const specialite = await SpecialiteInfirmier.find({ userId: user._id });
+        const specialitesWithName = await Promise.all(specialite.map(async (specialite) => {
+            return await Specialite.findById(specialite);
+        }))
+        console.log(specialitesWithName)
+        const languesparlees = await LangueInfirmier.find({ userId: user._id });
+        const languesWithName = await Promise.all(languesparlees.map(async (langue)=> {
+            return await Langue.findById(langue)
+        }))
+        console.log(languesWithName)
+        const nom_soin = await InfirmierSoins.find({ id_infirmiere: user._id });
+        const soinWithName= await Promise.all(nom_soin.map(async (s) => {
+            return await Soins.findById(s);
+        }))
+        console.log(soinWithName)
         const infirmierRep = {
-            langue_parlee: languesparlees.length>0 ? languesparlees.map((langue) => langue.langue) : [],
-            specialite: specialite.length>0 ? specialite.map((specialite) => specialite.specialite) : [],
-            soins: nom_soin.length>0 ? nom_soin.map((soin) => soin.nom_soin) : [],
+            specialite: specialitesWithName.length>0 ? specialitesWithName.map((specialite) => specialite.nom_specialite) : [],
+            langue_parlee: languesWithName.length>0 ? languesWithName.map((langue) => langue.langue) : [],
+            soins: soinWithName.length>0 ? soinWithName.map((soin) => soin.nom_soin) : [],
         };
 
         res.json(infirmierRep);
