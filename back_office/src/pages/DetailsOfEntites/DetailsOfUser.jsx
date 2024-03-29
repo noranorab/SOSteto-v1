@@ -3,39 +3,61 @@ import Sidebar from '../../components/sidebar/Sidebar';
 import Navbar from '../../components/navbar/Navbar';
 import './DetailsOfUser.scss'
 
-import {json, useLoaderData } from 'react-router-dom';
-import { getUserById, updateUserDetails } from '../../data/users';
+import {json, useLoaderData, Link } from 'react-router-dom';
+import { getAllDemandesOfUser, getInfirmierById, getUserById, updateUserDetails } from '../../data/users';
 import { getQuartiersFromVilleName, getVilles } from '../../data/villesetquartiers';
 
 
+
 export const loader = async ({params}) => {
-  const [data, villes] = await Promise.all([
+  const [data, villes, demandes] = await Promise.all([
      getUserById({params}),
      getVilles(),
-  ]);
-  return json({ data, villes });
+     getAllDemandesOfUser({params})
+     
+     ]);
+     console.log(demandes)
+  return json({ data, villes, demandes });
 }
 
 
 const DetailsOfUser = () => {
-  const {data, villes} = useLoaderData();
+  const {data, villes, demandes} = useLoaderData();
+
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState(data);
   const [quartiers, setQuartiers] = useState([]);
+  const [specialite, setSpecialite] = useState([])
+  const [soins, setSoins] = useState([])
   useEffect(() => {
     const fetchQuartiers = async () => {
       try {
         const quartiersByVilles = await getQuartiersFromVilleName(formData.ville);
         setQuartiers(quartiersByVilles);
+        console.log(quartiersByVilles)
       } catch (error) {
         console.error('Error fetching quartiers:', error);
+      }
+    };
+    const fetchInfirmiers = async () => {
+      try {
+        const infirmier = await getInfirmierById(formData._id);
+        setSpecialite(infirmier.specialite)
+        setSoins(infirmier.soins)
+        console.log(infirmier)
+      } catch (error) {
+        console.error('Error fetching infirmier:', error);
       }
     };
   
     if (formData.ville) {
       fetchQuartiers();
     }
-  }, [formData.ville]);
+    if(formData.role === 'infirmier'){
+      fetchInfirmiers()
+
+    }
+  }, [formData.ville, formData._id, formData.role]);
   
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -64,7 +86,7 @@ const DetailsOfUser = () => {
       <div className='usersContainer'>
         <Navbar />
         <div className="usersList">
-          <h1>User Profile</h1>
+          <h3>Profil utilisateur n°: {formData._id}</h3>
           <section>
             <div className="userProfile">
                   <div className="box1">
@@ -95,7 +117,7 @@ const DetailsOfUser = () => {
                         <p className="infoItem">
                           <label htmlFor="quartier">Quartier:</label>
                           <select id="quartier" name="quartier" value={formData.quartier} onChange={handleInputChange} disabled={!editMode}>
-                            {quartiers.map((quartier) => (
+                            { quartiers.map((quartier) => (
                               <option key={quartier._id} value={quartier.nom_quartier}>{quartier.nom_quartier}</option>
                             ))}
                           </select>
@@ -127,9 +149,66 @@ const DetailsOfUser = () => {
                     </form>
                   </div>
                 </div>
+                { formData.role === 'recruteur' ?(<div className="demandes">
+                  <h3>Demandes</h3>
+                  <div className="userProfile">
+                  <table>
+                      <thead>
+                          <tr>
+                            <th>Id</th>
+                            <th>Intitulé</th>
+                            <th>Objet</th>
+                            <th>Détails</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          { demandes && demandes.map((demande, rowIdx) => (
+                            <tr key={demande._id}>
+                              <td>{demande._id}</td>
+                              <td>{demande.titre}</td>
+                              <td>{demande.objet}</td>
+                              <Link to={`/demandes/${demande._id}`}>
+                                <td>Voir détail</td>
+                              </Link>
+                              {' '}
+                            </tr>
+                          ))}
+                        </tbody>
+                    </table>
+                    </div>
+                </div>): null}
+                
 
-              
           </section>
+          {
+            formData.role === 'infirmier' ? (
+            
+            <section>
+              <h3>Spécialité et Soins</h3>
+              <div className="userProfile">
+                    <div className="box1">
+                    <div className="info">
+                        <p className="infoInfirmier">
+                            {specialite.length > 0 ?
+                                <label htmlFor='specialite'>{specialite.join(', ')}</label> :
+                                <span>Pas de spécialités trouvées,</span>
+                            }
+                        </p>
+                        <p className="infoInfirmier">
+                            {soins.length > 0 ?
+                                <label htmlFor='soins'>{soins.join(', ')}</label> :
+                                <span>Pas de soins trouvés</span>
+                            }
+                        </p>
+                    </div>
+                      
+                    </div>
+                  </div>
+            </section>
+            ) : null
+          }
+          
+
           
         </div>
       </div>

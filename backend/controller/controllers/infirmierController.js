@@ -1,5 +1,6 @@
 const { ObjectId } = require("mongodb");
 const { Infirmier, Specialite, User, Ville, Quartier, SpecialiteInfirmier, LangueInfirmier, InfirmierSoins } = require("../../model/schema")
+const { Infirmier, Specialite, User, Ville, Quartier, SpecialiteInfirmier, LangueInfirmier, InfirmierSoins } = require("../../model/schema")
 
 
 
@@ -35,61 +36,63 @@ exports.getAllInfirmiers = async (req, res) => {
 exports.getInfirmierById = async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-
-        console.log(user);
-
-        const specialite = await SpecialiteInfirmier.find({ userId: user._id.valueOf() });
-        const languesparlees = await LangueInfirmier.find({ userId: user._id.valueOf() });
-        const nom_soin = await InfirmierSoins.find({ id_infirmiere: user._id.valueOf() });
-        console.log(specialite)
-        const infirmierRep = {
-            langue_parlee: languesparlees.length > 0 ? languesparlees.map((langue) => langue.langue) : [],
-            specialite: specialite.length > 0 ? specialite.map((specialite) => specialite.specialite) : [],
-            soins: nom_soin.length > 0 ? nom_soin.map((soin) => soin.nom_soin) : [],
-        };
-
-        res.json(infirmierRep);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Error from server' });
-    }
-};
-
-exports.getInfirmiersByFilterVilleSpec = async (req, res) => {
-    try {
-        const { ville, specialite } = req.body;
-        req.body
-        let filter = { role: 'infirmier' };
-
-        if (ville) {
-            const userVille = await Ville.findOne({ nom_ville: ville });
-            filter.ville = userVille._id;
-        }
-
-        if (specialite) {
-            const specialiteId = await Specialite.findOne({ nom_specialite: specialite });
-            if (specialiteId._id) {
-
-                const specialiteFound = await SpecialiteInfirmier.find({ specialite: specialiteId._id });
-                const infirmierIds = specialiteFound.map(infirmier => infirmier.userId);
-                filter._id = { $in: infirmierIds };
-
-            } else {
-                res.status(404).json([]);
-                return;
+        try {
+            const user = await User.findById(req.params.id);
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
             }
-        }
 
-        const infirmiers = await User.find(filter);
-        res.status(200).json(infirmiers);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Error from server' });
-    }
-};
+            console.log(user);
+
+            const specialite = await SpecialiteInfirmier.find({ userId: user._id.valueOf() });
+            const languesparlees = await LangueInfirmier.find({ userId: user._id.valueOf() });
+            const nom_soin = await InfirmierSoins.find({ id_infirmiere: user._id.valueOf() });
+            console.log(specialite)
+            const infirmierRep = {
+                langue_parlee: languesparlees.length > 0 ? languesparlees.map((langue) => langue.langue) : [],
+                specialite: specialite.length > 0 ? specialite.map((specialite) => specialite.specialite) : [],
+                soins: nom_soin.length > 0 ? nom_soin.map((soin) => soin.nom_soin) : [],
+            };
+
+            res.json(infirmierRep);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: 'Error from server' });
+        }
+    };
+
+    exports.getInfirmiersByFilterVilleSpec = async (req, res) => {
+        try {
+            const { ville, specialite } = req.body;
+            req.body
+            let filter = { role: 'infirmier' };
+
+            if (ville) {
+                const userVille = await Ville.findOne({ nom_ville: ville });
+                filter.ville = userVille._id;
+            }
+
+            if (specialite) {
+                const specialiteId = await Specialite.findOne({ nom_specialite: specialite });
+                if (specialiteId._id) {
+
+                    const specialiteFound = await SpecialiteInfirmier.find({ specialite: specialiteId._id });
+                    const infirmierIds = specialiteFound.map(infirmier => infirmier.userId);
+                    filter._id = { $in: infirmierIds };
+
+                } else {
+                    res.status(404).json([]);
+                    return;
+                }
+            }
+
+            const infirmiers = await User.find(filter);
+            res.status(200).json(infirmiers);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: 'Error from server' });
+        }
+    };
 
 // exports.getInfirmiersByFilter = async (req, res) => {
 //     try {

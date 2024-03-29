@@ -238,6 +238,10 @@ router.post('/api/users/login', UserController.login);
 
 router.post('/api/users/userdata', UserController.userdatafromtoken);
 
+router.post('/api/demandes', UserController.createADemande);
+router.get('/api/users/:userId/demandes', UserController.getAllDemandesFromUser);
+router.get('/api/demandes/:demandeId', UserController.getDemandeById);
+
 
 module.exports = router
 

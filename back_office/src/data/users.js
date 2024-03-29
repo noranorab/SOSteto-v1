@@ -52,3 +52,35 @@ export async function deleteUserDetails(id) {
   }
 }
 
+export async function getInfirmierById(id){
+  try {
+    const response = await axios.get(`http://localhost:3000/api/infirmiers/${id}`)
+    
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting user details:', error);
+    throw error; // Rethrow the error to be caught by the caller
+  }
+}
+
+export async function getAllDemandesOfUser({params}) {
+  try{
+    const response = await axios.get(`http://localhost:3000/api/users/${params.userId}/demandes`)
+    console.log(response.data)
+    return response.data;
+  }catch(error){
+    console.error('Error retrieving demandes:', error);
+    throw error;
+  }
+}
+
+export async function getDemandeById({params}) {
+  try{
+    const response = await axios.get(`http://localhost:3000/api/demandes/${params.demandeId}`)
+    console.log(response.data)
+    return response.data;
+  }catch(error){
+    console.error('Error retrieving demandes:', error);
+    throw error;
+  }
+}
