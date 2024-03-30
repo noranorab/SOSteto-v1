@@ -2,23 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
 import Header from '../components/Header';
 import RNPickerSelect from 'react-native-picker-select';
-import { villes } from '../data/villes';
-import { specialities } from '../data/specialities';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import Icon from 'react-native-vector-icons/Ionicons'; // Import the icon library you are using
 import { PostItem } from '../components/PostItem';
-import { posts } from '../data/posts';
 import { useNavigation } from '@react-navigation/core';
 import Filtre from '../components/Filtre';
 import { useRoute } from '@react-navigation/native';
-
-
 export default function SearchResultNonConnect() {
     const { navigate } = useNavigation();
     const route = useRoute();
     const userData = route.params?.infirmiersData;
-    console.log("infermiers now///////////////////////////////:::::/");
-    console.log(userData);
+    // console.log("infermiers now///////////////////////////////:::::/");
+    // console.log(userData);
 
     const [selectedCity, setSelectedCity] = React.useState(null);
     const [selectedSpecialties, setSelectedSpecialties] = React.useState([]);
