@@ -44,7 +44,7 @@ app.use('/', imageRoutes);
 app.use('/', roleRoutes);
 app.use('/', infirmierRoutes)
 app.use('/', SpecialiteRoute)
-app.user('/', DemandeRoute)
+app.use('/', DemandeRoute)
 // app.use('/api/recruteurs', recruteurRoutes)
 
 
