@@ -73,16 +73,23 @@ const Header = () => {
 
     const handleRecherche = async () => {
         try {
-            const rechercheInfer = await axios.post('http://192.168.58.61:3000/api/infirmiers/filtreByVilleSpe', {
+            // Perform the API call and await its response
+            const response = await axios.post('http://192.168.58.61:3000/api/infirmiers/filtreByVilleSpe', {
                 ville: selectedVille,
                 specialite: selectedSpecialite,
             });
-            setInfirmiers(rechercheInfer.data);
-            console.log(infirmiers);
+
+            // Assuming the response contains the data of infirmiers
+            const infirmiersData = response.data;
+
+            // Now navigate to the desired screen with the fetched data
+            navigate('homeSearch', { infirmiersData: infirmiersData }); // Replace 'NextScreenName' with your actual screen name
         } catch (error) {
-            console.error("Failed to fetch cities:", error);
+            console.error("Failed to fetch infirmiers:", error);
+            // Handle error scenario (maybe alert the user that fetching data failed)
         }
     };
+
 
 
 

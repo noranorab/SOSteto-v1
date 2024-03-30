@@ -1,53 +1,61 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, ScrollView, Pressable, ImageBackground } from 'react-native';
+import { View, Text, ScrollView, ActivityIndicator, Pressable, ImageBackground, Image } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import { recruteurs } from '../data/recruteurs';
-import { demandes } from '../data/demandes';
 import axios from 'axios';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { recruteurs } from '../data/recruteurs';
+import { demandes } from '../data/demandes';
 
 export default function PublicProfileScreen() {
     const { navigate } = useNavigation();
     const [mesDemandes, setMesDemandes] = useState([]);
-    const [token, setToken] = useState(null);
     const [userData, setUserData] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
-    async function fetchData() {
+    async function fetchDataUser() {
+        setIsLoading(true); // Set loading at the beginning
         try {
             const storedTokenString = await AsyncStorage.getItem("token");
             if (storedTokenString) {
-                setToken(storedTokenString);
-                axios.post('http://192.168.58.61:3000/api/users/userdata', { token: storedTokenString })
-                    .then(res => {
-                        setUserData(res.data.data);
-                    })
-                    .catch(error => {
-                        console.error("Error fetching user data:", error);
-                    });
+                const res = await axios.post('http://192.168.58.61:3000/api/users/userdata', { token: storedTokenString });
+                setUserData(res.data.data);
+                await fetchDemandes(res.data.data._id); // Pass the _id to fetchDemandes
             } else {
                 console.log("Token not found");
+                setIsLoading(false); // Set loading to false if token not found
             }
         } catch (error) {
-            console.error("Error retrieving token:", error);
+            console.error("Error retrieving token or user data:", error);
+            setIsLoading(false); // Ensure loading is set to false on error
+        }
+    }
+
+    async function fetchDemandes(userId) {
+        try {
+            const response = await axios.get(`http://192.168.58.61:3000/api/users/${userId}/demandes`);
+            setMesDemandes(response.data);
+        } catch (error) {
+            console.error("Failed to fetch demandes:", error);
+        } finally {
+            setIsLoading(false); // Ensure loading is set to false after demandes are fetched
         }
     }
 
     useFocusEffect(
         React.useCallback(() => {
-            fetchData();
+            fetchDataUser(); // fetchDemandes will be called within fetchDataUser if userData is obtained
         }, [])
     );
 
-    useEffect(() => {
-        const filteredDemandes = demandes.filter(demande => demande.id_recruteur === recruteurs[0].id);
-        setMesDemandes(filteredDemandes);
-    }, []);
-
-    if (!userData) {
-        return <Text>Loading user data...</Text>;
+    if (isLoading) {
+        return (
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <ActivityIndicator size="large" color="#0000ff" />
+            </View>
+        );
     }
-
+    console.log(mesDemandes)
     return (
         <ScrollView testID='PublicProfileScreen' >
             <ImageBackground
@@ -126,10 +134,10 @@ export default function PublicProfileScreen() {
                             fontSize: 20
                         }}>Mes demandes</Text>
                         <View style={{ paddingTop: 10 }}>
-                            <Text>Votre demande du {mesDemandes.length > 0 && mesDemandes[0].detail.date}</Text>
+                            <Text>Votre demande du {mesDemandes.length > 0 && mesDemandes[mesDemandes.length - 1].date}</Text>
                             <View style={{ paddingTop: 10 }}>
-                                <Text>{mesDemandes.length > 0 && mesDemandes[0].objet} </Text>
-                                <Text style={{ paddingTop: 5 }}>{mesDemandes.length > 0 && mesDemandes[0].corps}</Text>
+                                <Text>{mesDemandes.length > 0 && mesDemandes[mesDemandes.length - 1].objet} </Text>
+                                <Text style={{ paddingTop: 5 }}>{mesDemandes.length > 0 && mesDemandes[mesDemandes.length - 1].corps}</Text>
                             </View>
                         </View>
                     </View>

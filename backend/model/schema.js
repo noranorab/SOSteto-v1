@@ -123,6 +123,8 @@ const demandeSchema = new Schema({
     id_recruteur: { type: Schema.Types.ObjectId, ref: 'User' },
     titre: String,
     objet: String,
+    ville: { type: Schema.Types.ObjectId, ref: 'Ville' },
+    quartier: { type: Schema.Types.ObjectId, ref: 'Quartier' },
     date: String,
     heure_debut: String,
     heure_fin: String
@@ -182,7 +184,7 @@ const soinsSchema = new Schema({
 // demande-soins
 const demandeSoinsSchema = new Schema({
     id_demande: { type: Schema.Types.ObjectId, ref: 'Demande' },
-    nom_soin: { type: Schema.Types.ObjectId, ref: 'Soin' }
+    id_soin: { type: Schema.Types.ObjectId, ref: 'Soins' }
 });
 
 // infirmier-soins
