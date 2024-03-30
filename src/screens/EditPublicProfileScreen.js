@@ -44,6 +44,7 @@ export default function EditPublicProfileScreen() {
     const [quartiers, setQuartiers] = useState([]);
 
 
+
     useEffect(() => {
         const fetchVilles = async () => {
             try {
@@ -91,15 +92,15 @@ export default function EditPublicProfileScreen() {
             }
         } catch (error) {
             console.error("Error updating user", error);
-            // Handle error (e.g., show an error message)
+
         }
     };
 
     const handleCityChange = async (value) => {
         setVille(value);
         try {
-            const cityResponse = await axios.get(`http://192.168.58.61:3000/api/villes/${value}`);
-            const quartiersResponse = await axios.get(`http://192.168.58.61:3000/api/villes/${cityResponse.data._id}/quartiers`);
+
+            const quartiersResponse = await axios.get(`http://192.168.58.61:3000/api/villes/${value}/quartiers`);
             setQuartiers(quartiersResponse.data.map(quartier => ({ label: quartier.nom_quartier, value: quartier.nom_quartier, id: quartier._id })));
         } catch (error) {
             console.error("Failed to fetch city or quartiers data:", error);
@@ -110,8 +111,6 @@ export default function EditPublicProfileScreen() {
     const handleQuartierChange = (value) => {
         setQuartier(value);
     };
-
-
 
 
 

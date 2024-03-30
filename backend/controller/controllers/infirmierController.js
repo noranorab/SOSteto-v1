@@ -1,4 +1,5 @@
 const { ObjectId } = require("mongodb");
+// const { Infirmier, Specialite, User, Ville, Quartier, SpecialiteInfirmier, LangueInfirmier, InfirmierSoins } = require("../../model/schema")
 const { Infirmier, Specialite, User, Ville, Quartier, SpecialiteInfirmier, LangueInfirmier, InfirmierSoins, Langue, Soins } = require("../../model/schema")
 
 
@@ -32,49 +33,113 @@ exports.getAllInfirmiers = async (req, res) => {
         res.status(500).json(error);
     }
 };
+
+
+
 exports.getInfirmierById = async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
-        try {
-            const user = await User.findById(req.params.id);
-            if (!user) {
-                return res.status(404).json({ message: 'User not found' });
-            }
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
 
-            console.log(user);
+        const specialiteIds = await SpecialiteInfirmier.find({ userId: user._id });
+        const languesIds = await LangueInfirmier.find({ userId: user._id });
+        const soinsIds = await InfirmierSoins.find({ id_infirmiere: user._id });
 
-        const specialite = await SpecialiteInfirmier.find({ userId: user._id });
-        const specialitesWithName = await Promise.all(specialite.map(async (specialite) => {
-            return await Specialite.findById(specialite);
-        }))
-        console.log(specialitesWithName)
-        const languesparlees = await LangueInfirmier.find({ userId: user._id });
-        const languesWithName = await Promise.all(languesparlees.map(async (langue)=> {
-            return await Langue.findById(langue)
-        }))
-        console.log(languesWithName)
-        const nom_soin = await InfirmierSoins.find({ id_infirmiere: user._id });
-        const soinWithName= await Promise.all(nom_soin.map(async (s) => {
-            return await Soins.findById(s);
-        }))
-        console.log(soinWithName)
+        const specialitePromises = specialiteIds.map(async (specialite) => {
+            const specialiteDetails = await Specialite.findById(specialite.specialite);
+            return specialiteDetails ? specialiteDetails.nom_specialite : null;
+        });
+
+        const languesPromises = languesIds.map(async (langue) => {
+            const langueDetails = await Langue.findById(langue.languesparlees);
+            return langueDetails ? langueDetails.langue : null;
+        });
+
+        const soinsPromises = soinsIds.map(async (soin) => {
+            const soinDetails = await Soins.findById(soin.nom_soin);
+            return soinDetails ? soinDetails.nom_soin : null;
+        });
+
+        const specialiteNames = await Promise.all(specialitePromises);
+        const languesNames = await Promise.all(languesPromises);
+        const soinsNames = await Promise.all(soinsPromises);
+
         const infirmierRep = {
-            specialite: specialitesWithName.length>0 ? specialitesWithName.map((specialite) => specialite.nom_specialite) : [],
-            langue_parlee: languesWithName.length>0 ? languesWithName.map((langue) => langue.langue) : [],
-            soins: soinWithName.length>0 ? soinWithName.map((soin) => soin.nom_soin) : [],
+            langue_parlee: languesNames.filter(Boolean),
+            specialite: specialiteNames.filter(Boolean),
+            soins: soinsNames.filter(Boolean),
         };
 
-            res.json(infirmierRep);
-        } catch (error) {
-            console.error(error);
-            res.status(500).json({ message: 'Error from server' });
-        }
-    
-} catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error from server' });
-}
+        res.json(infirmierRep);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error from server' });
+    }
 };
+
+
+// exports.getInfirmierById = async (req, res) => {
+
+//     try {
+//         const user = await User.findById(req.params.id);
+//         if (!user) {
+//             return res.status(404).json({ message: 'User not found' });
+//         }
+//         const specialite = await SpecialiteInfirmier.find({ userId: user._id });
+//         const languesparlees = await LangueInfirmier.find({ userId: user._id });
+//         const nom_soin = await InfirmierSoins.find({ id_infirmiere: user._id });
+//         const infirmierRep = {
+//             langue_parlee: languesparlees.length > 0 ? languesparlees.map((langue) => langue.languesparlees) : [],
+//             specialite: specialite.length > 0 ? specialite.map((specialite) => specialite.specialite) : [],
+//             soins: nom_soin.length > 0 ? nom_soin.map((soin) => soin.nom_soin
+//             ) : [],
+//         };
+//         res.json(infirmierRep);
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ message: 'Error from server' });
+//     }
+// };
+
+// exports.getInfirmierById = async (req, res) => {
+//     try {
+//         const user = await User.findById(req.params.id);
+//         if (!user) {
+//             return res.status(404).json({ message: 'User not found' });
+//         }
+
+//         console.log(user);
+
+//         const specialite = await SpecialiteInfirmier.find({ userId: user._id });
+//         const specialitesWithName = await Promise.all(specialite.map(async (specialite) => {
+//             return await Specialite.findById(specialite);
+//         }))
+//         console.log(specialitesWithName)
+//         const languesparlees = await LangueInfirmier.find({ userId: user._id });
+//         const languesWithName = await Promise.all(languesparlees.map(async (langue) => {
+//             return await Langue.findById(langue)
+//         }))
+//         console.log(languesWithName)
+//         const nom_soin = await InfirmierSoins.find({ id_infirmiere: user._id });
+//         const soinWithName = await Promise.all(nom_soin.map(async (s) => {
+//             return await Soins.findById(s);
+//         }))
+//         console.log(soinWithName)
+//         const infirmierRep = {
+//             specialite: specialitesWithName.length > 0 ? specialitesWithName.map((specialite) => specialite.nom_specialite) : [],
+//             langue_parlee: languesWithName.length > 0 ? languesWithName.map((langue) => langue.langue) : [],
+//             soins: soinWithName.length > 0 ? soinWithName.map((soin) => soin.nom_soin) : [],
+//         };
+
+//         res.json(infirmierRep);
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ message: 'Error from server' });
+//     }
+// };
+
 
 exports.getInfirmiersByFilterVilleSpec = async (req, res) => {
     try {
@@ -109,35 +174,6 @@ exports.getInfirmiersByFilterVilleSpec = async (req, res) => {
     }
 };
 
-// exports.getInfirmiersByFilter = async (req, res) => {
-//     try {
-//         // Extract filters from request body
-//         const { ville, specialite } = req.body;
-
-//         // Build a filter object. Only add the properties if they are provided.
-//         let filter = {};
-//         if (ville) {
-//             const userVille = await Ville.findOne({ nom_ville: ville });
-//             filter.ville = userVille;
-//         }
-//         if (specialite) { filter.specialite = specialite; }
-
-//         // Query the database with the filter
-//         const infirmiers = await User.find(filter);
-
-//         // Check if we found any infirmiers
-//         if (infirmiers.length === 0) {
-//             return res.status(404).json({ message: "No infirmiers found with the given criteria." });
-//         }
-
-//         // Respond with the filtered list of infirmiers
-//         res.json(infirmiers);
-//     } catch (error) {
-//         // Handle potential errors
-//         console.error("Error fetching filtered infirmiers:", error);
-//         res.status(500).json({ message: "Internal server error" });
-//     }
-// };
 
 
 

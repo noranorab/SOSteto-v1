@@ -7,12 +7,14 @@ import {
   TouchableWithoutFeedback,
   TouchableOpacity,
   ScrollView,
-  StyleSheet,
+  StyleSheet, ActivityIndicator
 } from "react-native";
+
 import Ionicons from "react-native-vector-icons/Ionicons";
 import RNPickerSelect from "react-native-picker-select";
 import Filtre from "../components/Filtre";
 import { useNavigation } from "@react-navigation/core";
+import axios from 'axios';
 
 function InputWithIcon({ inputHeight, onPressIcon, iconName = "add-outline" }) {
   return (
@@ -87,6 +89,9 @@ export default function AjouterScreen({ navigation }) {
   const [selectedVille, setSelectedVille] = useState(null);
   const [selectedQuartier, setSelectedQuartier] = useState(null);
   const [quartiers, setQuartiers] = useState([]);
+  const [soins, setSoins] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
 
   const handleAddAct = () => {
     setAdditionalInputs((prevInputs) => [...prevInputs, {}]);
@@ -99,34 +104,48 @@ export default function AjouterScreen({ navigation }) {
   useEffect(() => {
 
     fetchVilles();
+    fetchSoinsData();
   }, []);
 
   const fetchVilles = async () => {
     try {
-      const response = await fetch("http://192.168.60.184:3000/api/villes");
-      const data = await response.json();
-      console.log(data);
-      setVilles(data);
+      const response = await axios.get('http://192.168.58.61:3000/api/villes');
+      setVilles(response.data.map(ville => ({ label: ville.nom_ville, value: ville.nom_ville })));
     } catch (error) {
-      console.error("Error fetching Villes:", error);
+      console.error("Failed to fetch cities:", error);
     }
   };
 
   const handleVilleChange = async (value) => {
     setSelectedVille(value);
     try {
-      const cityResponse = await fetch(`http://192.168.60.184:3000/api/villes/${value}`);
-      const data = await cityResponse.json();
-      const quartiersResponse = await fetch(`http://192.168.60.184:3000/api/villes/${data._id}/quartiers`);
-      const data2 = await quartiersResponse.json();
-      setQuartiers(data2.map(quartier => ({ label: quartier.nom_quartier, value: quartier.nom_quartier, id: quartier._id })));
-      console.log(quartiers);
+
+      const quartiersResponse = await axios.get(`http://192.168.58.61:3000/api/villes/${value}/quartiers`);
+      console.log(quartiersResponse)
+      setQuartiers(quartiersResponse.data.map(quartier => ({ label: quartier.nom_quartier, value: quartier.nom_quartier, id: quartier._id })));
     } catch (error) {
       console.error("Failed to fetch city or quartiers data:", error);
     }
 
   };
+  const fetchSoinsData = async () => {
+    try {
 
+      const response = await axios.get('http://192.168.58.61:3000/api/soins');
+      setSoins(response.data);
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Failed to fetch soins data:", error);
+      setIsLoadingSoins(false);
+    }
+  };
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
+  }
   return (
     <TouchableWithoutFeedback onPress={dismissKeyboard}>
       <ScrollView
@@ -212,11 +231,8 @@ export default function AjouterScreen({ navigation }) {
           >
             <RNPickerSelect
               placeholder={{ label: "Choisir une ville", value: null }}
-              onValueChange={handleVilleChange}
-              items={villes.map((ville) => ({
-                label: ville.nom_ville,
-                value: ville.nom_ville,
-              }))}
+              onValueChange={(value) => handleVilleChange(value)}
+              items={villes}
               value={selectedVille}
               style={{
                 inputAndroid: {
