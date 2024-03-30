@@ -10,10 +10,16 @@ import { PostItem } from '../components/PostItem';
 import { posts } from '../data/posts';
 import { useNavigation } from '@react-navigation/core';
 import Filtre from '../components/Filtre';
+import { useRoute } from '@react-navigation/native';
 
 
 export default function SearchResultNonConnect() {
     const { navigate } = useNavigation();
+    const route = useRoute();
+    const userData = route.params?.infirmiersData;
+    console.log("infermiers now///////////////////////////////:::::/");
+    console.log(userData);
+
     const [selectedCity, setSelectedCity] = React.useState(null);
     const [selectedSpecialties, setSelectedSpecialties] = React.useState([]);
 
@@ -50,10 +56,12 @@ export default function SearchResultNonConnect() {
                 </View>
                 <View >
                     <FlatList
-                        data={infermiers}
+                        data={userData}
                         renderItem={({ item }) => <PostItem item={item} />}
-                        keyExtractor={(item) => item.id.toString()}
+                        keyExtractor={(item) => item._id.toString()}
+                        ListEmptyComponent={<Text>No data found.</Text>}
                     />
+
                 </View>
             </ScrollView >
 
