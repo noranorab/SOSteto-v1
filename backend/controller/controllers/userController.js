@@ -2,7 +2,7 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken');
 var ObjectId = require('mongoose').Types.ObjectId;
 
-const { User, Ville, Quartier, Demande } = require('../../model/schema');
+const { User, Ville, Quartier, Demande, DemandeSoins, Soins } = require('../../model/schema');
 const VilleController = require('./villeController');
 
 
@@ -44,7 +44,7 @@ exports.getUserById = async (req, res) => {
             quartier: nom_quartier,
             telephone: user.telephone,
         }
-        
+
         if (!userRes) {
             return res.status(404).json({ message: 'User not found' });
         }
@@ -229,7 +229,7 @@ exports.userdatafromtoken = async (req, res) => {
 };
 
 exports.createADemande = async (req, res) => {
-    try{
+    try {
         const demande = req.body;
         const newdemande = {
             id_recruteur: req.body.id_recruteur,
@@ -241,40 +241,55 @@ exports.createADemande = async (req, res) => {
         }
         const demandeObject = await Demande.create(newdemande)
         res.status(201).json(demandeObject)
-    }catch(error){
-        return res.status(500).json({error: 'Error creating demande'})
+    } catch (error) {
+        return res.status(500).json({ error: 'Error creating demande' })
 
     }
 }
 
 exports.getAllDemandesFromUser = async (req, res) => {
-    try{
+    try {
         const user = await User.findById(req.params.userId)
-        const demandes = await Demande.find({id_recruteur: new Object(user._id)});
+        const demandes = await Demande.find({ id_recruteur: new Object(user._id) });
         res.status(200).json(demandes);
-        if (!user){
-            return res.status(404).json({error: 'No user found'})
+        if (!user) {
+            return res.status(404).json({ error: 'No user found' })
         }
-    }catch(error){
+    } catch (error) {
         res.status(500).json(error);
     }
 
 }
 
-exports.getDemandeById = async(req, res) => {
-    try{
+exports.getDemandeById = async (req, res) => {
+    try {
         const demande = await Demande.findById(req.params.demandeId)
-        res.status(200).json(demande);
-        if (!demande){
-            return res.status(404).json({error: 'No demande found'})
+        const { nom_ville } = await Ville.findOne(demande.ville)
+        const { nom_quartier } = await Quartier.findOne(demande.quartier)
+        const demandeRes = {
+            _id: demande._id,
+            id_recruteur: demande.id_recruteur,
+            titre: demande.titre,
+            objet: demande.objet,
+            date: demande.date,
+            heure_debut: demande.heure_debut,
+            heure_fin: demande.heure_fin,
+            ville: nom_ville,
+            quartier: nom_quartier,
         }
-    }catch(error){
+
+        if (!demande) {
+            return res.status(404).json({ error: 'No demande found' })
+        }
+        res.status(200).json(demandeRes);
+    } catch (error) {
         res.status(500).json(error);
     }
 }
 
 
-exports.countDemandesByUserId = async (req, res) => {
+
+exports.getSoinsForDemande = async (req, res) => {
     try {
         const userId = req.params.userId;
         if (!ObjectId.isValid(userId)) {

@@ -246,6 +246,7 @@ router.post('/api/users/userdata', UserController.userdatafromtoken);
 router.post('/api/demandes', UserController.createADemande);
 router.get('/api/users/:userId/demandes', UserController.getAllDemandesFromUser);
 router.get('/api/demandes/:demandeId', UserController.getDemandeById);
+router.get('/api/demandes/:id/soins', UserController.getSoinsForDemande);
 router.get('/api/demandes/:userId/count', UserController.countDemandesByUserId)
 
 
