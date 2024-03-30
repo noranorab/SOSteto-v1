@@ -15,6 +15,7 @@ import RNPickerSelect from "react-native-picker-select";
 import Filtre from "../components/Filtre";
 import { useNavigation } from "@react-navigation/core";
 import axios from 'axios';
+import MultiSelect from 'react-native-multiple-select';
 
 function InputWithIcon({ inputHeight, onPressIcon, iconName = "add-outline" }) {
   return (
@@ -91,20 +92,19 @@ export default function AjouterScreen({ navigation }) {
   const [quartiers, setQuartiers] = useState([]);
   const [soins, setSoins] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedSoins, setSelectedSoins] = useState([]);
 
 
-  const handleAddAct = () => {
-    setAdditionalInputs((prevInputs) => [...prevInputs, {}]);
-  };
+
 
   const dismissKeyboard = () => {
     Keyboard.dismiss();
   };
 
   useEffect(() => {
-
-    fetchVilles();
     fetchSoinsData();
+    fetchVilles();
+
   }, []);
 
   const fetchVilles = async () => {
@@ -146,6 +146,8 @@ export default function AjouterScreen({ navigation }) {
       </View>
     );
   }
+
+  console.log(selectedSoins)
   return (
     <TouchableWithoutFeedback onPress={dismissKeyboard}>
       <ScrollView
@@ -171,39 +173,67 @@ export default function AjouterScreen({ navigation }) {
             placeholder="  e.g J'ai besoin d'une infirmière pour faire des piqures à une personne âgée..."
             inputHeight={120}
           />
-          <InfoSection
-            title="Soins et actes"
-            description="Précisez les soins que vous recherchez"
-            placeholder="  Ajouter un acte"
-            onPressIcon={handleAddAct}
-          />
-          {additionalInputs.map((_, index) => (
-            <View key={index}>
-              <TextInput
-                style={{
-                  height: 40,
+
+          <Text
+            style={{
+              fontSize: 17,
+              fontWeight: "bold",
+              marginTop: 10,
+              color: "#7BBCB5",
+            }}
+          >
+            Soins et actes
+          </Text>
+          <Text
+            style={{
+              fontSize: 15,
+              // fontWeight: "bold",
+              marginTop: 10,
+              // color: "#7BBCB5",
+            }}
+          >
+            Précisez les soins que vous recherchez
+          </Text>
+          <View
+            style={{
+              // borderColor: "#C1C1C1",
+              // borderWidth: 1,
+              marginRight: 20,
+              // paddingLeft: ,
+              width: 370,
+              color: "gray",
+              marginTop: 10,
+              marginLeft: 2,
+              paddingRight: 20,
+              textAlignVertical: "center",
+              borderRadius: 5,
+              fontSize: 17,
+            }}
+          >
+            <View style={{ marginVertical: 10 }}>
+              <MultiSelect
+                items={soins.map(soin => ({ id: soin._id, name: soin.nom_soin }))}
+                uniqueKey="id"
+                onSelectedItemsChange={setSelectedSoins}
+                selectedItems={selectedSoins}
+                selectText="Choisir des soins"
+                searchInputPlaceholderText="Rechercher des soins..."
+                displayKey="name"
+                styleMainWrapper={{
                   borderColor: "#C1C1C1",
                   borderWidth: 1,
                   borderRadius: 5,
-                  marginRight: 20,
-                  color: "gray",
-                  marginTop: 15,
+                  paddingVertical: 10,
+                  paddingHorizontal: 15,
+                  marginTop: 10,
                 }}
-                placeholder="      Ajouter un acte"
+                styleDropdownMenuSubsection={{
+                  paddingVertical: 10,
+                }}
+                styleTextDropdown={{ color: "grey" }}
               />
-              {index >= 0 && (
-                <InputWithIcon
-                  iconName="remove-outline"
-                  inputHeight={40}
-                  onPressIcon={() =>
-                    setAdditionalInputs((prevInputs) =>
-                      prevInputs.filter((_, i) => i !== index)
-                    )
-                  }
-                />
-              )}
             </View>
-          ))}
+          </View>
           <Text
             style={{
               fontSize: 17,
