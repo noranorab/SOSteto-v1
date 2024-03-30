@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 
+
 export async function getUsers() {
   try {
     const users = await axios.get('http://localhost:3000/api/users');
@@ -83,4 +84,29 @@ export async function getDemandeById({params}) {
     console.error('Error retrieving demandes:', error);
     throw error;
   }
+}
+
+
+export const countDemandesByUserId = async (userId) => {
+  try {
+    // Count all demandes with the specified user ID
+    console.log(userId)
+    const demandeCount = await axios.get(`http://localhost:3000/api/demandes/${userId}/count`)
+    return demandeCount.data;
+  } catch (error) {
+    console.error('Error retrieving count of demandes:', error);
+    throw error;
+  }
+};
+
+export const getRecruteursIds = async () => {
+  try {
+    const users = await axios.get('http://localhost:3000/api/users?role=recruteur');
+    const userIds = users.data.map(user => user._id)
+    console.log(userIds)
+    return userIds
+  } catch (error) {
+    console.error('Error fetching users:', error);
+  }
+
 }

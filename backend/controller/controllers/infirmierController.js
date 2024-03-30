@@ -1,5 +1,8 @@
 const { ObjectId } = require("mongodb");
+<<<<<<< HEAD
 // const { Infirmier, Specialite, User, Ville, Quartier, SpecialiteInfirmier, LangueInfirmier, InfirmierSoins } = require("../../model/schema")
+=======
+>>>>>>> 9d1b32de1c616cd3219f72c4f8c05ae5c850071b
 const { Infirmier, Specialite, User, Ville, Quartier, SpecialiteInfirmier, LangueInfirmier, InfirmierSoins, Langue, Soins } = require("../../model/schema")
 
 
@@ -39,6 +42,7 @@ exports.getAllInfirmiers = async (req, res) => {
 exports.getInfirmierById = async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
+<<<<<<< HEAD
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
@@ -77,6 +81,47 @@ exports.getInfirmierById = async (req, res) => {
         console.error(error);
         res.status(500).json({ message: 'Error from server' });
     }
+=======
+        try {
+            const user = await User.findById(req.params.id);
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+
+            console.log(user);
+
+        const specialite = await SpecialiteInfirmier.find({ userId: user._id });
+        const specialitesWithName = await Promise.all(specialite.map(async (specialite) => {
+            return await Specialite.findById(specialite);
+        }))
+        console.log(specialitesWithName)
+        const languesparlees = await LangueInfirmier.find({ userId: user._id });
+        const languesWithName = await Promise.all(languesparlees.map(async (langue)=> {
+            return await Langue.findById(langue)
+        }))
+        console.log(languesWithName)
+        const nom_soin = await InfirmierSoins.find({ id_infirmiere: user._id });
+        const soinWithName= await Promise.all(nom_soin.map(async (s) => {
+            return await Soins.findById(s);
+        }))
+        console.log(soinWithName)
+        const infirmierRep = {
+            specialite: specialitesWithName.length>0 ? specialitesWithName.map((specialite) => specialite.nom_specialite) : [],
+            langue_parlee: languesWithName.length>0 ? languesWithName.map((langue) => langue.langue) : [],
+            soins: soinWithName.length>0 ? soinWithName.map((soin) => soin.nom_soin) : [],
+        };
+
+            res.json(infirmierRep);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: 'Error from server' });
+        }
+    
+} catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error from server' });
+}
+>>>>>>> 9d1b32de1c616cd3219f72c4f8c05ae5c850071b
 };
 
 
