@@ -99,12 +99,11 @@ export const countDemandesByUserId = async (userId) => {
   }
 };
 
-export const getRecruteursIds = async () => {
+export const getRecruteursIdsFromDemandes = async () => {
   try {
-    const users = await axios.get('http://localhost:3000/api/users?role=recruteur');
-    const userIds = users.data.map(user => user._id)
-    console.log(userIds)
-    return userIds
+    const users = await axios.get('http://localhost:3000/api/demandes/users');
+    console.log(users.data)
+    return users.data
   } catch (error) {
     console.error('Error fetching users:', error);
   }

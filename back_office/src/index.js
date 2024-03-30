@@ -11,7 +11,7 @@ import List, { loader as usersLoader } from './pages/list/List';
 import { loader as dataLoader } from './pages/DetailsOfEntites/DetailsOfUser'
 import DetailsOfDemande from './pages/DetailsOfEntites/DetailsOfDemandes';
 import {loader as demandeLoader} from './pages/DetailsOfEntites/DetailsOfDemandes'
-import {loader as userIdsLoader} from './pages/home/Home'
+
 
 
 const router = createBrowserRouter([
@@ -19,7 +19,7 @@ const router = createBrowserRouter([
     path: "/",
     element: <Home/>,
     errorElement: <ErrorPage/>,
-    loader: userIdsLoader,
+
   },
   {
     path: "users",

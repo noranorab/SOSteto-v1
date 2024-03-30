@@ -1,59 +1,54 @@
-import React, { useEffect, useState } from 'react';
-import { Bar } from 'react-chartjs-2';
-import { countDemandesByUserId } from '../../data/users';
+import React, { useEffect, useState } from "react";
+import { Chart } from "react-google-charts";
 
-const DemandsPerUserBarChart = ({userIds}) => {
-  console.log(userIds)
-  const [chartData, setChartData] = useState({});
+
+
+
+const UsersPieChart = () => {
+  const [chartData, setChartData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchChartData = async () => {
+    const fetchData = async () => {
       try {
-        const demandeCounts = await Promise.all(
-          
-          userIds.map(async (userId) => {
-            const count = await countDemandesByUserId(userId);
-            console.log(count)
-            return count;
-          })
-        );
+        // Fetch data from your API
+        const response = await fetch("http://localhost:3000/api/users/count");
+        const data = await response.json();
+        console.log(data)
+        
+        // Transform data to match the format expected by Google Charts
+        const chartData = [
+          ["Utilisateurs", "Nombres"],
+          ["infirmiers", data[0]],
+          ["recruteurs", data[1]],
+        ];
 
-        setChartData({
-          labels: userIds,
-          datasets: [
-            {
-              label: 'Number of Demandes',
-              data: demandeCounts,
-              backgroundColor: 'rgba(75,192,192,0.6)',
-              borderWidth: 1,
-            },
-          ],
-        });
+        setChartData(chartData);
+        setIsLoading(false);
       } catch (error) {
-        console.error('Error fetching chart data:', error);
+        console.error("Error fetching data:", error);
+        setIsLoading(false);
       }
     };
 
-      fetchChartData();
-    
-  }, [userIds]);
+    fetchData();
+  }, []);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
-    <div>
-      <h2>Demandes per User</h2>
-      <Bar
-        data={chartData}
-        options={{
-          responsive: true,
-          scales: {
-            y: {
-              beginAtZero: true,
-            },
-          },
-        }}
-      />
-    </div>
+    <Chart
+      chartType="PieChart"
+      data={chartData}
+      options={{
+        title: "Utilisateurs",
+      }}
+      width={"100%"}
+      height={"400px"}
+    />
   );
 };
 
-export default DemandsPerUserBarChart;
+export default UsersPieChart;

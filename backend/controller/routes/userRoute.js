@@ -2,6 +2,11 @@ const express = require('express');
 const router = express.Router();
 const UserController = require('../controllers/userController');
 
+
+router.get('/api/users/count', UserController.countUsers)
+
+router.get('/api/demandes/count', UserController.countDemandes)
+
 /**
  * @openapi
  * /api/users:
@@ -242,6 +247,7 @@ router.post('/api/demandes', UserController.createADemande);
 router.get('/api/users/:userId/demandes', UserController.getAllDemandesFromUser);
 router.get('/api/demandes/:demandeId', UserController.getDemandeById);
 router.get('/api/demandes/:userId/count', UserController.countDemandesByUserId)
+
 
 
 module.exports = router

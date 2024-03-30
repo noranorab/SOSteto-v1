@@ -27,18 +27,7 @@ const Sidebar = () => {
               <span>Users</span>
             </Link>
           </li>
-          <li>
-            <Link to={`/villes`}>
-              <GroupIcon className='icon' />
-              <span>Villes</span>
-            </Link>
-          </li>
-          <li>
-            <Link to={`/roles`}>
-              <GroupIcon className='icon' />
-              <span>Roles</span>
-            </Link>
-          </li>
+         
 
         </ul>
       </div>

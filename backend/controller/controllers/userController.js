@@ -276,11 +276,57 @@ exports.getDemandeById = async(req, res) => {
 
 exports.countDemandesByUserId = async (req, res) => {
     try {
-      // Count all demandes with the specified user ID
-      const demandeCount = await Demande.countDocuments({ id_recruteur: req.params.userId });
-      return demandeCount;
-    } catch (error) {
-      console.error('Error counting demandes:', error);
-      throw error;
-    }
+        const userId = req.params.userId;
+        if (!ObjectId.isValid(userId)) {
+          return res.status(400).json({ error: 'Invalid user ID' });
+        }
+    
+        const demandeCount = await Demande.countDocuments({ id_recruteur: userId });
+        console.log(demandeCount);
+        res.status(200).json(demandeCount);
+      } catch (error) {
+        console.error('Error counting demandes:', error);
+        res.status(500).json({ error: 'Internal server error' });
+      }
   };
+
+  exports.getUsersFromDemandes = async (req, res) => {
+    try {
+        // Count all demandes with the specified user ID
+        const demandes = await Demande.find()
+        console.log('demandes', demandes)
+        const users = demandes.map((demande) => demande.id_recruteur)
+        const uniqueUsers = [...new Set(users)];
+        console.log(uniqueUsers)
+        res.status(200).json(uniqueUsers);
+      } catch (error) {
+        console.error('Error getting users from demandes:', error);
+        throw error;
+      }
+  }
+
+  exports.countUsers = async (req, res) => {
+    try {
+        // Count all demandes with the specified user ID
+        const nombreInfirmiers = await User.countDocuments({role : "infirmier"})
+        const nombreRecruteurs = await User.countDocuments({role: "recruteur"})
+        console.log(nombreInfirmiers)
+        res.status(200).json([nombreInfirmiers, nombreRecruteurs]);
+      } catch (error) {
+        console.error('Erreur nombre users:', error);
+        throw error;
+      }
+  }
+
+  exports.countDemandes = async (req, res) => {
+    try {
+        // Count all demandes with the specified user ID
+        const nombreDemandes = await Demande.countDocuments()
+        console.log('nombre de deamdnes', nombreDemandes )
+        res.status(200).json(nombreDemandes);
+      } catch (error) {
+        console.error('Erreur nombre demandes:', error);
+        throw error;
+      }
+  }
+
